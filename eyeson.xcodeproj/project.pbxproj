@@ -14,6 +14,9 @@
 		C48458072C4C00F400745A56 /* eyesonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458062C4C00F400745A56 /* eyesonTests.swift */; };
 		C48458112C4C00F400745A56 /* eyesonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458102C4C00F400745A56 /* eyesonUITests.swift */; };
 		C48458132C4C00F400745A56 /* eyesonUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458122C4C00F400745A56 /* eyesonUITestsLaunchTests.swift */; };
+		C48458202C4C01E900745A56 /* ScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484581F2C4C01E900745A56 /* ScanData.swift */; };
+		C48458222C4C033500745A56 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458212C4C033500745A56 /* ScannerView.swift */; };
+		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		C484580C2C4C00F400745A56 /* eyesonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eyesonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C48458102C4C00F400745A56 /* eyesonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonUITests.swift; sourceTree = "<group>"; };
 		C48458122C4C00F400745A56 /* eyesonUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C484581F2C4C01E900745A56 /* ScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanData.swift; sourceTree = "<group>"; };
+		C48458212C4C033500745A56 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,9 @@
 			children = (
 				C48457F52C4C00F200745A56 /* eyesonApp.swift */,
 				C48457F72C4C00F200745A56 /* ContentView.swift */,
+				C48458212C4C033500745A56 /* ScannerView.swift */,
+				C48458232C4C048C00745A56 /* TextRecognizer.swift */,
+				C484581F2C4C01E900745A56 /* ScanData.swift */,
 				C48457F92C4C00F300745A56 /* Assets.xcassets */,
 				C48457FB2C4C00F300745A56 /* Preview Content */,
 			);
@@ -258,7 +267,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
+				C48458222C4C033500745A56 /* ScannerView.swift in Sources */,
+				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
+				C48458202C4C01E900745A56 /* ScanData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +359,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -404,7 +416,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -425,6 +437,7 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -454,6 +467,7 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
