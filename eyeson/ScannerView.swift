@@ -13,20 +13,22 @@ struct ScannerView: UIViewControllerRepresentable {
         return Coordinator(completion: completionHandler)
     }
     
-    
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        private let completionHandler: ([String]?) -> Void
+        private let completionHandler: ([UIImage]?) -> Void
         
-        init(completion: @escaping ([String]?) -> Void) {
+        init(completion: @escaping ([UIImage]?) -> Void) {
             self.completionHandler = completion
         }
+        
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
-            let recognizer = TextRecognizer(cameraScan: scan)
-            recognizer.recognizeText(withCompletionHandler: completionHandler)
+            let images = (0..<scan.pageCount).map { scan.imageOfPage(at: $0) }
+            completionHandler(images)
         }
+        
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
             completionHandler(nil)
         }
+        
         func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
             completionHandler(nil)
         }
@@ -38,16 +40,13 @@ struct ScannerView: UIViewControllerRepresentable {
         return viewController
     }
     
-    func updateUIViewController(_ uiViewController: VNDocumentCameraViewController, context: Context) {
-        
-        
-    }
+    func updateUIViewController(_ uiViewController: VNDocumentCameraViewController, context: Context) {}
     
     typealias UIViewControllerType = VNDocumentCameraViewController
     
-    private let completionHandler: ([String]?) -> Void
+    private let completionHandler: ([UIImage]?) -> Void
     
-    init(completion: @escaping([String]?) -> Void) {
+    init(completion: @escaping([UIImage]?) -> Void) {
         self.completionHandler = completion
     }
 }

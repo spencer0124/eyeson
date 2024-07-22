@@ -17,6 +17,8 @@
 		C48458202C4C01E900745A56 /* ScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484581F2C4C01E900745A56 /* ScanData.swift */; };
 		C48458222C4C033500745A56 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458212C4C033500745A56 /* ScannerView.swift */; };
 		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
+		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
+		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		C484581F2C4C01E900745A56 /* ScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanData.swift; sourceTree = "<group>"; };
 		C48458212C4C033500745A56 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
+		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
+		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,7 @@
 		C48457F42C4C00F200745A56 /* eyeson */ = {
 			isa = PBXGroup;
 			children = (
+				C4BCFB8F2C4DF65A001F943B /* bluetooth */,
 				C48457F52C4C00F200745A56 /* eyesonApp.swift */,
 				C48457F72C4C00F200745A56 /* ContentView.swift */,
 				C48458212C4C033500745A56 /* ScannerView.swift */,
@@ -134,6 +139,15 @@
 				C48458122C4C00F400745A56 /* eyesonUITestsLaunchTests.swift */,
 			);
 			path = eyesonUITests;
+			sourceTree = "<group>";
+		};
+		C4BCFB8F2C4DF65A001F943B /* bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */,
+				C4BCFB902C4DF679001F943B /* peripheral.swift */,
+			);
+			path = bluetooth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,7 +283,9 @@
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C48458222C4C033500745A56 /* ScannerView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
+				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
+				C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */,
 				C48458202C4C01E900745A56 /* ScanData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

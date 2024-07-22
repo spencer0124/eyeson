@@ -4,24 +4,47 @@
 //
 //  Created by 조승용 on 7/20/24.
 //
-
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showCannerSheet = false
-    @State private var texts: [ScanData] = []
+    @State private var showScannerSheet = false
+    @State private var images: [ScanData] = []
+    @State private var showBluetoothView = false
     
     var body: some View {
         NavigationView {
             VStack {
-                if texts.count > 0 {
+                if images.count > 0 {
                     List {
-                        ForEach(texts) { text in
+                        ForEach(images) { image in
                             NavigationLink(
-                                destination: ScrollView{Text(text.content)},
+                                destination: ScrollView {
+                                    VStack {
+                                        ForEach(image.pictures, id: \.self) { picture in
+                                            Image(uiImage: picture)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        }
+                                    }
+                                },
                                 label: {
-                                    Text(text.content).lineLimit(1)
-                                }                            )
+                                    VStack(alignment: .leading) {
+                                        Text(image.timestamp, style: .time)
+                                            .font(.headline)
+                                        ScrollView(.horizontal, showsIndicators: false) {
+                                            HStack {
+                                                ForEach(image.pictures, id: \.self) { picture in
+                                                    Image(uiImage: picture)
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 100, height: 100)
+                                                        .clipped()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            )
                         }
                     }
                 }
@@ -29,33 +52,44 @@ struct ContentView: View {
                     Text("No scan yet").font(.title)
                 }
             }
-                .navigationTitle("Scan OCR")
-                .navigationBarItems(trailing:
-                        Button(action: {
-                    self.showCannerSheet = true
+            .navigationTitle("History")
+            .navigationBarItems(trailing: HStack {
+                Button(action: {
+                    self.showBluetoothView = true
                 }, label: {
-                    Image(systemName: "doc.text.viewfinder")
+                    Image(systemName: "dot.radiowaves.left.and.right")
                         .font(.title)
                 })
-                            .sheet(isPresented: $showCannerSheet, content: {
-                                makeSacnnerView()
-                            })
-                
-                
+                .background(
+                    NavigationLink(destination: bluetoothScan(), isActive: $showBluetoothView) {
+                        EmptyView()
+                    }
+                    .hidden()
                 )
+                Button(action: {
+                    self.showScannerSheet = true
+                }, label: {
+                    Image(systemName: "camera")
+                        .font(.title)
+                })
+                .sheet(isPresented: $showScannerSheet, content: {
+                    makeScannerView()
+                })
+            })
         }
     }
-    private func makeSacnnerView() -> ScannerView {
-        ScannerView(completion: {
-            textPerPage in
-            if let outputText = textPerPage?.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines) {
-                let newScanData = ScanData(content: outputText)
-                self.texts.append(newScanData)
+    
+    private func makeScannerView() -> ScannerView {
+        ScannerView(completion: { imagesPerPage in
+            if let newImages = imagesPerPage {
+                let newScanData = ScanData(pictures: newImages)
+                self.images.append(newScanData)
             }
-            self.showCannerSheet = false
+            self.showScannerSheet = false
         })
     }
 }
+
 
 #Preview {
     ContentView()

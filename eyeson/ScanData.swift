@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 struct ScanData: Identifiable {
     var id = UUID()
-    let content: String
+    let timestamp: Date
+    let pictures: [UIImage]
     
-    init(content:String) {
-        self.content = content
+    init(pictures: [UIImage]) {
+        self.timestamp = Date()
+        self.pictures = pictures
     }
 }
