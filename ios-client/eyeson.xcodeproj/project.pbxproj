@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
+		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
 		C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F52C4C00F200745A56 /* eyesonApp.swift */; };
 		C48457F82C4C00F200745A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F72C4C00F200745A56 /* ContentView.swift */; };
 		C48457FA2C4C00F300745A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C48457F92C4C00F300745A56 /* Assets.xcassets */; };
@@ -15,11 +17,12 @@
 		C48458112C4C00F400745A56 /* eyesonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458102C4C00F400745A56 /* eyesonUITests.swift */; };
 		C48458132C4C00F400745A56 /* eyesonUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458122C4C00F400745A56 /* eyesonUITestsLaunchTests.swift */; };
 		C48458202C4C01E900745A56 /* ScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484581F2C4C01E900745A56 /* ScanData.swift */; };
-		C48458222C4C033500745A56 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458212C4C033500745A56 /* ScannerView.swift */; };
+		C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458212C4C033500745A56 /* DocumentScanner.swift */; };
 		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
+		F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F807439606D1330482835A12 /* Pods_eyesonTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E880C13A66FF0CBCDED4004 /* Pods-eyeson-eyesonUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson-eyesonUITests.debug.xcconfig"; path = "Target Support Files/Pods-eyeson-eyesonUITests/Pods-eyeson-eyesonUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson_eyesonUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73B9F40BCD49ADA5B66D84C6 /* Pods-eyesonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.release.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.release.xcconfig"; sourceTree = "<group>"; };
+		772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.release.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.release.xcconfig"; sourceTree = "<group>"; };
+		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C48457F22C4C00F200745A56 /* eyeson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eyeson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C48457F52C4C00F200745A56 /* eyesonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonApp.swift; sourceTree = "<group>"; };
 		C48457F72C4C00F200745A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,11 +60,14 @@
 		C48458102C4C00F400745A56 /* eyesonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonUITests.swift; sourceTree = "<group>"; };
 		C48458122C4C00F400745A56 /* eyesonUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C484581F2C4C01E900745A56 /* ScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanData.swift; sourceTree = "<group>"; };
-		C48458212C4C033500745A56 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		C48458212C4C033500745A56 /* DocumentScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScanner.swift; sourceTree = "<group>"; };
 		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		D4AFA9AEB09116BE95EA8F09 /* Pods-eyeson-eyesonUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson-eyesonUITests.release.xcconfig"; path = "Target Support Files/Pods-eyeson-eyesonUITests/Pods-eyeson-eyesonUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D694C3C3999ECE94C3469C12 /* Pods-eyeson.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.debug.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.debug.xcconfig"; sourceTree = "<group>"; };
+		F807439606D1330482835A12 /* Pods_eyesonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyesonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,19 +91,105 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		90199907AA22C4B7C8FB09F4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D694C3C3999ECE94C3469C12 /* Pods-eyeson.debug.xcconfig */,
+				772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */,
+				5E880C13A66FF0CBCDED4004 /* Pods-eyeson-eyesonUITests.debug.xcconfig */,
+				D4AFA9AEB09116BE95EA8F09 /* Pods-eyeson-eyesonUITests.release.xcconfig */,
+				B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */,
+				73B9F40BCD49ADA5B66D84C6 /* Pods-eyesonTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				C4475F3F2C4EA33900DFBD90 /* Camerascan */,
+				C4BCFB8F2C4DF65A001F943B /* BluetoothScan */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		C4475F3C2C4EA2FB00DFBD90 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C4BCFB902C4DF679001F943B /* peripheral.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C4475F3D2C4EA30400DFBD90 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C4475F3E2C4EA31600DFBD90 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4BCFB922C4DF700001F943B /* BLEManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4475F3F2C4EA33900DFBD90 /* Camerascan */ = {
+			isa = PBXGroup;
+			children = (
+				C4475F422C4EA35400DFBD90 /* ViewModel */,
+				C4475F412C4EA35000DFBD90 /* View */,
+				C4475F402C4EA34A00DFBD90 /* Model */,
+			);
+			path = Camerascan;
+			sourceTree = "<group>";
+		};
+		C4475F402C4EA34A00DFBD90 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C484581F2C4C01E900745A56 /* ScanData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C4475F412C4EA35000DFBD90 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C48457F72C4C00F200745A56 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C4475F422C4EA35400DFBD90 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C48458212C4C033500745A56 /* DocumentScanner.swift */,
+				C48458232C4C048C00745A56 /* TextRecognizer.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C48457E92C4C00F200745A56 = {
 			isa = PBXGroup;
 			children = (
-				C48457F42C4C00F200745A56 /* eyeson */,
 				C48458052C4C00F400745A56 /* eyesonTests */,
 				C484580F2C4C00F400745A56 /* eyesonUITests */,
+				C48457F42C4C00F200745A56 /* eyeson */,
+				C4475F3B2C4EA26E00DFBD90 /* Features */,
 				C48457F32C4C00F200745A56 /* Products */,
+				90199907AA22C4B7C8FB09F4 /* Pods */,
+				CF96437DE1362F55D7828574 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,12 +206,7 @@
 		C48457F42C4C00F200745A56 /* eyeson */ = {
 			isa = PBXGroup;
 			children = (
-				C4BCFB8F2C4DF65A001F943B /* bluetooth */,
 				C48457F52C4C00F200745A56 /* eyesonApp.swift */,
-				C48457F72C4C00F200745A56 /* ContentView.swift */,
-				C48458212C4C033500745A56 /* ScannerView.swift */,
-				C48458232C4C048C00745A56 /* TextRecognizer.swift */,
-				C484581F2C4C01E900745A56 /* ScanData.swift */,
 				C48457F92C4C00F300745A56 /* Assets.xcassets */,
 				C48457FB2C4C00F300745A56 /* Preview Content */,
 			);
@@ -143,14 +238,24 @@
 			path = eyesonUITests;
 			sourceTree = "<group>";
 		};
-		C4BCFB8F2C4DF65A001F943B /* bluetooth */ = {
+		C4BCFB8F2C4DF65A001F943B /* BluetoothScan */ = {
 			isa = PBXGroup;
 			children = (
-				C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */,
-				C4BCFB902C4DF679001F943B /* peripheral.swift */,
-				C4BCFB922C4DF700001F943B /* BLEManager.swift */,
+				C4475F3E2C4EA31600DFBD90 /* ViewModel */,
+				C4475F3D2C4EA30400DFBD90 /* View */,
+				C4475F3C2C4EA2FB00DFBD90 /* Model */,
 			);
-			path = bluetooth;
+			path = BluetoothScan;
+			sourceTree = "<group>";
+		};
+		CF96437DE1362F55D7828574 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */,
+				6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */,
+				F807439606D1330482835A12 /* Pods_eyesonTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,9 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C48458162C4C00F400745A56 /* Build configuration list for PBXNativeTarget "eyeson" */;
 			buildPhases = (
+				6DB4A2A020BF5D0D88821B9E /* [CP] Check Pods Manifest.lock */,
 				C48457EE2C4C00F200745A56 /* Sources */,
 				C48457EF2C4C00F200745A56 /* Frameworks */,
 				C48457F02C4C00F200745A56 /* Resources */,
+				AC2DB2CF6B0C56DB06FEC428 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -177,6 +284,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C48458192C4C00F400745A56 /* Build configuration list for PBXNativeTarget "eyesonTests" */;
 			buildPhases = (
+				DB3F12C5DAA8FCF61D5DF91F /* [CP] Check Pods Manifest.lock */,
 				C48457FE2C4C00F400745A56 /* Sources */,
 				C48457FF2C4C00F400745A56 /* Frameworks */,
 				C48458002C4C00F400745A56 /* Resources */,
@@ -195,9 +303,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C484581C2C4C00F400745A56 /* Build configuration list for PBXNativeTarget "eyesonUITests" */;
 			buildPhases = (
+				7C5D99DBAC912548D37E61F5 /* [CP] Check Pods Manifest.lock */,
 				C48458082C4C00F400745A56 /* Sources */,
 				C48458092C4C00F400745A56 /* Frameworks */,
 				C484580A2C4C00F400745A56 /* Resources */,
+				5098EF09E5F30CB85CAE4212 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -278,6 +388,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5098EF09E5F30CB85CAE4212 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-eyeson-eyesonUITests/Pods-eyeson-eyesonUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-eyeson-eyesonUITests/Pods-eyeson-eyesonUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-eyeson-eyesonUITests/Pods-eyeson-eyesonUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DB4A2A020BF5D0D88821B9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-eyeson-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C5D99DBAC912548D37E61F5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-eyeson-eyesonUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC2DB2CF6B0C56DB06FEC428 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-eyeson/Pods-eyeson-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-eyeson/Pods-eyeson-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-eyeson/Pods-eyeson-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB3F12C5DAA8FCF61D5DF91F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-eyesonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C48457EE2C4C00F200745A56 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -285,7 +498,7 @@
 			files = (
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
-				C48458222C4C033500745A56 /* ScannerView.swift in Sources */,
+				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
@@ -448,6 +661,7 @@
 		};
 		C48458172C4C00F400745A56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D694C3C3999ECE94C3469C12 /* Pods-eyeson.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -480,6 +694,7 @@
 		};
 		C48458182C4C00F400745A56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -512,6 +727,7 @@
 		};
 		C484581A2C4C00F400745A56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -532,6 +748,7 @@
 		};
 		C484581B2C4C00F400745A56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73B9F40BCD49ADA5B66D84C6 /* Pods-eyesonTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -552,6 +769,7 @@
 		};
 		C484581D2C4C00F400745A56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E880C13A66FF0CBCDED4004 /* Pods-eyeson-eyesonUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -570,6 +788,7 @@
 		};
 		C484581E2C4C00F400745A56 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4AFA9AEB09116BE95EA8F09 /* Pods-eyeson-eyesonUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
