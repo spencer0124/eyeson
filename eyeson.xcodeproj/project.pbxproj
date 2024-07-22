@@ -19,6 +19,7 @@
 		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
+		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
+		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			children = (
 				C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */,
 				C4BCFB902C4DF679001F943B /* peripheral.swift */,
+				C4BCFB922C4DF700001F943B /* BLEManager.swift */,
 			);
 			path = bluetooth;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
+				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* ScannerView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
@@ -453,6 +457,8 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -483,6 +489,8 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
