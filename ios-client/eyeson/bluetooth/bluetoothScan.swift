@@ -16,7 +16,7 @@ struct bluetoothScan: View {
                 .font(.largeTitle)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            List(bleManager.peripherals) { peripheral in
+            List(bleManager.knownPeripherals) { peripheral in
                 HStack {
                     Text(peripheral.name)
                     Spacer()

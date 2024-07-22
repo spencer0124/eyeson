@@ -30,6 +30,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        let peripheralName = advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? peripheral.name ?? "Unknown"
         let newPeripheral = Peripheral(id: peripheral.identifier, name: peripheral.name ?? "Unknown", rssi: RSSI.intValue)
         if !peripherals.contains(where: { $0.id == newPeripheral.id }) { // check if the peripheral is already in the list
             DispatchQueue.main.async {
@@ -86,8 +87,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services { // check if services are discovered
             for service in services { // Iterate through the services
-                print("Discovered series: \(service.uuid)")
+                print("Discovered service: \(service.uuid)")
                 peripheral.discoverCharacteristics(nil, for: service) // discover characteristics for the service
+            }
+        }
+        // Update peripheral name if it was "Unknown"
+        if let index = peripherals.firstIndex(where: { $0.id == peripheral.identifier }) {
+            DispatchQueue.main.async {
+                self.peripherals[index].name = peripheral.name ?? "Unknown"
             }
         }
     }
@@ -101,5 +108,9 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
             }
         }
     }
+    
+    var knownPeripherals: [Peripheral] {
+           return peripherals.filter { $0.name != "Unknown" }
+       }
     
 }
