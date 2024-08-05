@@ -10,6 +10,9 @@
 		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
 		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
+		C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499A92C6062830064D824 /* CamerascanView.swift */; };
+		C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499AF2C6062B20064D824 /* ExhibitsView.swift */; };
+		C47499B22C6065AE0064D824 /* ExhibitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499B12C6065AE0064D824 /* ExhibitsModel.swift */; };
 		C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F52C4C00F200745A56 /* eyesonApp.swift */; };
 		C48457F82C4C00F200745A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F72C4C00F200745A56 /* ContentView.swift */; };
 		C48457FA2C4C00F300745A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C48457F92C4C00F300745A56 /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C47499A92C6062830064D824 /* CamerascanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerascanView.swift; sourceTree = "<group>"; };
+		C47499AF2C6062B20064D824 /* ExhibitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsView.swift; sourceTree = "<group>"; };
+		C47499B12C6065AE0064D824 /* ExhibitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsModel.swift; sourceTree = "<group>"; };
 		C47B33DE2C60592B006BCC1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C48457F22C4C00F200745A56 /* eyeson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eyeson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C48457F52C4C00F200745A56 /* eyesonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonApp.swift; sourceTree = "<group>"; };
@@ -117,6 +123,7 @@
 		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C47499AB2C6062950064D824 /* Exhibits */,
 				C4475F3F2C4EA33900DFBD90 /* Camerascan */,
 				C4BCFB8F2C4DF65A001F943B /* BluetoothScan */,
 			);
@@ -168,7 +175,7 @@
 		C4475F412C4EA35000DFBD90 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C48457F72C4C00F200745A56 /* ContentView.swift */,
+				C47499A92C6062830064D824 /* CamerascanView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +187,39 @@
 				C48458232C4C048C00745A56 /* TextRecognizer.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C47499AB2C6062950064D824 /* Exhibits */ = {
+			isa = PBXGroup;
+			children = (
+				C47499AE2C6062A70064D824 /* Model */,
+				C47499AD2C6062A40064D824 /* View */,
+				C47499AC2C60629E0064D824 /* ViewModel */,
+			);
+			path = Exhibits;
+			sourceTree = "<group>";
+		};
+		C47499AC2C60629E0064D824 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C47499B12C6065AE0064D824 /* ExhibitsModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C47499AD2C6062A40064D824 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C47499AF2C6062B20064D824 /* ExhibitsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C47499AE2C6062A70064D824 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		C48457E92C4C00F200745A56 = {
@@ -211,6 +251,7 @@
 				C47B33DE2C60592B006BCC1E /* Info.plist */,
 				C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */,
 				C48457F52C4C00F200745A56 /* eyesonApp.swift */,
+				C48457F72C4C00F200745A56 /* ContentView.swift */,
 				C48457F92C4C00F300745A56 /* Assets.xcassets */,
 				C48457FB2C4C00F300745A56 /* Preview Content */,
 			);
@@ -504,11 +545,14 @@
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
+				C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */,
+				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
 				C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */,
 				C48458202C4C01E900745A56 /* ScanData.swift in Sources */,
+				C47499B22C6065AE0064D824 /* ExhibitsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

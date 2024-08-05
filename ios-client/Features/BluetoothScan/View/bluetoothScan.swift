@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct bluetoothScan: View {
+    @Binding var path: NavigationPath
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
+    
     @StateObject var bleManager = BLEManager()
     
     var body: some View {
@@ -76,5 +80,5 @@ struct bluetoothScan: View {
 }
 
 #Preview {
-    bluetoothScan()
+    bluetoothScan(path: .constant(NavigationPath()))
 }
