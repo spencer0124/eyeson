@@ -68,6 +68,7 @@ struct ContentView: View {
             }
             
         }
+   
         .navigationDestination(for: NavigationState.self) { route in
                         switch route {
                         case .Exhibits:
