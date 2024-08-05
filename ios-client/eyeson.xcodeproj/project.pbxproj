@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
 		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
+		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F52C4C00F200745A56 /* eyesonApp.swift */; };
 		C48457F82C4C00F200745A56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48457F72C4C00F200745A56 /* ContentView.swift */; };
 		C48457FA2C4C00F300745A56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C48457F92C4C00F300745A56 /* Assets.xcassets */; };
@@ -49,6 +50,8 @@
 		772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.release.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.release.xcconfig"; sourceTree = "<group>"; };
 		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C47B33DE2C60592B006BCC1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C48457F22C4C00F200745A56 /* eyeson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eyeson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C48457F52C4C00F200745A56 /* eyesonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eyesonApp.swift; sourceTree = "<group>"; };
 		C48457F72C4C00F200745A56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 		C48457F42C4C00F200745A56 /* eyeson */ = {
 			isa = PBXGroup;
 			children = (
+				C47B33DE2C60592B006BCC1E /* Info.plist */,
+				C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */,
 				C48457F52C4C00F200745A56 /* eyesonApp.swift */,
 				C48457F92C4C00F300745A56 /* Assets.xcassets */,
 				C48457FB2C4C00F300745A56 /* Preview Content */,
@@ -366,6 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */,
 				C48457FD2C4C00F300745A56 /* Preview Assets.xcassets in Resources */,
 				C48457FA2C4C00F300745A56 /* Assets.xcassets in Resources */,
 			);
@@ -670,12 +676,13 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = eyeson/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -703,12 +710,13 @@
 				DEVELOPMENT_TEAM = 95HGXTX76L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = eyeson/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
