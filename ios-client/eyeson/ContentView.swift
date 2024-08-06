@@ -11,6 +11,7 @@ enum NavigationState {
 }
 
 struct ContentView: View {
+   
     @State private var selectedTab: NavigationState = .Exhibits
 
     var body: some View {
@@ -37,7 +38,9 @@ struct ContentView: View {
                     .tag(NavigationState.Settings)
             }
         }
+       
     }
+        
     
    
     

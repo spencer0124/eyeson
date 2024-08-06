@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExhibitsView: View {
-//    @Binding var path: NavigationPath
+    @StateObject private var locationpermissionManager = LocationPermissionManager()
     @State private var searchText = ""
     
     let exhibits: [ExhibitList] = [
@@ -65,6 +65,10 @@ struct ExhibitsView: View {
                    Spacer()
                }
                .navigationBarTitle("전시관", displayMode: .large)
+               .onAppear {
+                   let result: () = locationpermissionManager.checkLocationPermission()
+                   print(result)
+               }
              
              
              

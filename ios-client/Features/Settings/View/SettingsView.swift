@@ -6,23 +6,41 @@
 //
 
 import SwiftUI
+import UserNotifications
+import CoreLocation
 
 struct SettingsView: View {
-    @State private var pushNotificationsEnabled = true
-    @State private var locationServicesEnabled = true
+    @State private var pushNotificationsEnabled = false
+    @State private var locationServicesEnabled = false
     @State private var selectedLanguage = "Korean"
     
     var body: some View {
         NavigationView {
                 Form {
-                    Section(header: Text("계정 설정")) {
-                        Toggle(isOn: $pushNotificationsEnabled) {
-                            Text("푸시 알림")
-                        }
-                        Toggle(isOn: $locationServicesEnabled) {
-                            Text("위치 정보 (GPS)")
-                        }
-                    }
+                    Section(header: Text("권한 설정")) {
+                        Button(action: {
+                                openSettings()
+                            }) {
+                                HStack {
+                                    Text("푸시 알림")
+                                    Spacer()
+                                    Text(pushNotificationsEnabled ? "허용됨" : "허용 안 됨")
+                                        .foregroundColor(pushNotificationsEnabled ? .blue : .gray)
+                                }
+                            }
+                            .foregroundColor(.primary)
+                        Button(action: {
+                                                openSettings()
+                                            }) {
+                                                HStack {
+                                                    Text("위치 정보 (GPS)")
+                                                    Spacer()
+                                                    Text(locationServicesEnabled ? "허용됨" : "허용 안 됨")
+                                                        .foregroundColor(locationServicesEnabled ? .blue : .gray)
+                                                }
+                                            }
+                                            .foregroundColor(.primary) // To keep the default text color
+                                        }
                     
                     Section(header: Text("언어 설정")) {
                        Picker(selection: $selectedLanguage, label: Text("")) {
@@ -35,8 +53,37 @@ struct SettingsView: View {
                    }
                }
             .navigationBarTitle("환경설정", displayMode: .large)
+            .onAppear {
+                        checkPushNotificationPermission()
+                        checkLocationServicesPermission()
+                    }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                            checkPushNotificationPermission()
+                            checkLocationServicesPermission()
+                        }
         }
     }
+    
+    private func checkPushNotificationPermission() {
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                DispatchQueue.main.async {
+                    pushNotificationsEnabled = settings.authorizationStatus == .authorized
+                }
+            }
+        }
+        
+        private func checkLocationServicesPermission() {
+            let authorizationStatus = CLLocationManager.authorizationStatus()
+            DispatchQueue.main.async {
+                locationServicesEnabled = authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse
+            }
+        }
+    
+    private func openSettings() {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        }
 }
 
 #Preview {
