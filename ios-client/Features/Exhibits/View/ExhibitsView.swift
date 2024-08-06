@@ -29,6 +29,7 @@ struct ExhibitsView: View {
     var body: some View {
         
            NavigationView {
+               
                VStack {
                    List {
                        ForEach(exhibits.filter { searchText.isEmpty ? true : $0.mainText.contains(searchText) || $0.subText1.contains(searchText) || $0.subText2.contains(searchText) || $0.subText3.contains(searchText) }) { exhibit in
@@ -64,6 +65,7 @@ struct ExhibitsView: View {
                    Spacer()
                }
                .navigationBarTitle("전시관", displayMode: .large)
+             
              
              
     

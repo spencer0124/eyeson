@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
 		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
+		C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7E72C61B6FA00B9AAED /* SettingsView.swift */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499A92C6062830064D824 /* CamerascanView.swift */; };
@@ -56,6 +57,7 @@
 		772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.release.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.release.xcconfig"; sourceTree = "<group>"; };
 		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C429E7E72C61B6FA00B9AAED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C47499A92C6062830064D824 /* CamerascanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerascanView.swift; sourceTree = "<group>"; };
 		C47499AF2C6062B20064D824 /* ExhibitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsView.swift; sourceTree = "<group>"; };
@@ -126,9 +128,42 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C429E7E32C61B6DD00B9AAED /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7E62C61B6F100B9AAED /* Model */,
+				C429E7E52C61B6EC00B9AAED /* View */,
+				C429E7E42C61B6E600B9AAED /* ViewModel */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C429E7E42C61B6E600B9AAED /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C429E7E52C61B6EC00B9AAED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7E72C61B6FA00B9AAED /* SettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C429E7E62C61B6F100B9AAED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C429E7E32C61B6DD00B9AAED /* Settings */,
 				C47499B32C608BE70064D824 /* ExhibitsDetail */,
 				C47499AB2C6062950064D824 /* Exhibits */,
 				C4475F3F2C4EA33900DFBD90 /* Camerascan */,
@@ -595,6 +630,7 @@
 				C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */,
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
+				C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
 				C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */,

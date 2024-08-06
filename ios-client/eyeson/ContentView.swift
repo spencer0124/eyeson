@@ -15,8 +15,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Color("backgroundColor")
-                .edgesIgnoringSafeArea(.all)
+            
             
             TabView(selection: $selectedTab) {
                 ExhibitsView()
@@ -48,11 +47,7 @@ struct ContentView: View {
         }
     }
     
-    private func SettingsView() -> some View {
-        VStack {
-            Text("Settings View")
-        }
-    }
+   
 }
 
 #Preview {
