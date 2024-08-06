@@ -15,6 +15,10 @@
 		C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7F02C61C00C00B9AAED /* LocationInfo.swift */; };
 		C429E7F32C61DB1900B9AAED /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7F22C61DB1900B9AAED /* SettingsModel.swift */; };
 		C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7F42C61DB2300B9AAED /* SettingViewModel.swift */; };
+		C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FA2C61E25000B9AAED /* NearbyView.swift */; };
+		C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */; };
+		C429E7FF2C61E25E00B9AAED /* NearByModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FE2C61E25E00B9AAED /* NearByModel.swift */; };
+		C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C429E8012C61E2EB00B9AAED /* Lottie */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499A92C6062830064D824 /* CamerascanView.swift */; };
@@ -68,6 +72,9 @@
 		C429E7F02C61C00C00B9AAED /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		C429E7F22C61DB1900B9AAED /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		C429E7F42C61DB2300B9AAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		C429E7FA2C61E25000B9AAED /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
+		C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyViewModel.swift; sourceTree = "<group>"; };
+		C429E7FE2C61E25E00B9AAED /* NearByModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByModel.swift; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C47499A92C6062830064D824 /* CamerascanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerascanView.swift; sourceTree = "<group>"; };
 		C47499AF2C6062B20064D824 /* ExhibitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsView.swift; sourceTree = "<group>"; };
@@ -103,6 +110,7 @@
 			files = (
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
+				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,9 +190,44 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		C429E7F62C61E22600B9AAED /* Nearby */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7F72C61E22C00B9AAED /* View */,
+				C429E7F82C61E23400B9AAED /* ViewModel */,
+				C429E7F92C61E23900B9AAED /* Model */,
+			);
+			path = Nearby;
+			sourceTree = "<group>";
+		};
+		C429E7F72C61E22C00B9AAED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7FA2C61E25000B9AAED /* NearbyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C429E7F82C61E23400B9AAED /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C429E7F92C61E23900B9AAED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C429E7FE2C61E25E00B9AAED /* NearByModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C429E7F62C61E22600B9AAED /* Nearby */,
 				C429E7E32C61B6DD00B9AAED /* Settings */,
 				C47499B32C608BE70064D824 /* ExhibitsDetail */,
 				C47499AB2C6062950064D824 /* Exhibits */,
@@ -421,6 +464,7 @@
 			name = eyeson;
 			packageProductDependencies = (
 				C455A01B2C609B6300A3F786 /* Glur */,
+				C429E8012C61E2EB00B9AAED /* Lottie */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -499,6 +543,7 @@
 			mainGroup = C48457E92C4C00F200745A56;
 			packageReferences = (
 				C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */,
+				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -652,11 +697,14 @@
 				C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
+				C429E7FF2C61E25E00B9AAED /* NearByModel.swift in Sources */,
 				C47FCA432C61A4CA005C07D1 /* ExhibitsDetailModel.swift in Sources */,
 				C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */,
+				C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */,
 				C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */,
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
+				C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */,
 				C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */,
 				C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
@@ -1016,6 +1064,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/Glur";
@@ -1027,6 +1083,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C429E8012C61E2EB00B9AAED /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		C455A01B2C609B6300A3F786 /* Glur */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */;

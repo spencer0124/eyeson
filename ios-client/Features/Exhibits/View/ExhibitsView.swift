@@ -29,41 +29,45 @@ struct ExhibitsView: View {
     var body: some View {
         
            NavigationView {
-               
-               VStack {
-                   List {
-                       ForEach(exhibits.filter { searchText.isEmpty ? true : $0.mainText.contains(searchText) || $0.subText1.contains(searchText) || $0.subText2.contains(searchText) || $0.subText3.contains(searchText) }) { exhibit in
-                           NavigationLink(destination: ExhibitsDetailView(exhibit: exhibit)) {
-                               HStack {
-                                   Image(exhibit.image)
-                                       .resizable()
-                                       .scaledToFit()
-                                       .frame(width: 65, height: 65)
-                                   Spacer()
-                                       .frame(width: 20)
-                                   VStack(alignment: .leading) {
-                                       Text(exhibit.mainText)
-                                           .font(.headline)
-                                       HStack {
-                                           Text(exhibit.subText1)
-                                           Text("|")
-                                           Text(exhibit.subText2)
-                                           Text("|")
-                                           Text(exhibit.subText3)
+               ZStack {
+                   Color("backgroundColor")
+                       .ignoresSafeArea()
+                   VStack {
+                       List {
+                           ForEach(exhibits.filter { searchText.isEmpty ? true : $0.mainText.contains(searchText) || $0.subText1.contains(searchText) || $0.subText2.contains(searchText) || $0.subText3.contains(searchText) }) { exhibit in
+                               NavigationLink(destination: ExhibitsDetailView(exhibit: exhibit)) {
+                                   HStack {
+                                       Image(exhibit.image)
+                                           .resizable()
+                                           .scaledToFit()
+                                           .frame(width: 65, height: 65)
+                                       Spacer()
+                                           .frame(width: 20)
+                                       VStack(alignment: .leading) {
+                                           Text(exhibit.mainText)
+                                               .font(.headline)
+                                           HStack {
+                                               Text(exhibit.subText1)
+                                               Text("|")
+                                               Text(exhibit.subText2)
+                                               Text("|")
+                                               Text(exhibit.subText3)
+                                           }
+                                           .font(.subheadline)
+                                           .foregroundColor(.secondary)
                                        }
-                                       .font(.subheadline)
-                                       .foregroundColor(.secondary)
                                    }
+                                   .padding(.vertical, 4)
                                }
-                               .padding(.vertical, 4)
+                               .navigationBarBackButtonHidden(true)
                            }
-                           .navigationBarBackButtonHidden(true)
                        }
+                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                       
+                       Spacer()
                    }
-                   .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-                   
-                   Spacer()
                }
+               
                .navigationBarTitle("전시관", displayMode: .large)
                .onAppear {
                    let result: () = locationpermissionManager.checkLocationPermission()

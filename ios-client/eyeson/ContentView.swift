@@ -11,13 +11,10 @@ enum NavigationState {
 }
 
 struct ContentView: View {
-   
     @State private var selectedTab: NavigationState = .Exhibits
 
     var body: some View {
-        ZStack {
-            
-            
+
             TabView(selection: $selectedTab) {
                 ExhibitsView()
                     .tabItem {
@@ -38,20 +35,8 @@ struct ContentView: View {
                     .tag(NavigationState.Settings)
             }
         }
-       
     }
-        
-    
    
-    
-    private func NearbyView() -> some View {
-        VStack {
-            Text("Nearby View")
-        }
-    }
-    
-   
-}
 
 #Preview {
     ContentView()
