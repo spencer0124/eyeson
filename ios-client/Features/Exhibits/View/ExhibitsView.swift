@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExhibitsView: View {
-    @Binding var path: NavigationPath
+//    @Binding var path: NavigationPath
     @State private var searchText = ""
     
     let exhibits: [ExhibitList] = [
@@ -16,15 +16,15 @@ struct ExhibitsView: View {
         ExhibitList(image: "image_museum", mainText: "abcd", subText1: "수원", subText2: "SKKU", subText3: "9.4-9.11"),
     ]
     
-    init(path: Binding<NavigationPath>) {
-            self._path = path
+//    init(path: Binding<NavigationPath>) {
+//            self._path = path
 //        let appearance = UINavigationBarAppearance()
 //                appearance.configureWithOpaqueBackground()
 //        appearance.backgroundColor = .white
 //                UINavigationBar.appearance().standardAppearance = appearance
 //                UINavigationBar.appearance().scrollEdgeAppearance = appearance
-       
-        }
+//       
+//        }
     
     var body: some View {
         
@@ -65,6 +65,7 @@ struct ExhibitsView: View {
                }
                .navigationBarTitle("전시관", displayMode: .large)
              
+             
     
     }
            
@@ -74,5 +75,5 @@ struct ExhibitsView: View {
 }
 
 #Preview {
-    ExhibitsView(path: .constant(NavigationPath()))
+    ExhibitsView()
 }

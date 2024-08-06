@@ -10,19 +10,46 @@ import Glur
 
 struct ExhibitsDetailView: View {
     
+    @State private var searchText = ""
+    
+    let exhibitdetails: [ExhibitDetailList] = [
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자1", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자2", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자3", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자4", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자5", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자6", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자7", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자8", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자9", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자10", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자11", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자12", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자13", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자14", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자15", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자16", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자17", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자18", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자19", subText: "작가: 레오나르도 다 빈치"),
+        ExhibitDetailList(image: "image_museum", mainText: "모나리자20", subText: "작가: 레오나르도 다 빈치")
+    ]
+    
 
     
     var exhibit: ExhibitList
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
+        NavigationView {
+        
         ZStack {
             VStack {
                 Image("image_exhibition")
                     .resizable()
                     .scaledToFit()
                     .glur(radius: 10.0, // The total radius of the blur effect when fully applied.
-                          offset: 0.3, // The distance from the view's edge to where the effect begins, relative to the view's size.
+                          offset: 0.1, // The distance from the view's edge to where the effect begins, relative to the view's size.
                           interpolation: 0.5, // The distance from the offset to where the effect is fully applied, relative to the view's size.
                           direction: .up // The direction in which the effect is applied.
                     )
@@ -33,60 +60,107 @@ struct ExhibitsDetailView: View {
                             endPoint: .center
                         )
                     )
+                
+               
+                
+                
                 CustomButtonsView()
-                HStack{
+                
+                Spacer()
+                    .frame(height: 20)
+                
+               
+                
+             
+                
+               
+                
+                HStack {
                     Spacer()
-                        .frame(width: 20)
-                    Text("작품 목록 100개")
-                        .font(.system(size: 16))
-                        .fontWeight(.regular)
+                        .frame(width: 18)
+                    Rectangle()
+                        .frame(width: 4, height: 26)
+                        .foregroundColor(.gray)
+                    Text(exhibit.mainText)
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
                     Spacer()
                 }
+                
+                
+                List {
+                                ForEach(exhibitdetails) { exhibitdetail in
+                                    NavigationLink(destination: ExhibitsDetailView(exhibit: exhibit)) {
+                                        HStack {
+                                            Image(exhibitdetail.image)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 65, height: 55)
+                                            Spacer()
+                                                .frame(width: 20)
+                                            VStack(alignment: .leading) {
+                                                Text(exhibitdetail.mainText)
+                                                    .font(.headline)
+                                                HStack {
+                                                    Text(exhibitdetail.subText)
+                                                }
+                                                .font(.subheadline)
+                                                .foregroundColor(.secondary)
+                                            }
+                                        }
+                                        .padding(.vertical, 4)
+                                    }
+                                    .navigationBarBackButtonHidden(true)
+                        }
+                }
+                .listStyle(PlainListStyle())
+//                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 
                 Spacer()
             }
-            VStack {
-                HStack {
-                    Spacer()
-                        .frame(width: 15)
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18))
-                            .foregroundColor(.white)
-                    }
-                    
-                    Spacer()
-                    
-                    Text(exhibit.mainText)
-                        .font(.system(size: 18))
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        // Empty action
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18))
-                            .foregroundColor(.clear) // Invisible button
-                    }
-                    Spacer()
-                        .frame(width: 15)
-                }
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                        .frame(width: 15)
+//                    Button(action: {
+//                        presentationMode.wrappedValue.dismiss()
+//                    }) {
+//                        Image(systemName: "chevron.left")
+//                            .font(.system(size: 18))
+//                            .foregroundColor(.clear)
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    Text(exhibit.mainText)
+//                        .font(.system(size: 18))
+//                        .fontWeight(.bold)
+////                        .foregroundColor(.black)
+//                    
+//                    Spacer()
+//                    
+//                    Button(action: {
+//                        // Empty action
+//                    }) {
+//                        Image(systemName: "chevron.left")
+//                            .font(.system(size: 18))
+//                            .foregroundColor(.clear) // Invisible button
+//                    }
+//                    Spacer()
+//                        .frame(width: 15)
+//                }
+//                
+//                .foregroundColor(.white)
+//                .padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 5) // Add safe area space
+//                Spacer()
+//            }
             
-                        .foregroundColor(.white)
-                        .padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 5) // Add safe area space
-                    Spacer()
-                }
-
-                
-            }
-            .ignoresSafeArea()
-            .navigationBarBackButtonHidden(true)
-           
+            
+        }
+        .toolbar(.hidden)
+        .ignoresSafeArea()
+        .navigationBarBackButtonHidden(true)
+    }
     }
    }
 
@@ -105,10 +179,11 @@ struct CustomButtonsView: View {
             }) {
                 VStack {
                     Image(systemName: "photo")
-                        .font(.system(size: 24))
-                        .foregroundColor(Color.gray.opacity(1.2))
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.customGray1)
                     Text("전시정보")
                         .font(.system(size: 14))
+                        .foregroundColor(Color.customGray1)
                 }
                 .padding(.vertical, 10)
             }
@@ -122,10 +197,12 @@ struct CustomButtonsView: View {
                 // Action for "장소정보"
             }) {
                 VStack {
-                    Image(systemName: "location.circle")
-                        .font(.system(size: 24))
-                    Text("장소정보")
+                    Image(systemName: "camera")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.customGray1)
+                    Text("카메라")
                         .font(.system(size: 14))
+                        .foregroundColor(Color.customGray1)
                 }
                 .padding(.vertical, 10)
             }
@@ -136,34 +213,21 @@ struct CustomButtonsView: View {
                 .background(Color.gray)
             
             Button(action: {
-                // Action for "작가정보"
+                // Action for "장소정보"
             }) {
                 VStack {
-                    Image(systemName: "pencil.line")
-                        .font(.system(size: 24))
-                    Text("작가정보")
+                    Image(systemName: "shareplay")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.customGray1)
+                    Text("주변인원")
                         .font(.system(size: 14))
+                        .foregroundColor(Color.customGray1)
                 }
                 .padding(.vertical, 10)
             }
             .frame(maxWidth: .infinity)
             
-            Divider()
-                .frame(width: 1, height: 40)
-                .background(Color.gray)
             
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                VStack {
-                    Image(systemName: "info.circle")
-                        .font(.system(size: 24))
-                    Text("저작권")
-                        .font(.system(size: 14))
-                }
-                .padding(.vertical, 10)
-            }
-            .frame(maxWidth: .infinity)
         }
 
         .background(Color.white)
