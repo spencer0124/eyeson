@@ -8,37 +8,63 @@
 import SwiftUI
 import Lottie
 
+//                                  Image(systemName: "shareplay")
+//                                      .resizable()
+//                                      .scaledToFit()
+//                                      .frame(width: 30)
+
 struct NearbyView: View {
+    @State private var playbackMode: LottiePlaybackMode = .paused
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Color("backgroundColor")
                     .ignoresSafeArea()
                 VStack {
-                    LottieView(animation: .named("lottie_splash"))
-                        .looping()
-//                        .playing()
-                    Image(systemName: "shareplay")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30)
                     
-                    Text("노들갤러리")
-                        .font(.system(size: 18))
-                        .fontWeight(.medium)
-                        .foregroundColor(.gray)
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    
+                    HStack {
+                        Spacer()
+                            .frame(width: 20)
+                       
+                        Text("서울특별시 동작구 노들갤러리")
+                            .font(.system(size: 17))
+                            .foregroundColor(.gray)
+                     
+                       Spacer()
+                    }
+                   
+                    
+                      
+                
+            
+                    
+                    LottieView(animation: .named("lottie_splash"))
+                        .playbackMode(.playing(.fromProgress(0, toProgress: 0.96, loopMode: .loop)))
+                    
+                    
                     
                     Spacer()
                         .frame(height: 15)
                     
-                    Text("주변에 약 5명의 사람이 있습니다")
-                        .font(.system(size: 20))
-                        .fontWeight(.regular)
-                        .foregroundColor(.black)
+//                    Gauge(value: 12, in: 0...100) {
+//                        Text("Battery Level")
+//                    }
+//                    .gaugeStyle(.accessoryLinear)
+//                    
+                    
+                 
+                    
+                    Spacer()
                 }
             }
             
             .navigationBarTitle("주변인원")
+            
             
             
         }
