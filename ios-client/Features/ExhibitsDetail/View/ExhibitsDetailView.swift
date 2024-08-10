@@ -84,7 +84,7 @@ struct ExhibitsDetailView: View {
                     
                     List {
                         ForEach(exhibitdetails) { exhibitdetail in
-                            NavigationLink(destination: ExhibitsDetailView(exhibit: exhibit)) {
+                            NavigationLink(destination: ArtworkDetailView()) {
                                 HStack {
                                     Image(exhibitdetail.image)
                                         .resizable()
