@@ -4,15 +4,20 @@
 //
 //  Created by 조승용 on 8/10/24.
 //
+
+
 import SwiftUI
 import UIKit
 import SwiftUIImageViewer
-
+import Shimmer
+import Lottie
 
 struct ArtworkDetailView: View {
     
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var isImagePresented = false
+    @State private var isBottomSheetPresented = false
 
     var body: some View {
         image
@@ -26,7 +31,7 @@ struct ArtworkDetailView: View {
             .fullScreenCover(isPresented: $isImagePresented) {
                 ZStack {
                     Color.black
-                                    .edgesIgnoringSafeArea(.all)
+                        .edgesIgnoringSafeArea(.all)
                     SwiftUIImageViewer(image: image)
                         .overlay(alignment: .topTrailing) {
                             closeButton
@@ -34,20 +39,36 @@ struct ArtworkDetailView: View {
                     VStack {
                         Spacer()
                         Button(action: {
-                            print("Hello is HoonIOS")
+                            withAnimation {
+                                isBottomSheetPresented = true
+                            }
                         }, label: {
                             Text("해설 요청하기")
-                                .foregroundColor(.white) // 글씨를 흰색으로 설정
-                                .padding() // 버튼 내부 여백 추가
-                                .background(Color.blue) // 배경색을 파란색으로 설정
-                                .cornerRadius(10) // 모서리를 둥글게
+                                .font(.system(size: 15))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.gray)
+                                .cornerRadius(10)
                         })
                         Spacer()
                             .frame(height: 100)
                     }
-                    
                 }
-                
+                .overlay(
+                    VStack {
+                        Spacer()
+                        if isBottomSheetPresented {
+                            bottomSheet
+                                .transition(.move(edge: .bottom))
+                                .animation(.easeInOut)
+                        }
+                        
+                    }
+                )
+                // sheet가 bottom safe area 무시하도록 설정
+                .edgesIgnoringSafeArea(.all)
+
             }
     }
 
@@ -68,10 +89,64 @@ struct ArtworkDetailView: View {
         .padding()
     }
 
-    
+    private var bottomSheet: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                            isBottomSheetPresented = false
+                        }
+                                }) {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.black)
+                                        .padding()
+                                        .background(Color.white)
+                                        .cornerRadius(15)
+                                }
+            }
+            
+            
+            HStack {
+                Spacer()
+                LottieView(animation: .named("lottie_scan2"))
+                    .playbackMode(.playing(.fromProgress(0, toProgress: 1.0, loopMode: .loop)))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 280)
+                Spacer()
+            }
+            
+            
+            HStack {
+                Spacer()
+                Text("그림 분석중...")
+                    .font(.system(size: 25))
+                    .foregroundColor(.gray)
+                    .shimmering(
+                        active: true,
+                        animation: .easeInOut(duration: 2).repeatForever(),
+                        bandSize: 5.5
+                    )
+                    
+                Spacer()
+            }
+            
+                       
+
+            
+           
+            Spacer()
+                .frame(height: 60)
+        }
+        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+        .background(Color.white)
+        .cornerRadius(20)
+        .shadow(radius: 20)
+        .ignoresSafeArea(edges: .bottom)
+        
+    }
 }
-
-
 
 #Preview {
     ArtworkDetailView()

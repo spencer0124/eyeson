@@ -42,6 +42,7 @@
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
+		C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = C4EF82D92C67B93F00A358D7 /* Shimmer */; };
 		F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F807439606D1330482835A12 /* Pods_eyesonTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
+				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
 				C466110C2C677C4A00049492 /* SwiftUIImageViewer in Frameworks */,
 				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
@@ -538,6 +540,7 @@
 				C455A01B2C609B6300A3F786 /* Glur */,
 				C429E8012C61E2EB00B9AAED /* Lottie */,
 				C466110B2C677C4A00049492 /* SwiftUIImageViewer */,
+				C4EF82D92C67B93F00A358D7 /* Shimmer */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -618,6 +621,7 @@
 				C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */,
 				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
+				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -1164,6 +1168,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1181,6 +1193,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
 			productName = SwiftUIImageViewer;
+		};
+		C4EF82D92C67B93F00A358D7 /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
