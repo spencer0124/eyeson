@@ -961,6 +961,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = eyeson/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "눈와";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -998,6 +999,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = eyeson/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "눈와";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSCameraUsageDescription = "";

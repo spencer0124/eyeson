@@ -39,7 +39,6 @@ struct ContentView: View {
             }
             .tag(NavigationState.Settings)
         }
-        .tint(.black)
     }
 }
    

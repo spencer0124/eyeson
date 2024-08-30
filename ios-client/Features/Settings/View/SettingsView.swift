@@ -18,17 +18,17 @@ struct SettingsView: View {
         
                 Form {
                     Section(header: Text("권한 설정")) {
-                        Button(action: {
-                                openSettings()
-                            }) {
-                                HStack {
-                                    Text("푸시 알림")
-                                    Spacer()
-                                    Text(pushNotificationsEnabled ? "허용됨" : "허용 안 됨")
-                                        .foregroundColor(pushNotificationsEnabled ? .blue : .gray)
-                                }
-                            }
-                            .foregroundColor(.primary)
+//                        Button(action: {
+//                                openSettings()
+//                            }) {
+//                                HStack {
+//                                    Text("푸시 알림")
+//                                    Spacer()
+//                                    Text(pushNotificationsEnabled ? "허용됨" : "허용 안 됨")
+//                                        .foregroundColor(pushNotificationsEnabled ? .blue : .gray)
+//                                }
+//                            }
+//                            .foregroundColor(.primary)
                         Button(action: {
                                                 openSettings()
                                             }) {
@@ -45,13 +45,14 @@ struct SettingsView: View {
                     Section(header: Text("언어 설정")) {
                        Picker(selection: $selectedLanguage, label: Text("")) {
                            Text("한국어 (Korean)").tag("Korean")
-                           Text("영어 (English)").tag("English")
-                           Text("중국어 (Chinese)").tag("Chinese")
+//                           Text("영어 (English)").tag("English")
+//                           Text("중국어 (Chinese)").tag("Chinese")
                        }
                        .pickerStyle(.inline)
                        .labelsHidden()
                    }
                }
+            
             .navigationBarTitle("설정", displayMode: .large)
             .onAppear {
                         checkPushNotificationPermission()
@@ -63,6 +64,7 @@ struct SettingsView: View {
                         }
         
     }
+    
     
     private func checkPushNotificationPermission() {
             UNUserNotificationCenter.current().getNotificationSettings { settings in
