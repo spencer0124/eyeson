@@ -18,6 +18,7 @@ struct ContentView: View {
             NavigationView {
                 ExhibitsView()
             }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("전시관", systemImage: "photo")
             }
@@ -26,6 +27,7 @@ struct ContentView: View {
             NavigationView {
                 CamerascanView()
             }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("작품 촬영", systemImage: "camera")
             }
@@ -34,6 +36,7 @@ struct ContentView: View {
             NavigationView {
                 SettingsView()
             }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("설정", systemImage: "gear")
             }
