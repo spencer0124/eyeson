@@ -60,15 +60,17 @@ struct ExhibitsView: View {
                                    .padding(.vertical, 4)
                                }
                                
+                               
                            }
                        }
-//                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                        
                        Spacer()
                    }
                }
-               
-               .navigationBarTitle("전시관", displayMode: .large)
+               .navigationTitle("전시관")
+               .navigationBarTitleDisplayMode(.large)
+              
                .onAppear {
                    let result: () = locationpermissionManager.checkLocationPermission()
                    print(result)

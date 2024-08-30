@@ -70,7 +70,9 @@ struct ArtworkDetailView: View {
 //                .edgesIgnoringSafeArea(.all)
 
             }
+           
     }
+    
 
     private var image: Image {
         Image("artwork_example")

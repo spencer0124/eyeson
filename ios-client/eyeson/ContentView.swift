@@ -12,44 +12,36 @@ enum NavigationState {
 
 struct ContentView: View {
     @State private var selectedTab: NavigationState = .Exhibits
-    
 
     var body: some View {
-        NavigationView {
         TabView(selection: $selectedTab) {
-            ExhibitsView()
-                .tabItem {
-                    Label("전시관", systemImage: "photo")
-                }
-                .tag(NavigationState.Exhibits)
+            NavigationView {
+                ExhibitsView()
+            }
+            .tabItem {
+                Label("전시관", systemImage: "photo")
+            }
+            .tag(NavigationState.Exhibits)
+
+            NavigationView {
+                CamerascanView()
+            }
+            .tabItem {
+                Label("작품 촬영", systemImage: "camera")
+            }
+            .tag(NavigationState.Camera)
             
-            
-            CamerascanView()
-                .tabItem {
-                    Label("카메라", systemImage: "camera")
-                }
-                .tag(NavigationState.Camera)
-            
-            
-            
-            //                NearbyView()
-            //                    .tabItem {
-            //                        Label("주변 인원", systemImage: "person")
-            //                    }
-            //                    .tag(NavigationState.Nearby)
-            //
-            
-            SettingsView()
-                .tabItem {
-                    Label("설정", systemImage: "gear")
-                }
-                .tag(NavigationState.Settings)
-            
+            NavigationView {
+                SettingsView()
+            }
+            .tabItem {
+                Label("설정", systemImage: "gear")
+            }
+            .tag(NavigationState.Settings)
         }
-    }.tint(.black)
-           
-        }
+        .tint(.black)
     }
+}
    
 
 #Preview {

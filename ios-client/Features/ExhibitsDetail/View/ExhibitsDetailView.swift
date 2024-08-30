@@ -77,6 +77,7 @@ struct ExhibitsDetailView: View {
                 
                 Spacer()
             }
+            
             .background(
                 NavigationLink(
                     destination: ExhibitInfoView(exhibit: exhibit),
@@ -84,7 +85,11 @@ struct ExhibitsDetailView: View {
                     label: { EmptyView() }
                 )
             )
+            
         }
+        .navigationTitle("작품 목록")
+        .navigationBarTitleDisplayMode(.inline)
+        
         .ignoresSafeArea()
     }
     

@@ -52,7 +52,7 @@ struct SettingsView: View {
                        .labelsHidden()
                    }
                }
-            .navigationBarTitle("환경설정", displayMode: .large)
+            .navigationBarTitle("설정", displayMode: .large)
             .onAppear {
                         checkPushNotificationPermission()
                         checkLocationServicesPermission()
