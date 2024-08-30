@@ -610,11 +610,11 @@
 			};
 			buildConfigurationList = C48457ED2C4C00F200745A56 /* Build configuration list for PBXProject "eyeson" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = C48457E92C4C00F200745A56;
 			packageReferences = (
