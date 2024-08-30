@@ -13,28 +13,7 @@ struct ExhibitsDetailView: View {
     @State private var searchText = ""
     @State private var isExhibitInfoSheetPresented = false
     
-    let exhibitdetails: [ExhibitDetailList] = [
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자1", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자2", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자3", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자4", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자5", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자6", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자7", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자8", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자9", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자10", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자11", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자12", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자13", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자14", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자15", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자16", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자17", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자18", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자19", subText: "작가: 레오나르도 다 빈치"),
-        ExhibitDetailList(image: "image_museum", mainText: "모나리자20", subText: "작가: 레오나르도 다 빈치")
-    ]
+   
     
     
     
@@ -83,20 +62,20 @@ struct ExhibitsDetailView: View {
                     
                     
                     List {
-                        ForEach(exhibitdetails) { exhibitdetail in
+                        ForEach(exhibitDetails) { exhibitDetail in  // 여기서 exhibitDetails 배열을 사용합니다.
                             NavigationLink(destination: ArtworkDetailView()) {
                                 HStack {
-                                    Image(exhibitdetail.image)
+                                    Image(exhibitDetail.id)  // 이미지 파일명을 id로 사용
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 65, height: 55)
                                     Spacer()
                                         .frame(width: 20)
                                     VStack(alignment: .leading) {
-                                        Text(exhibitdetail.mainText)
+                                        Text(exhibitDetail.meta.title)
                                             .font(.headline)
                                         HStack {
-                                            Text(exhibitdetail.subText)
+                                            Text(exhibitDetail.meta.artist)
                                         }
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)

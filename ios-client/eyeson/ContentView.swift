@@ -7,7 +7,7 @@
 import SwiftUI
 
 enum NavigationState {
-    case Exhibits, Nearby, Settings
+    case Exhibits, Camera, Nearby, Settings
 }
 
 struct ContentView: View {
@@ -22,11 +22,18 @@ struct ContentView: View {
                     }
                     .tag(NavigationState.Exhibits)
                 
-                NearbyView()
+                CamerascanView()
                     .tabItem {
-                        Label("주변 인원", systemImage: "person")
+                        Label("카메라", systemImage: "camera")
                     }
-                    .tag(NavigationState.Nearby)
+                    .tag(NavigationState.Camera)
+                
+                
+//                NearbyView()
+//                    .tabItem {
+//                        Label("주변 인원", systemImage: "person")
+//                    }
+//                    .tag(NavigationState.Nearby)
                 
                 SettingsView()
                     .tabItem {

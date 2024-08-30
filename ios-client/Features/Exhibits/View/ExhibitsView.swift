@@ -13,7 +13,7 @@ struct ExhibitsView: View {
     
     let exhibits: [ExhibitList] = [
         ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11"),
-        ExhibitList(image: "image_museum", mainText: "abcd", subText1: "수원", subText2: "SKKU", subText3: "9.4-9.11"),
+//        ExhibitList(image: "image_museum", mainText: "abcd", subText1: "수원", subText2: "SKKU", subText3: "9.4-9.11"),
     ]
     
 //    init(path: Binding<NavigationPath>) {
