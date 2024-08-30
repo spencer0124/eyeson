@@ -10,6 +10,7 @@ import SwiftUI
 struct CamerascanView: View {
     @State private var scannedImages: [(id: UUID, image: UIImage, date: Date)] = []
     @State private var isShowingScanner = false
+    @State private var isNavigatingToAnalyze = false
 
     var body: some View {
         NavigationView {
@@ -35,6 +36,9 @@ struct CamerascanView: View {
                             if let images = images {
                                 let currentDate = Date()
                                 addScannedImages(images: images, date: currentDate)
+                                if let lastImage = scannedImages.last {
+                                    isNavigatingToAnalyze = true
+                                }
                             }
                             isShowingScanner = false
                         }
@@ -57,30 +61,26 @@ struct CamerascanView: View {
                             if let images = images {
                                 let currentDate = Date()
                                 addScannedImages(images: images, date: currentDate)
+                                if let lastImage = scannedImages.last {
+                                    isNavigatingToAnalyze = true
+                                }
                             }
                             isShowingScanner = false
                         }
                     }
-                    
-//                    List(scannedImages, id: \.id) { item in
-//                        VStack(alignment: .leading) {
-//                            Image(uiImage: item.image)
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(height: 200)
-//                                .cornerRadius(10)
-//                            
-//                            Text("촬영 시간: \(formattedDate(item.date))")
-//                                .font(.caption)
-//                                .foregroundColor(.gray)
-//                        }
-//                        .padding(.vertical, 5)
-//                    }
-//                    .listStyle(PlainListStyle())
+
+                    // Removed the List view as per your request
                 }
                 .padding()
+                .navigationBarTitle("작품 촬영", displayMode: .large)
+                .background(
+                    NavigationLink(
+                        destination: AnalyzeImage(image: scannedImages.last?.image),
+                        isActive: $isNavigatingToAnalyze,
+                        label: { EmptyView() }
+                    )
+                )
             }
-            .navigationBarTitle("작품 촬영", displayMode: .large)
         }
     }
 
@@ -103,11 +103,28 @@ struct CamerascanView: View {
     }
 }
 
+struct AnalyzeImage: View {
+    var image: UIImage?
+
+    var body: some View {
+        VStack {
+            if let image = image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxHeight: 400)
+            } else {
+                Text("No image available")
+            }
+        }
+        .navigationTitle("이미지 분석중..")
+    }
+}
+
 #Preview {
     CamerascanView()
 }
 
-// Extension to use hex colors
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
