@@ -31,7 +31,7 @@ struct ArtworkDetailView: View {
             .fullScreenCover(isPresented: $isImagePresented) {
                 ZStack {
                     Color.black
-                        .edgesIgnoringSafeArea(.all)
+//                        .edgesIgnoringSafeArea(.all)
                     SwiftUIImageViewer(image: image)
                         .overlay(alignment: .topTrailing) {
                             closeButton
@@ -67,7 +67,7 @@ struct ArtworkDetailView: View {
                     }
                 )
                 // sheet가 bottom safe area 무시하도록 설정
-                .edgesIgnoringSafeArea(.all)
+//                .edgesIgnoringSafeArea(.all)
 
             }
     }
@@ -143,7 +143,7 @@ struct ArtworkDetailView: View {
         .background(Color.white)
         .cornerRadius(20)
         .shadow(radius: 20)
-        .ignoresSafeArea(edges: .bottom)
+//        .ignoresSafeArea(edges: .bottom)
         
     }
 }

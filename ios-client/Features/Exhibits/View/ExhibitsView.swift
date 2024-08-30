@@ -28,7 +28,7 @@ struct ExhibitsView: View {
     
     var body: some View {
         
-           NavigationView {
+          
                ZStack {
                    Color("backgroundColor")
                        .ignoresSafeArea()
@@ -59,10 +59,10 @@ struct ExhibitsView: View {
                                    }
                                    .padding(.vertical, 4)
                                }
-                               .navigationBarBackButtonHidden(true)
+                               
                            }
                        }
-                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+//                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                        
                        Spacer()
                    }
@@ -77,7 +77,7 @@ struct ExhibitsView: View {
              
              
     
-    }
+    
            
            .tint(.black)
         

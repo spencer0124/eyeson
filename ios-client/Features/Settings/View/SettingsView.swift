@@ -15,7 +15,7 @@ struct SettingsView: View {
     @State private var selectedLanguage = "Korean"
     
     var body: some View {
-        NavigationView {
+        
                 Form {
                     Section(header: Text("권한 설정")) {
                         Button(action: {
@@ -61,7 +61,7 @@ struct SettingsView: View {
                             checkPushNotificationPermission()
                             checkLocationServicesPermission()
                         }
-        }
+        
     }
     
     private func checkPushNotificationPermission() {

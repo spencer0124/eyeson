@@ -17,7 +17,7 @@ struct NearbyView: View {
     @State private var playbackMode: LottiePlaybackMode = .paused
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 Color("backgroundColor")
                     .ignoresSafeArea()
@@ -67,7 +67,7 @@ struct NearbyView: View {
             
             
             
-        }
+        
         
     }
 }

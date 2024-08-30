@@ -13,7 +13,7 @@ struct CamerascanView: View {
     @State private var isNavigatingToAnalyze = false
 
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 Color("backgroundColor")
                     .ignoresSafeArea()
@@ -81,7 +81,7 @@ struct CamerascanView: View {
                     )
                 )
             }
-        }
+        
     }
 
     // Helper function to format the date
