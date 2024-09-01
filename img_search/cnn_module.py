@@ -59,29 +59,11 @@ def create_fv(s3_file_list, download_image_func, pkl_path):
     return fv_np
 
 def preprocess_query(query_s3_key, download_image_func):
-    try:
-        print(f"Starting preprocessing for S3 key: {query_s3_key}")
-
-        # 1. 이미지 다운로드
-        image = download_image_func(query_s3_key)
-        if image is None:
-            raise ValueError(f"Failed to download image with S3 key: {query_s3_key}")
-        print(f"Image downloaded successfully for S3 key: {query_s3_key}")
-
-        # 2. 이미지 전처리
-        query = preprocess_image(image)
-        print(f"Image preprocessed successfully for S3 key: {query_s3_key}")
-
-        # 3. 특징 벡터 생성
-        with torch.no_grad():
-            query_fv = feature_extractor(query)
-        print(f"Feature vector created successfully for S3 key: {query_s3_key}")
-
-        return query_fv
-
-    except Exception as e:
-        print(f"An error occurred during preprocessing for S3 key {query_s3_key}: {str(e)}")
-        return None
+    image = download_image_func(query_s3_key)
+    query = preprocess_image(image)
+    with torch.no_grad():
+        query_fv = feature_extractor(query)
+    return query_fv
 
 def load_or_create_feature_vectors(fv_pkl_path, s3_file_list, download_image_func):
     if os.path.isfile(fv_pkl_path):
