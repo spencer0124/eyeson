@@ -1,3 +1,4 @@
+import traceback
 import os
 import json
 import base64
@@ -62,7 +63,8 @@ async def search_image(file: UploadFile = File(...)):
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-        raise HTTPException(status_code=500, detail="An internal server error occurred.")
+        print(traceback.format_exc())  # 예외 발생 위치와 스택 트레이스 출력
+        raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
 
 def load_data():
     with open(data_path, "r") as f:
