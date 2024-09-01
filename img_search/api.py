@@ -32,7 +32,7 @@ async def read_root():
 
 @app.post("/search/")
 async def search_image(file: UploadFile = File(...)):
-    query_path = f'temp/{file.filename}'
+    query_path = f'photo/{file.filename}'
     print('filename', file.filename)
 
     try:
