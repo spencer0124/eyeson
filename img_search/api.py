@@ -33,13 +33,21 @@ async def read_root():
 
 @app.post("/search/")
 async def search_image(file: UploadFile = File(...)):
-    query_path = f'photo/{file.filename}'
+    query_dir = 'photo'
+    query_path = os.path.join(query_dir, file.filename)
     print('filename', file.filename)
 
     try:
+        # 디렉토리 존재 여부 확인 후 생성
+        if not os.path.exists(query_dir):
+            os.makedirs(query_dir)
+            print(f"Directory {query_dir} created.")
+
+        # 파일 저장
         with open(query_path, "wb") as buffer:
             buffer.write(await file.read())
-
+        print(f"File saved at: {query_path}")
+        
         query_fv = preprocess_query(query_path, download_image_from_s3)
         print('queryfv', query_fv)
 
