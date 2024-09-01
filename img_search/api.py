@@ -93,18 +93,19 @@ async def get_description(data: Engid_list):
     first = data.results[0].model_dump()
     first_file = first['file']
 
-    matched = next((entry) for entry in json_data if entry['eng_id'] == first_file)
-    
-    if matched:
-        return {
-            'eng_id': matched.get('eng_id', 'N/A'),
-            'description': matched.get('description', 'N/A'),
-            'explanation': matched.get('explanation', 'N/A'),
-            'comment': matched.get('comment', 'N/A'),
-            'meta': matched.get('meta', 'N/A')
-        }
-    else:
-        raise HTTPException(status_code=404, detail="Matching entry not found")
+    try:
+        matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
+    except StopIteration:
+        # StopIteration이 발생하면 HTTP 404 오류를 반환
+        raise HTTPException(status_code=404, detail=f"No matching entry found for eng_id: {first_file}")
+
+    return {
+        'eng_id': matched.get('eng_id', 'N/A'),
+        'description': matched.get('description', 'N/A'),
+        'explanation': matched.get('explanation', 'N/A'),
+        'comment': matched.get('comment', 'N/A'),
+        'meta': matched.get('meta', 'N/A')
+    }
 
 load_dotenv()
 OpenAI.api_key = os.getenv("OPENAI_API_KEY")
