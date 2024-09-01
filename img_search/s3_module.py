@@ -6,8 +6,9 @@ from fastapi import HTTPException
 # AWS S3 설정
 s3_client = boto3.client('s3')
 bucket_name = 'seeterature'
+prefix = 'photo/'
 
-def list_images_in_s3(prefix=''):
+def list_images_in_s3():
     try:
         response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
         files = [content['Key'] for content in response.get('Contents', []) if content['Key'].lower().endswith(('jpg', 'jpeg', 'png'))]
