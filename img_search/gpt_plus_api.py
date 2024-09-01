@@ -1,14 +1,17 @@
 from openai import OpenAI
+import openai
 import os
 import base64
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
+from dotenv import load_dotenv
 
 # app api
 app = FastAPI()
 
 # openai api
-api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Function to encode the image
 def encode_image(image_path):
