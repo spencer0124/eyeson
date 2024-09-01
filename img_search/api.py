@@ -1,7 +1,7 @@
 import os
 import json
 import base64
-import openai
+from openai import OpenAI
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
@@ -97,9 +97,9 @@ async def get_description(data: Engid_list):
         raise HTTPException(status_code=404, detail="Matching entry not found")
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+OpenAI.api_key = os.getenv("OPENAI_API_KEY")
 
-client = openai()
+client = OpenAI()
 rule = '''확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
     배경 지식이나 주관적인 해석을 최대한 배제하고, 작품의 소재와 형태를 위주로 묘사하라.
     묘사 시 지켜야 할 원칙은 다음과 같다.
