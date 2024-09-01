@@ -16,15 +16,6 @@ struct ExhibitsView: View {
 //        ExhibitList(image: "image_museum", mainText: "abcd", subText1: "수원", subText2: "SKKU", subText3: "9.4-9.11"),
     ]
     
-//    init(path: Binding<NavigationPath>) {
-//            self._path = path
-//        let appearance = UINavigationBarAppearance()
-//                appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = .white
-//                UINavigationBar.appearance().standardAppearance = appearance
-//                UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//       
-//        }
     
     var body: some View {
         
@@ -75,12 +66,6 @@ struct ExhibitsView: View {
                    let result: () = locationpermissionManager.checkLocationPermission()
                    print(result)
                }
-             
-             
-             
-    
-    
-           
            .tint(.black)
         
 }

@@ -15,7 +15,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavigationView {
+            NavigationStack {
                 ExhibitsView()
             }
             .navigationViewStyle(.stack)
@@ -24,7 +24,7 @@ struct ContentView: View {
             }
             .tag(NavigationState.Exhibits)
 
-            NavigationView {
+            NavigationStack {
                 CamerascanView()
             }
             .navigationViewStyle(.stack)
@@ -33,7 +33,7 @@ struct ContentView: View {
             }
             .tag(NavigationState.Camera)
             
-            NavigationView {
+            NavigationStack {
                 SettingsView()
             }
             .navigationViewStyle(.stack)

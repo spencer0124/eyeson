@@ -6,77 +6,131 @@
 //
 
 import SwiftUI
-import Glur
+
 
 struct ExhibitsDetailView: View {
     @State private var isNavigatingToExhibitInfo = false
+    @State private var searchText = ""
+    
+    
     var exhibit: ExhibitList
 
     var body: some View {
-        ZStack {
+        
             VStack {
-                Image("image_exhibition")
-                    .resizable()
-                    .scaledToFit()
-                    .glur(radius: 10.0,
-                          offset: 0.1,
-                          interpolation: 0.5,
-                          direction: .up
-                    )
-                    .overlay(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.black.opacity(0.5), Color.clear]),
-                            startPoint: .top,
-                            endPoint: .center
-                        )
-                    )
+//                Image("image_exhibition")
+//                    .resizable()
+//                    .scaledToFit()
+//                    
+//                    .padding()
+                   
                 
-                Spacer()
-                    .frame(height: 20)
+//                Spacer()
+//                    .frame(height: 20)
    
-                HStack {
-                    Spacer()
-                        .frame(width: 18)
-                    Rectangle()
-                        .frame(width: 4, height: 26)
-                        .foregroundColor(.gray)
-                    Text(exhibit.mainText)
-                        .font(.system(size: 20))
-                        .fontWeight(.bold)
-                    Spacer()
-                    CustomButtonsView(isNavigatingToExhibitInfo: $isNavigatingToExhibitInfo)
-                    Spacer()
-                        .frame(width: 18)
-                }
+//                HStack {
+//                    Spacer()
+//                        .frame(width: 18)
+//                    Rectangle()
+//                        .frame(width: 4, height: 26)
+//                        .foregroundColor(.gray)
+//                    Text(exhibit.mainText)
+//                        .font(.system(size: 20))
+//                        .fontWeight(.bold)
+//                    Spacer()
+////                    CustomButtonsView(isNavigatingToExhibitInfo: $isNavigatingToExhibitInfo)
+//                    Spacer()
+//                        .frame(width: 18)
+//                }
                 
                 List {
-                    ForEach(exhibitDetails) { exhibitDetail in
-                        NavigationLink(destination: ArtworkDetailView()) {
-                            HStack {
-                                Image(exhibitDetail.id)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 65, height: 55)
-                                Spacer()
-                                    .frame(width: 20)
-                                VStack(alignment: .leading) {
-                                    Text(exhibitDetail.meta.title)
-                                        .font(.headline)
-                                    HStack {
-                                        Text(exhibitDetail.meta.artist)
+                    
+                    Section(header: Text("실내 전시관1")) {
+                        ForEach(exhibitDetails) { exhibitDetail in
+                            NavigationLink(destination: ArtworkDetailView()) {
+                                HStack {
+                                    Image(exhibitDetail.id)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 65, height: 55)
+                                    Spacer()
+                                        .frame(width: 20)
+                                    VStack(alignment: .leading) {
+                                        Text(exhibitDetail.meta.title)
+                                            .font(.headline)
+                                        HStack {
+                                            Text(exhibitDetail.meta.artist)
+                                        }
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
                                     }
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
                                 }
+                                .padding(.vertical, 4)
                             }
-                            .padding(.vertical, 4)
                         }
                     }
+                    
+                    
+                    Section(header: Text("야외 전시관")) {
+                        ForEach(exhibitDetails) { exhibitDetail in
+                            NavigationLink(destination: ArtworkDetailView()) {
+                                HStack {
+                                    Image(exhibitDetail.id)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 65, height: 55)
+                                    Spacer()
+                                        .frame(width: 20)
+                                    VStack(alignment: .leading) {
+                                        Text(exhibitDetail.meta.title)
+                                            .font(.headline)
+                                        HStack {
+                                            Text(exhibitDetail.meta.artist)
+                                        }
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("완전 야외 전시관")) {
+                        ForEach(exhibitDetails) { exhibitDetail in
+                            NavigationLink(destination: ArtworkDetailView()) {
+                                HStack {
+                                    Image(exhibitDetail.id)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 65, height: 55)
+                                    Spacer()
+                                        .frame(width: 20)
+                                    VStack(alignment: .leading) {
+                                        Text(exhibitDetail.meta.title)
+                                            .font(.headline)
+                                        HStack {
+                                            Text(exhibitDetail.meta.artist)
+                                        }
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            }
+                        }
+                    }
+                    
+                    
+                    
                 }
                 .listStyle(PlainListStyle())
+                .searchable(text: $searchText, placement: .automatic)
+                
                 
                 Spacer()
             }
+        
             
             .background(
                 NavigationLink(
@@ -86,11 +140,23 @@ struct ExhibitsDetailView: View {
                 )
             )
             
-        }
+        
         .navigationTitle("작품 목록")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            isNavigatingToExhibitInfo = true
+                        }) {
+                            HStack(spacing: 2) {
+//                                Image(systemName: "info.circle")
+                                Text("전시정보")
+                            }
+                        }
+                    }
+                }
         
-        .ignoresSafeArea()
+        
     }
     
     struct CustomButtonsView: View {

@@ -11,6 +11,8 @@ struct CamerascanView: View {
     @State private var scannedImages: [(id: UUID, image: UIImage, date: Date)] = []
     @State private var isShowingScanner = false
     @State private var isNavigatingToAnalyze = false
+    
+    
 
     var body: some View {
         
@@ -105,19 +107,45 @@ struct CamerascanView: View {
 
 struct AnalyzeImage: View {
     var image: UIImage?
+    
+    @StateObject private var viewModel = ImageSearchViewModel()
 
     var body: some View {
         VStack {
             if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 400)
+//                Image(uiImage: image)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(maxHeight: 400)
+                
+                if viewModel.isLoading {
+                    ProgressView("이미지 분석중...")
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                } else if !viewModel.searchResults.isEmpty {
+                    List(viewModel.searchResults, id: \.rank) { result in
+                        VStack(alignment: .leading) {
+                            Text("Rank: \(result.rank)")
+                                .font(.headline)
+                            Text("File: \(result.file)")
+                                .font(.subheadline)
+                        }
+                    }
+                } else {
+                    Text("No results found.")
+                        .padding()
+                }
             } else {
                 Text("No image available")
             }
         }
-        .navigationTitle("이미지 분석중..")
+//        .navigationTitle("이미지 분석중..")
+        .onChange(of: image) { newImage in
+            if let image = newImage {
+                viewModel.searchImage(image: image)
+            }
+        }
     }
 }
 
