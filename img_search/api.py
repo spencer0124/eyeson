@@ -34,6 +34,15 @@ print(file_list)
 async def read_root():
     return RedirectResponse(url="/static/index.html")
 
+@app.get("/list-images/")
+async def list_images():
+    try:
+        image_list = list_images_in_s3()
+        return {"images": image_list}
+    except Exception as e:
+        print(f"An error occurred while listing images: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to list images in S3")
+
 @app.post("/search/")
 async def search_image(file: UploadFile = File(...)):
     query_dir = 'temp'
