@@ -44,6 +44,7 @@
 		C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */; };
 		C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */; };
 		C4AE0E912C855B23000A0A72 /* ExhibitsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */; };
+		C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
@@ -111,6 +112,7 @@
 		C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkVM.swift; sourceTree = "<group>"; };
 		C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtwordModel.swift; sourceTree = "<group>"; };
 		C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsInfoView.swift; sourceTree = "<group>"; };
+		C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInfoView.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				C47499A92C6062830064D824 /* CamerascanView.swift */,
+				C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				C429E7F32C61DB1900B9AAED /* SettingsModel.swift in Sources */,
 				C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */,
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
+				C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */,
 				C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
