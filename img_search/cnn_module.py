@@ -58,9 +58,8 @@ def create_fv(s3_file_list, download_image_func, pkl_path):
     
     return fv_np
 
-def preprocess_query(query_s3_key, download_image_func):
-    image = download_image_func(query_s3_key)
-    query = preprocess_image(image)
+def preprocess_query(image_path):
+    query = preprocess_image(image_path)
     with torch.no_grad():
         query_fv = feature_extractor(query)
     return query_fv

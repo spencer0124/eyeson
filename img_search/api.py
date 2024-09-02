@@ -23,6 +23,7 @@ data_path = './data/data.json'
 
 # Mount s3 files and Setting
 file_list = list_images_in_s3()
+
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
 print(file_list)
@@ -33,7 +34,7 @@ async def read_root():
 
 @app.post("/search/")
 async def search_image(file: UploadFile = File(...)):
-    query_dir = 'photo'
+    query_dir = 'temp'
     query_path = os.path.join(query_dir, file.filename)
     print('filename', file.filename)
 
@@ -48,7 +49,7 @@ async def search_image(file: UploadFile = File(...)):
             buffer.write(await file.read())
         print(f"File saved at: {query_path}")
         
-        query_fv = preprocess_query(query_path, download_image_from_s3)
+        query_fv = preprocess_query(query_path)
         print('queryfv', query_fv)
 
         top_k = 3
@@ -59,9 +60,6 @@ async def search_image(file: UploadFile = File(...)):
         for n, i in enumerate(indices[0]):
             top_n_id = file_list[i]
             print('topn id', top_n_id)
-
-            img = download_image_from_s3(top_n_id)
-
             results.append({
                 'rank': n+1,
                 'file': top_n_id,
