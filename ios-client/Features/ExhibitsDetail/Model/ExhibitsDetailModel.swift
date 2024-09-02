@@ -37,7 +37,7 @@ let exhibitDetails: [ExhibitDetailList] = [
         )
     ),
     ExhibitDetailList(
-        id: "artwork_example2",
+        id: "artwork_example",
         explanation: "작가는 자신이 좋아하는 게임 속 캐릭터들을 그리며 느끼는 기쁨과 즐거움을 표현. 캐릭터들이 마음껏 뛰어놀고 즐거워하는 모습을 담음.",
         description: "갈색 배경의 종이 위에 다양한 게임 캐릭터들이 그려져 있습니다. 캐릭터들은 서로 다른 포즈와 형태를 하고 있으며, 다양한 모습으로 그려져 있습니다.",
         comment: "이 작품은 게임을 좋아하는 작가가 자신이 좋아하는 게임 속 캐릭터들을 그리며 느끼는 기쁨과 즐거움을 표현한 것입니다. 게임 속 캐릭터들이 마음껏 뛰어놀고 즐거워하는 모습을 보여주고 있습니다.",

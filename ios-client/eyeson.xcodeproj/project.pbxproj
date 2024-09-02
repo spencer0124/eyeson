@@ -43,6 +43,7 @@
 		C4AADEC12C845CDA00D47510 /* CameraScanVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */; };
 		C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */; };
 		C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */; };
+		C4AE0E912C855B23000A0A72 /* ExhibitsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
@@ -109,6 +110,7 @@
 		C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanVM.swift; sourceTree = "<group>"; };
 		C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkVM.swift; sourceTree = "<group>"; };
 		C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtwordModel.swift; sourceTree = "<group>"; };
+		C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsInfoView.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				C47499B72C608C0C0064D824 /* ExhibitsDetailView.swift */,
+				C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */,
 				C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */,
 				C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */,
+				C4AE0E912C855B23000A0A72 /* ExhibitsInfoView.swift in Sources */,
 				C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,

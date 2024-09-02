@@ -134,7 +134,7 @@ struct ExhibitsDetailView: View {
             
             .background(
                 NavigationLink(
-                    destination: ExhibitInfoView(exhibit: exhibit),
+                    destination: ExhibitInfoView(),
                     isActive: $isNavigatingToExhibitInfo,
                     label: { EmptyView() }
                 )
@@ -178,25 +178,6 @@ struct ExhibitsDetailView: View {
     }
 }
 
-struct ExhibitInfoView: View {
-    var exhibit: ExhibitList
-    
-    var body: some View {
-        VStack {
-           
-            Text(exhibit.mainText)
-                .font(.largeTitle)
-                .padding()
-            
-            // Insert additional exhibit information here
-            Text("Details about the exhibit will be shown here.")
-                .padding()
-            
-            Spacer()
-        }
-        .navigationTitle("전시정보")
-    }
-}
 
 #Preview {
     ExhibitsDetailView(exhibit: ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11"))
