@@ -3,3 +3,4 @@ __pycache__
 data/*
 !data/data.json
 temp/
+.DS_Store
