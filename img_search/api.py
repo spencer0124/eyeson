@@ -27,7 +27,7 @@ data_path = './data/data.json'
 file_list = list_images_in_s3()
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
-print(file_list)
+# print(file_list)
 
 @app.get("/")
 async def read_root():
@@ -37,7 +37,7 @@ async def read_root():
 async def search_image(file: UploadFile = File(...)):
     query_dir = 'temp'
     query_path = os.path.join(query_dir, file.filename)
-    print('filename', file.filename)
+    # print('filename', file.filename)
 
     try:
         # 디렉토리 존재 여부 확인 후 생성
@@ -51,16 +51,16 @@ async def search_image(file: UploadFile = File(...)):
         print(f"File saved at: {query_path}")
         
         query_fv = preprocess_query(query_path)
-        print('queryfv', query_fv)
+        # print('queryfv', query_fv)
 
         top_k = 3
         distance, indices = search_faiss(top_k, idx, query_fv)
-        print("indices", indices)
+        # print("indices", indices)
 
         results = []
         for n, i in enumerate(indices[0]):
             top_n_id = file_list[i]
-            print('topn id', top_n_id)
+            # print('topn id', top_n_id)
             results.append({
                 'rank': n+1,
                 'file': top_n_id,
@@ -194,7 +194,7 @@ def get_image_metadata(file_list, data):
 async def get_images_with_metadata():
     try:
         data = load_data()
-        
+
         images_with_metadata = []
         for s3_key in file_list:
             filename = get_filename_from_path(s3_key)
