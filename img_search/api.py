@@ -83,11 +83,10 @@ class eng_id(BaseModel):
 
 @app.post("/get-description/")
 async def get_description(data: eng_id):
+    print(data)
     # 데이터 로드
     json_data = load_data()
-
-    first = data.model_dump()
-    first_file = first['file']
+    first_file = data.file
 
     try:
         matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
