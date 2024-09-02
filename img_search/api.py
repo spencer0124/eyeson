@@ -25,7 +25,6 @@ data_path = './data/data.json'
 
 # Mount s3 files and Setting
 file_list = list_images_in_s3()
-
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
 print(file_list)
@@ -93,7 +92,6 @@ async def get_description(data: eng_id):
     try:
         matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
     except StopIteration:
-        # StopIteration이 발생하면 HTTP 404 오류를 반환
         raise HTTPException(status_code=404, detail=f"No matching entry found for eng_id: {first_file}")
 
     return {
@@ -192,10 +190,9 @@ def get_image_metadata(file_list, data):
             })
     return metadata_list
 
-@app.get("/get-all-images/")
+@app.get("/images-with-metadata/")
 async def get_images_with_metadata():
     try:
-        file_list = list_images_in_s3()
         data = load_data()
         
         images_with_metadata = []
@@ -204,17 +201,13 @@ async def get_images_with_metadata():
             matched_data = next((entry for entry in data if entry['eng_id'] == filename), None)
             
             if matched_data:
-                image = download_image_from_s3(s3_key)
-                image_data = image_to_bytes(image)
-                base64_image = base64.b64encode(image_data).decode('utf-8')
-                
+                s3_url = f"https://seeterature.s3.amazonaws.com/{s3_key}"
                 images_with_metadata.append({
                     'file': filename,
                     'title': matched_data['meta'].get('title', 'N/A'),
                     'artist': matched_data['meta'].get('artist', 'N/A'),
-                    'image_base64': f"data:image/{dtype_is(filename)};base64,{base64_image}"
+                    'image_url': s3_url
                 })
-        
         return {"images": images_with_metadata}
     
     except Exception as e:
