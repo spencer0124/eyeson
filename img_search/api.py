@@ -3,7 +3,7 @@ import os
 import json
 import base64
 from openai import OpenAI
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
@@ -132,23 +132,22 @@ def generate_image_description(original_dtype, base64_image, crop_dtype, crop_ba
         return response.choices[0].message.content
     except:
         raise HTTPException(status_code=response.status_code, detail="OpenAI API request failed")
-
-class ImageRequest(BaseModel):
-    original_image_path: str # 원본 이미지 경로
     
 @app.post("/gpt-plus-describe/")
-async def describe_image(request: ImageRequest, crop_image: UploadFile = File(...)):
+async def describe_image(request: str = Form(...), # original path
+                         crop_image: UploadFile = File(...)):
+    
     # 이미지 불러오기
     print('request', request)
-    original_image = download_image_from_s3(request.original_image_path)
+    original_image = download_image_from_s3(request)
     crop_image_data = await crop_image.read()
 
     # base64로 인코딩
-    base64_image = base64.b64encode(original_image.tobytes()).decode('utf-8')
+    base64_image = base64.b64encode(original_image).decode('utf-8')
     crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
     # 이미지 타입 확인
-    original_dtype = dtype_is(request.original_image_path)
+    original_dtype = dtype_is(request)
     crop_dtype = dtype_is(crop_image.filename)
 
     description = generate_image_description(original_dtype, base64_image, crop_dtype, crop_base64_image)
