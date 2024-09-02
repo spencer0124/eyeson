@@ -1,7 +1,7 @@
 import torch
 import torchvision.transforms as transforms
 import torchvision.models as models
-from PIL import Image
+import cv2
 import pickle
 import os
 
@@ -29,8 +29,9 @@ class VGG16_FeatureExtractor(torch.nn.Module):
 vgg16 = models.vgg16(pretrained=True)
 feature_extractor = VGG16_FeatureExtractor(vgg16)
 
-def preprocess_image(image):
-    img = image.resize((256, 256))  # 이미지 리사이즈
+def preprocess_image(image_path):
+    img = cv2.imread(image_path)
+    img = img.resize((256, 256))  # 이미지 리사이즈
     center_crop_size = 224
     h, w = img.size
     left = (w - center_crop_size) / 2
