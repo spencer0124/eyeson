@@ -41,6 +41,8 @@
 		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
 		C4AADEBF2C845CBC00D47510 /* CameraAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AADEBE2C845CBC00D47510 /* CameraAPIModel.swift */; };
 		C4AADEC12C845CDA00D47510 /* CameraScanVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */; };
+		C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */; };
+		C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
@@ -105,6 +107,8 @@
 		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		C4AADEBE2C845CBC00D47510 /* CameraAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAPIModel.swift; sourceTree = "<group>"; };
 		C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanVM.swift; sourceTree = "<group>"; };
+		C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkVM.swift; sourceTree = "<group>"; };
+		C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtwordModel.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 		C4734E9A2C630FE100110334 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 		C4734E9B2C630FE600110334 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -786,11 +792,13 @@
 				C4AADEC12C845CDA00D47510 /* CameraScanVM.swift in Sources */,
 				C47FCA432C61A4CA005C07D1 /* ExhibitsDetailModel.swift in Sources */,
 				C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */,
+				C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */,
 				C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */,
 				C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */,
 				C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */,
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
+				C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */,
 				C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */,
 				C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */,
 				C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */,
