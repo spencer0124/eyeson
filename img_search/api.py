@@ -78,17 +78,14 @@ def load_data():
     return json_data
 
 class eng_id(BaseModel):
-    rank: int
     file: str
 
-class Engid_list(BaseModel):
-    results: List[eng_id]
-
 @app.post("/get-description/")
-async def get_description(data: Engid_list):
+async def get_description(data: eng_id):
+    # 데이터 로드
     json_data = load_data()
 
-    first = data.results[0].model_dump()
+    first = data.model_dump()
     first_file = first['file']
 
     try:
