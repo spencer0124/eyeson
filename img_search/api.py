@@ -34,15 +34,6 @@ print(file_list)
 async def read_root():
     return RedirectResponse(url="/static/index.html")
 
-@app.get("/list-images/")
-async def list_images():
-    try:
-        image_list = list_images_in_s3()
-        return {"images": image_list}
-    except Exception as e:
-        print(f"An error occurred while listing images: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to list images in S3")
-
 @app.post("/search/")
 async def search_image(file: UploadFile = File(...)):
     query_dir = 'temp'
@@ -184,3 +175,48 @@ def image_to_bytes(image: Image) -> bytes:
     # 바이트 데이터로 변환
     byte_data = byte_io.getvalue()
     return byte_data
+
+def get_filename_from_path(s3_key):
+    # 'photo/image.jpg'에서 'image.jpg'만 추출
+    return os.path.basename(s3_key)
+
+def get_image_metadata(file_list, data):
+    metadata_list = []
+    for file in file_list:
+        matched_data = next((entry for entry in data if entry['eng_id'] == file), None)
+        if matched_data:
+            metadata_list.append({
+                'file': file,
+                'title': matched_data['meta'].get('title', 'N/A'),
+                'artist': matched_data['meta'].get('artist', 'N/A')
+            })
+    return metadata_list
+
+@app.get("/get-all-images/")
+async def get_images_with_metadata():
+    try:
+        file_list = list_images_in_s3()
+        data = load_data()
+        
+        images_with_metadata = []
+        for s3_key in file_list:
+            filename = get_filename_from_path(s3_key)
+            matched_data = next((entry for entry in data if entry['eng_id'] == filename), None)
+            
+            if matched_data:
+                image = download_image_from_s3(s3_key)
+                image_data = image_to_bytes(image)
+                base64_image = base64.b64encode(image_data).decode('utf-8')
+                
+                images_with_metadata.append({
+                    'file': filename,
+                    'title': matched_data['meta'].get('title', 'N/A'),
+                    'artist': matched_data['meta'].get('artist', 'N/A'),
+                    'image_base64': f"data:image/{dtype_is(filename)};base64,{base64_image}"
+                })
+        
+        return {"images": images_with_metadata}
+    
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve images and metadata")
