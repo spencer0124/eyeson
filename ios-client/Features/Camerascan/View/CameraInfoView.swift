@@ -96,7 +96,7 @@ struct CameraInfoView: View {
                     .scaledToFit()
                     .padding(.bottom)
                     .accessibilityLabel("""
-사진. 모양이 자동으로 인식되어 촬영되는 모습.
+사진. 수동으로 사진을 촬영하는 모습.
 """)
                 
                 Spacer()

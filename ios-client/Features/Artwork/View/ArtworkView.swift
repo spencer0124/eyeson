@@ -8,44 +8,56 @@
 import SwiftUI
 
 struct ArtworkView: View {
-    @StateObject private var viewModel = DescriptionViewModel()
-    let fileId: String
+    var eng_id: String
     
+    @StateObject private var viewModel = DescriptionViewModel()
+
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 20) {
             if viewModel.isLoading {
                 ProgressView("Loading...")
             } else if let errorMessage = viewModel.errorMessage {
-                Text("Error: \(errorMessage)")
+                Text(errorMessage)
                     .foregroundColor(.red)
-            } else if let response = viewModel.apiResponse {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Title: \(response.meta.title)")
-                        .font(.headline)
-                    Text("Artist: \(response.meta.artist)")
-                    Text("Style: \(response.meta.style)")
-                    Text("Emotion: \(response.meta.emotion)")
-                    Text("Description: \(response.description)")
-                    Text("Explanation: \(response.explanation)")
-                    Text("Comment: \(response.comment)")
-                    Text("Audio URL: \(response.음성url)")
-                        .foregroundColor(.blue)
-                        .onTapGesture {
-                            if let url = URL(string: response.음성url) {
-                                UIApplication.shared.open(url)
-                            }
-                        }
-                }
-                .padding()
+            } else {
+                Text("**Title:** \(viewModel.meta["title"] ?? "Unknown Title")")
+                    .font(.title)
+                
+                Text("**Artist:** \(viewModel.meta["artist"] ?? "Unknown Artist")")
+                    .font(.headline)
+                
+                Text("**Style:** \(viewModel.meta["style"] ?? "Unknown Style")")
+                    .font(.subheadline)
+                
+                Text("**Emotion:** \(viewModel.meta["emotion"] ?? "Unknown Emotion")")
+                    .font(.subheadline)
+                
+                Divider()
+                
+                Text("**Description**")
+                    .font(.headline)
+                Text(viewModel.descriptionText)
+                    .padding(.bottom, 10)
+                
+                Text("**Explanation**")
+                    .font(.headline)
+                Text(viewModel.explanationText)
+                    .padding(.bottom, 10)
+                
+                Text("**Comment**")
+                    .font(.headline)
+                Text(viewModel.commentText)
+                    .padding(.bottom, 10)
             }
         }
+        .padding()
+        .navigationTitle("Artwork Details")
         .onAppear {
-            viewModel.fetchDescription(fileId: fileId)
+            viewModel.fetchDescription(for: eng_id)
         }
-        .navigationTitle("작품명 어쩌구 모나리자")
     }
 }
 
 #Preview {
-    ArtworkView(fileId: "sample_file_id")
+    ArtworkView(eng_id: "ByeongyunLee_Bird.JPG")
 }

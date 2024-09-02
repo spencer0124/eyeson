@@ -30,14 +30,23 @@ class ImageSearchViewModel: ObservableObject {
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
         }, to: url, headers: headers)
-        .responseString { response in
+        .responseJSON { response in
             self.isLoading = false
             
             switch response.result {
             case .success(let data):
-                // Assuming that the API returns a single string result
-                self.searchResults = [data]
-                print("Search Results: \(data)") // Print the raw string response
+                if let json = data as? [String: Any],
+                   let results = json["results"] as? [[String: Any]] {
+                    // Extract the file name where rank is 1
+                    if let rank1Result = results.first(where: { $0["rank"] as? Int == 1 }),
+                       let fileName = rank1Result["file"] as? String {
+                        self.searchResults = [fileName]
+                    } else {
+                        self.errorMessage = "Rank 1 file not found."
+                    }
+                } else {
+                    self.errorMessage = "Invalid response format."
+                }
             case .failure(let error):
                 self.errorMessage = "Failed to upload image: \(error.localizedDescription)"
                 print("Error: \(error.localizedDescription)") // Print the error message
