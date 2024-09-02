@@ -30,18 +30,18 @@ vgg16 = models.vgg16(pretrained=True)
 feature_extractor = VGG16_FeatureExtractor(vgg16)
 
 def preprocess_image(image_path):
+    #print('path', image_path)
     img = cv2.imread(image_path)
-    img = img.resize((256, 256))  # 이미지 리사이즈
+    img = cv2.resize(img, (256,256))
     center_crop_size = 224
-    h, w = img.size
-    left = (w - center_crop_size) / 2
-    top = (h - center_crop_size) / 2
-    right = (w + center_crop_size) / 2
-    bottom = (h + center_crop_size) / 2
-    img = img.crop((left, top, right, bottom))  # 센터 크롭
+    h, w, _ = img.shape
+    startx = w//2 - (center_crop_size//2)
+    starty = h//2 - (center_crop_size//2)
+    img = img[starty:starty+center_crop_size, startx:startx+center_crop_size]
 
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = transforms.ToTensor()(img)
-    img = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])(img)
+    img = transforms.Normalize(mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225])(img)
     img = img.unsqueeze(0)
     return img
 
