@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 from s3_module import list_images_in_s3, download_image_from_s3
 from cnn_module import load_or_create_feature_vectors, preprocess_query
 from faiss_module import load_or_create_faiss_index, search_faiss
+from io import BytesIO
+from PIL import Image
 
 app = FastAPI()
 
@@ -143,7 +145,8 @@ async def describe_image(request: str = Form(...), # original path
     crop_image_data = await crop_image.read()
 
     # base64로 인코딩
-    base64_image = base64.b64encode(original_image).decode('utf-8')
+    byte_original_image = image_to_bytes(original_image)
+    base64_image = base64.b64encode(byte_original_image).decode('utf-8')
     crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
     # 이미지 타입 확인
@@ -161,3 +164,14 @@ def dtype_is(img_path):
     else:
         raise ValueError('Unsupported image format')
     return dtype
+
+def image_to_bytes(image: Image) -> bytes:
+    """PIL Image 객체를 바이트 데이터로 변환하는 함수"""
+    byte_io = BytesIO()
+    
+    # 이미지를 원래 포맷(JPEG, PNG 등)으로 저장
+    image.save(byte_io, format=image.format)
+    
+    # 바이트 데이터로 변환
+    byte_data = byte_io.getvalue()
+    return byte_data
