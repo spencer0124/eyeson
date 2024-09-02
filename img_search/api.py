@@ -137,20 +137,22 @@ def generate_image_description(original_dtype, base64_image, crop_dtype, crop_ba
         raise HTTPException(status_code=response.status_code, detail="OpenAI API request failed")
 
 class ImageRequest(BaseModel):
-    original_image_path: str
-    crop_image_path : str
+    original_image_path: str # 원본 이미지 경로
     
 @app.post("/gpt-plus-describe/")
-async def describe_image(request: ImageRequest):
+async def describe_image(request: ImageRequest, crop_image: UploadFile = File(...)):
+    # 이미지 불러오기
     print('request', request)
     original_image = download_image_from_s3(request.original_image_path)
-    crop_image = download_image_from_s3(request.crop_image_path)
+    crop_image_data = await crop_image.read()
 
+    # base64로 인코딩
     base64_image = base64.b64encode(original_image.tobytes()).decode('utf-8')
-    crop_base64_image = base64.b64encode(crop_image.tobytes()).decode('utf-8')
+    crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
+    # 이미지 타입 확인
     original_dtype = dtype_is(request.original_image_path)
-    crop_dtype = dtype_is(request.crop_image_path)
+    crop_dtype = dtype_is(crop_image.filename)
 
     description = generate_image_description(original_dtype, base64_image, crop_dtype, crop_base64_image)
     return {"description": description}
