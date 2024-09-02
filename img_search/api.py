@@ -83,7 +83,6 @@ class eng_id(BaseModel):
 
 @app.post("/get-description/")
 async def get_description(data: eng_id):
-    print(data)
     # 데이터 로드
     json_data = load_data()
     first_file = data.file
