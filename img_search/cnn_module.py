@@ -70,5 +70,10 @@ def load_or_create_feature_vectors(fv_pkl_path, s3_file_list, download_image_fun
         with open(fv_pkl_path, 'rb') as file:
             fv = pickle.load(file)
     else:
+        feature_dir = os.path.dirname(fv_pkl_path)
+        if not os.path.exists(feature_dir):
+            os.makedirs(feature_dir)
+            print(f"Directory {feature_dir} created.")
+            
         fv = create_fv(s3_file_list, download_image_func, fv_pkl_path)
     return fv
