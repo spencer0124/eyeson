@@ -30,7 +30,7 @@ vgg16 = models.vgg16(pretrained=True)
 feature_extractor = VGG16_FeatureExtractor(vgg16)
 
 def preprocess_image(image_path):
-    #print('path', image_path)
+    print('path', image_path)
     img = cv2.imread(image_path)
     img = cv2.resize(img, (256,256))
     center_crop_size = 224
