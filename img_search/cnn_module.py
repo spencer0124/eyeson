@@ -4,6 +4,8 @@ import torchvision.models as models
 import cv2
 import pickle
 import os
+from PIL import Image
+import numpy as np
 
 # VGG16 모델 설정
 class VGG16_FeatureExtractor(torch.nn.Module):
@@ -29,9 +31,15 @@ class VGG16_FeatureExtractor(torch.nn.Module):
 vgg16 = models.vgg16(pretrained=True)
 feature_extractor = VGG16_FeatureExtractor(vgg16)
 
-def preprocess_image(image_path):
-    print('path', image_path)
-    img = cv2.imread(image_path)
+def preprocess_image(image):
+    if isinstance(image, str):
+        img = cv2.imread(image)
+    elif isinstance(image, Image.Image):
+        img = np.array(image)
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    else:
+        raise ValueError(f"Unsupported image type: {type(image)}")
+    
     img = cv2.resize(img, (256,256))
     center_crop_size = 224
     h, w, _ = img.shape
