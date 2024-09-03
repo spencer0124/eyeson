@@ -138,7 +138,7 @@ async def describe_image(request: str = Form(...), # original path
                          crop_image: UploadFile = File(...)):
     
     # 이미지 불러오기
-    print('request', request)
+    # print('request', request)
     original_image = download_image_from_s3(request)
     crop_image_data = await crop_image.read()
 
