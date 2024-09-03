@@ -13,45 +13,74 @@ struct ArtworkView: View {
     @StateObject private var viewModel = DescriptionViewModel()
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        
+        ScrollView {
+        VStack(alignment: .leading, spacing: 0) {
             if viewModel.isLoading {
-                ProgressView("Loading...")
+                ProgressView("로딩중...")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else {
-                Text("**Title:** \(viewModel.meta["title"] ?? "Unknown Title")")
-                    .font(.title)
                 
-                Text("**Artist:** \(viewModel.meta["artist"] ?? "Unknown Artist")")
-                    .font(.headline)
+                VStack (alignment: .leading, spacing: 5) {
+                    HStack {
+                        
+                        Text("\(viewModel.meta["artist"] ?? "작가 정보 없음")")
+                            .font(.headline)
+                        
+                        Text("\(viewModel.meta["emotion"] ?? "감정 정보 없음")")
+                            .font(.subheadline)
+                    }
+                    
+                    Text("\(viewModel.meta["style"] ?? "스타일 정보 없음")")
+                        .font(.subheadline)
+                    
+                    Spacer()
+                        .frame(height: 15)
+                }
                 
-                Text("**Style:** \(viewModel.meta["style"] ?? "Unknown Style")")
-                    .font(.subheadline)
                 
-                Text("**Emotion:** \(viewModel.meta["emotion"] ?? "Unknown Emotion")")
-                    .font(.subheadline)
+                VStack (alignment: .leading, spacing: 20) {
+                    
+                    Divider()
                 
-                Divider()
+                    HStack {
+                        Spacer()
+                        Image("artwork_example")
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(12)
+                            .frame(width: 260, height: 260)
+                        Spacer()
+                    }
+                    
+                    
+                    Divider()
+                    
+                    Text("**한 줄 설명**")
+                        .font(.headline)
+                    Text(viewModel.explanationText)
+                        .padding(.bottom, 10)
+                    
+                    Text("**작품 묘사**")
+                        .font(.headline)
+                    Text(viewModel.descriptionText)
+                        .padding(.bottom, 10)
+                    
+                    
+                    Text("**작품 해설**")
+                        .font(.headline)
+                    Text(viewModel.commentText)
+                        .padding(.bottom, 10)
+                }
                 
-                Text("**Description**")
-                    .font(.headline)
-                Text(viewModel.descriptionText)
-                    .padding(.bottom, 10)
                 
-                Text("**Explanation**")
-                    .font(.headline)
-                Text(viewModel.explanationText)
-                    .padding(.bottom, 10)
-                
-                Text("**Comment**")
-                    .font(.headline)
-                Text(viewModel.commentText)
-                    .padding(.bottom, 10)
             }
         }
         .padding()
-        .navigationTitle("Artwork Details")
+    }
+        .navigationTitle("\(viewModel.meta["title"] ?? "Unknown Title")")
         .onAppear {
             viewModel.fetchDescription(for: eng_id)
         }

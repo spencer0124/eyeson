@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
 		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
+		C41040D32C86A49C00CA6F4A /* ExhibitsDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */; };
+		C41040D62C86A75900CA6F4A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C41040D52C86A75900CA6F4A /* Kingfisher */; };
 		C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7E72C61B6FA00B9AAED /* SettingsView.swift */; };
 		C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7EC2C61BCD800B9AAED /* NotificationPermission.swift */; };
 		C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7EE2C61BFE900B9AAED /* LocationPermission.swift */; };
@@ -76,6 +78,7 @@
 		772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.release.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.release.xcconfig"; sourceTree = "<group>"; };
 		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsDetailVM.swift; sourceTree = "<group>"; };
 		C429E7E72C61B6FA00B9AAED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C429E7EC2C61BCD800B9AAED /* NotificationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
 		C429E7EE2C61BFE900B9AAED /* LocationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPermission.swift; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41040D62C86A75900CA6F4A /* Kingfisher in Frameworks */,
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
 				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
@@ -450,6 +454,7 @@
 		C47499B62C608BFE0064D824 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -559,6 +564,7 @@
 				C429E8012C61E2EB00B9AAED /* Lottie */,
 				C466110B2C677C4A00049492 /* SwiftUIImageViewer */,
 				C4EF82D92C67B93F00A358D7 /* Shimmer */,
+				C41040D52C86A75900CA6F4A /* Kingfisher */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -640,6 +646,7 @@
 				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+				C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -803,6 +810,7 @@
 				C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */,
 				C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */,
 				C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */,
+				C41040D32C86A49C00CA6F4A /* ExhibitsDetailVM.swift in Sources */,
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */,
@@ -1172,6 +1180,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1207,6 +1223,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C41040D52C86A75900CA6F4A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		C429E8012C61E2EB00B9AAED /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */;

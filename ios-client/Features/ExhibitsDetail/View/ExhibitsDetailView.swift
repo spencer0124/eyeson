@@ -6,158 +6,84 @@
 //
 
 import SwiftUI
-
+import Kingfisher
 
 struct ExhibitsDetailView: View {
+    @StateObject private var viewModel = ExhibitsDetailViewModel()
     @State private var isNavigatingToExhibitInfo = false
     @State private var searchText = ""
-    
-    
+
     var exhibit: ExhibitList
 
     var body: some View {
-        
-            VStack {
-//                Image("image_exhibition")
-//                    .resizable()
-//                    .scaledToFit()
-//                    
-//                    .padding()
-                   
-                
-//                Spacer()
-//                    .frame(height: 20)
-   
-//                HStack {
-//                    Spacer()
-//                        .frame(width: 18)
-//                    Rectangle()
-//                        .frame(width: 4, height: 26)
-//                        .foregroundColor(.gray)
-//                    Text(exhibit.mainText)
-//                        .font(.system(size: 20))
-//                        .fontWeight(.bold)
-//                    Spacer()
-////                    CustomButtonsView(isNavigatingToExhibitInfo: $isNavigatingToExhibitInfo)
-//                    Spacer()
-//                        .frame(width: 18)
-//                }
-                
+        VStack {
+            if viewModel.isLoading {
+                ProgressView("Loading...")
+            } else if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            } else {
                 List {
-                    
-                    Section(header: Text("실내 전시관1")) {
-                        ForEach(exhibitDetails) { exhibitDetail in
-                            NavigationLink(destination: ArtworkDetailView()) {
+                    Section(header: Text("나의 모든 순간")) {
+                        ForEach(viewModel.exhibits.filter { exhibit in
+                            searchText.isEmpty || exhibit.title.localizedCaseInsensitiveContains(searchText)
+                        }) { exhibit in
+                            NavigationLink(destination: ArtworkView(eng_id: exhibit.id)) {
                                 HStack {
-                                    Image(exhibitDetail.id)
+                                    KFImage(URL(string: exhibit.imageUrl))
+                                        .placeholder {
+                                        ProgressView()
+                                            .frame(width: 65, height: 55)
+                                        }
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 65, height: 55)
+                                        
                                     Spacer()
                                         .frame(width: 20)
                                     VStack(alignment: .leading) {
-                                        Text(exhibitDetail.meta.title)
+                                        Text(exhibit.title)
                                             .font(.headline)
-                                        HStack {
-                                            Text(exhibitDetail.meta.artist)
-                                        }
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                        Text(exhibit.artist)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
                                     }
                                 }
                                 .padding(.vertical, 4)
                             }
                         }
                     }
-                    
-                    
-                    Section(header: Text("야외 전시관")) {
-                        ForEach(exhibitDetails) { exhibitDetail in
-                            NavigationLink(destination: ArtworkDetailView()) {
-                                HStack {
-                                    Image(exhibitDetail.id)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 65, height: 55)
-                                    Spacer()
-                                        .frame(width: 20)
-                                    VStack(alignment: .leading) {
-                                        Text(exhibitDetail.meta.title)
-                                            .font(.headline)
-                                        HStack {
-                                            Text(exhibitDetail.meta.artist)
-                                        }
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("완전 야외 전시관")) {
-                        ForEach(exhibitDetails) { exhibitDetail in
-                            NavigationLink(destination: ArtworkDetailView()) {
-                                HStack {
-                                    Image(exhibitDetail.id)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 65, height: 55)
-                                    Spacer()
-                                        .frame(width: 20)
-                                    VStack(alignment: .leading) {
-                                        Text(exhibitDetail.meta.title)
-                                            .font(.headline)
-                                        HStack {
-                                            Text(exhibitDetail.meta.artist)
-                                        }
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        }
-                    }
-                    
-                    
-                    
                 }
                 .listStyle(PlainListStyle())
                 .searchable(text: $searchText, placement: .automatic)
-                
-                
-                Spacer()
             }
-        
-            
-            .background(
-                NavigationLink(
-                    destination: ExhibitInfoView(),
-                    isActive: $isNavigatingToExhibitInfo,
-                    label: { EmptyView() }
-                )
+            Spacer()
+        }
+        .onAppear {
+            viewModel.fetchExhibits()
+        }
+        .background(
+            NavigationLink(
+                destination: ExhibitInfoView(),
+                isActive: $isNavigatingToExhibitInfo,
+                label: { EmptyView() }
             )
-            
-        
+        )
         .navigationTitle("작품 목록")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            isNavigatingToExhibitInfo = true
-                        }) {
-                            HStack(spacing: 2) {
-//                                Image(systemName: "info.circle")
-                                Text("전시정보")
-                            }
-                        }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isNavigatingToExhibitInfo = true
+                }) {
+                    HStack(spacing: 2) {
+                        Text("전시정보")
                     }
                 }
-        
-        
+            }
+        }
     }
+}
     
     struct CustomButtonsView: View {
         @Binding var isNavigatingToExhibitInfo: Bool
@@ -176,7 +102,7 @@ struct ExhibitsDetailView: View {
             }
         }
     }
-}
+
 
 
 #Preview {
