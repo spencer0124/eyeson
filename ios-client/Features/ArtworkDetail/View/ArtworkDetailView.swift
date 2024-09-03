@@ -8,7 +8,7 @@
 
 import SwiftUI
 import UIKit
-import SwiftUIImageViewer
+
 import Shimmer
 import Lottie
 
@@ -22,7 +22,7 @@ struct ArtworkDetailView: View {
                 ZStack {
                     Color.white
 
-                    SwiftUIImageViewer(image: image)
+//                    SwiftUIImageViewer(image: image)
 //                        .overlay(alignment: .topTrailing) {
 //                                                    closeButton
 //                                                }

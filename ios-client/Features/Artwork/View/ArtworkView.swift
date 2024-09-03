@@ -68,7 +68,7 @@ struct ArtworkView: View {
                                 .fullScreenCover(isPresented: $isImagePresented) {
                                     ZStack {
                                             Color.white
-                                            SwiftUIImageViewer(image: image)
+                                        SwiftUIImageViewer(imageURLString: viewModel.image_url)
                                                 .overlay(alignment: .topTrailing) {
                                                     closeButton
                                                 }
@@ -159,34 +159,26 @@ struct ArtworkView: View {
 
     private var bottomSheet: some View {
             VStack(alignment: .leading) {
+//                HStack {
+//                    Spacer()
+//                    Button(action: {
+//                        withAnimation {
+//                                isBottomSheetPresented = false
+//                            }
+//                                    }) {
+//                                        Image(systemName: "xmark")
+//                                            .foregroundColor(.black)
+//                                            .padding()
+//                                            .background(Color.white)
+//                                            .cornerRadius(15)
+//                                    }
+//                }
+//                
+                
+                
                 HStack {
                     Spacer()
-                    Button(action: {
-                        withAnimation {
-                                isBottomSheetPresented = false
-                            }
-                                    }) {
-                                        Image(systemName: "xmark")
-                                            .foregroundColor(.black)
-                                            .padding()
-                                            .background(Color.white)
-                                            .cornerRadius(15)
-                                    }
-                }
-                
-                
-                
-                HStack {
-                    Spacer()
-                    Text("그림 분석중...")
-                        .font(.system(size: 25))
-                        .foregroundColor(.gray)
-                        .shimmering(
-                            active: true,
-                            animation: .easeInOut(duration: 2).repeatForever(),
-                            bandSize: 5.5
-                        )
-                        
+                    ProgressView("해설 불러오는 중")
                     Spacer()
                 }
                 
@@ -201,6 +193,7 @@ struct ArtworkView: View {
             .background(Color.white)
             .cornerRadius(20)
             .shadow(radius: 20)
+            .ignoresSafeArea()
         }
 
 }

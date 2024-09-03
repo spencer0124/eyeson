@@ -24,7 +24,6 @@
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46611062C67754500049492 /* ArtworkDetailView.swift */; };
-		C466110C2C677C4A00049492 /* SwiftUIImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = C466110B2C677C4A00049492 /* SwiftUIImageViewer */; };
 		C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4734E9C2C630FFA00110334 /* ArtworkView.swift */; };
 		C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499A92C6062830064D824 /* CamerascanView.swift */; };
 		C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499AF2C6062B20064D824 /* ExhibitsView.swift */; };
@@ -50,6 +49,7 @@
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
+		C4E8F9672C86D71900EC81F3 /* SwiftUIImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */; };
 		C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = C4EF82D92C67B93F00A358D7 /* Shimmer */; };
 		F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F807439606D1330482835A12 /* Pods_eyesonTests.framework */; };
 /* End PBXBuildFile section */
@@ -131,9 +131,9 @@
 			files = (
 				C41040D62C86A75900CA6F4A /* Kingfisher in Frameworks */,
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
+				C4E8F9672C86D71900EC81F3 /* SwiftUIImageViewer in Frameworks */,
 				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
-				C466110C2C677C4A00049492 /* SwiftUIImageViewer in Frameworks */,
 				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,9 +562,9 @@
 			packageProductDependencies = (
 				C455A01B2C609B6300A3F786 /* Glur */,
 				C429E8012C61E2EB00B9AAED /* Lottie */,
-				C466110B2C677C4A00049492 /* SwiftUIImageViewer */,
 				C4EF82D92C67B93F00A358D7 /* Shimmer */,
 				C41040D52C86A75900CA6F4A /* Kingfisher */,
+				C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -644,9 +644,9 @@
 			packageReferences = (
 				C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */,
 				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -1204,7 +1204,7 @@
 				minimumVersion = 1.0.4;
 			};
 		};
-		C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
+		C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/fuzzzlove/swiftui-image-viewer.git";
 			requirement = {
@@ -1238,9 +1238,9 @@
 			package = C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */;
 			productName = Glur;
 		};
-		C466110B2C677C4A00049492 /* SwiftUIImageViewer */ = {
+		C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			package = C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
 			productName = SwiftUIImageViewer;
 		};
 		C4EF82D92C67B93F00A358D7 /* Shimmer */ = {
