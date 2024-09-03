@@ -59,7 +59,7 @@ async def search_image(file: UploadFile = File(...)):
         results = []
         for n, i in enumerate(indices[0]):
             top_n_id = file_list[i]
-            print('topn id', top_n_id)
+            # print('topn id', top_n_id)
             results.append({
                 'rank': n+1,
                 'file': top_n_id,
