@@ -10,7 +10,12 @@ import SwiftUI
 struct CamerascanView: View {
     @State private var scannedImages: [(id: UUID, image: UIImage, date: Date)] = []
     @State private var isShowingScanner = false
+    @State private var isShowingProgress = false
     @State private var isNavigatingToAnalyze = false
+    
+    @State private var navigateToCameraInfo = false
+    
+    
     
     
 
@@ -47,7 +52,7 @@ struct CamerascanView: View {
                     }
                     
                     Button(action: {
-                        isShowingScanner = true
+                        navigateToCameraInfo = true
                     }) {
                         Text("촬영 가이드 보기")
                             .font(.system(size: 15))
@@ -71,16 +76,28 @@ struct CamerascanView: View {
                         }
                     }
 
-                    // Removed the List view as per your request
+                    NavigationLink(destination: CameraInfoView(), isActive: $navigateToCameraInfo) {
+                                        EmptyView()
+                    };
+                    
+                  
                 }
                 .padding()
                 .navigationBarTitle("작품 촬영", displayMode: .large)
+                
+                
+                
+                
+                
                 .background(
                     NavigationLink(
                         destination: AnalyzeImage(image: scannedImages.last?.image),
                         isActive: $isNavigatingToAnalyze,
                         label: { EmptyView() }
                     )
+                    
+                    
+                    
                 )
             }
         
@@ -105,18 +122,23 @@ struct CamerascanView: View {
     }
 }
 
+
 struct AnalyzeImage: View {
     var image: UIImage?
     
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ImageSearchViewModel()
+    @State private var navigateToDescription = false
+    @State private var hasLoadedData = false
 
     var body: some View {
         VStack {
             if let image = image {
-//                Image(uiImage: image)
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(maxHeight: 400)
+                // Uncomment and adjust the image display if needed
+                // Image(uiImage: image)
+                //     .resizable()
+                //     .scaledToFit()
+                //     .frame(maxHeight: 400)
                 
                 if viewModel.isLoading {
                     ProgressView("이미지 분석중...")
@@ -124,14 +146,19 @@ struct AnalyzeImage: View {
                     Text(errorMessage)
                         .foregroundColor(.red)
                 } else if !viewModel.searchResults.isEmpty {
-                    List(viewModel.searchResults, id: \.rank) { result in
-                        VStack(alignment: .leading) {
-                            Text("Rank: \(result.rank)")
-                                .font(.headline)
-                            Text("File: \(result.file)")
-                                .font(.subheadline)
-                        }
-                    }
+                   
+                   
+                    
+                    Text(viewModel.searchResults)
+                        .font(.subheadline)
+                    
+                    .onAppear {
+                                hasLoadedData = true
+                                navigateToDescription = true
+                                
+                            }
+                    
+                    
                 } else {
                     Text("No results found.")
                         .padding()
@@ -140,11 +167,22 @@ struct AnalyzeImage: View {
                 Text("No image available")
             }
         }
-//        .navigationTitle("이미지 분석중..")
+        
+        // .navigationTitle("이미지 분석중..")
         .onChange(of: image) { newImage in
             if let image = newImage {
                 viewModel.searchImage(image: image)
             }
+        }
+        .onAppear() {
+            if(hasLoadedData) {
+                dismiss()
+            }
+        }
+        .background() {
+            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults), isActive: $navigateToDescription) {
+                                EmptyView()
+                            }
         }
     }
 }

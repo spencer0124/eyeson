@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1787CBE6F0747B9D78C6B89A /* Pods_eyeson_eyesonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCBE13E13359B652111611 /* Pods_eyeson_eyesonUITests.framework */; };
 		33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */; };
+		C41040D32C86A49C00CA6F4A /* ExhibitsDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */; };
+		C41040D62C86A75900CA6F4A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C41040D52C86A75900CA6F4A /* Kingfisher */; };
 		C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7E72C61B6FA00B9AAED /* SettingsView.swift */; };
 		C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7EC2C61BCD800B9AAED /* NotificationPermission.swift */; };
 		C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7EE2C61BFE900B9AAED /* LocationPermission.swift */; };
@@ -22,7 +24,6 @@
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46611062C67754500049492 /* ArtworkDetailView.swift */; };
-		C466110C2C677C4A00049492 /* SwiftUIImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = C466110B2C677C4A00049492 /* SwiftUIImageViewer */; };
 		C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4734E9C2C630FFA00110334 /* ArtworkView.swift */; };
 		C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499A92C6062830064D824 /* CamerascanView.swift */; };
 		C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47499AF2C6062B20064D824 /* ExhibitsView.swift */; };
@@ -41,9 +42,14 @@
 		C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48458232C4C048C00745A56 /* TextRecognizer.swift */; };
 		C4AADEBF2C845CBC00D47510 /* CameraAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AADEBE2C845CBC00D47510 /* CameraAPIModel.swift */; };
 		C4AADEC12C845CDA00D47510 /* CameraScanVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */; };
+		C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */; };
+		C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */; };
+		C4AE0E912C855B23000A0A72 /* ExhibitsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */; };
+		C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */; };
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
+		C4E8F9672C86D71900EC81F3 /* SwiftUIImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */; };
 		C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = C4EF82D92C67B93F00A358D7 /* Shimmer */; };
 		F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F807439606D1330482835A12 /* Pods_eyesonTests.framework */; };
 /* End PBXBuildFile section */
@@ -72,6 +78,7 @@
 		772E0DBEAAF2B50B6461D555 /* Pods-eyeson.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyeson.release.xcconfig"; path = "Target Support Files/Pods-eyeson/Pods-eyeson.release.xcconfig"; sourceTree = "<group>"; };
 		875708CAE5D7CBE185B51FF4 /* Pods_eyeson.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eyeson.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DBE7E18503A96EEC65445F /* Pods-eyesonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eyesonTests.debug.xcconfig"; path = "Target Support Files/Pods-eyesonTests/Pods-eyesonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsDetailVM.swift; sourceTree = "<group>"; };
 		C429E7E72C61B6FA00B9AAED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C429E7EC2C61BCD800B9AAED /* NotificationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
 		C429E7EE2C61BFE900B9AAED /* LocationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPermission.swift; sourceTree = "<group>"; };
@@ -105,6 +112,10 @@
 		C48458232C4C048C00745A56 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
 		C4AADEBE2C845CBC00D47510 /* CameraAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAPIModel.swift; sourceTree = "<group>"; };
 		C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanVM.swift; sourceTree = "<group>"; };
+		C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkVM.swift; sourceTree = "<group>"; };
+		C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtwordModel.swift; sourceTree = "<group>"; };
+		C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsInfoView.swift; sourceTree = "<group>"; };
+		C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraInfoView.swift; sourceTree = "<group>"; };
 		C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bluetoothScan.swift; sourceTree = "<group>"; };
 		C4BCFB902C4DF679001F943B /* peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = peripheral.swift; sourceTree = "<group>"; };
 		C4BCFB922C4DF700001F943B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
@@ -118,10 +129,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41040D62C86A75900CA6F4A /* Kingfisher in Frameworks */,
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
+				C4E8F9672C86D71900EC81F3 /* SwiftUIImageViewer in Frameworks */,
 				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
-				C466110C2C677C4A00049492 /* SwiftUIImageViewer in Frameworks */,
 				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				C47499A92C6062830064D824 /* CamerascanView.swift */,
+				C4AE0E922C8565B5000A0A72 /* CameraInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -365,6 +378,7 @@
 		C4734E9A2C630FE100110334 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C4AE0E8C2C85570A000A0A72 /* ArtworkVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -372,6 +386,7 @@
 		C4734E9B2C630FE600110334 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C4AE0E8E2C855713000A0A72 /* ArtwordModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -431,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				C47499B72C608C0C0064D824 /* ExhibitsDetailView.swift */,
+				C4AE0E902C855B23000A0A72 /* ExhibitsInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -438,6 +454,7 @@
 		C47499B62C608BFE0064D824 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C41040D22C86A49C00CA6F4A /* ExhibitsDetailVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -545,8 +562,9 @@
 			packageProductDependencies = (
 				C455A01B2C609B6300A3F786 /* Glur */,
 				C429E8012C61E2EB00B9AAED /* Lottie */,
-				C466110B2C677C4A00049492 /* SwiftUIImageViewer */,
 				C4EF82D92C67B93F00A358D7 /* Shimmer */,
+				C41040D52C86A75900CA6F4A /* Kingfisher */,
+				C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -626,8 +644,9 @@
 			packageReferences = (
 				C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */,
 				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+				C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -778,6 +797,7 @@
 				C429E7F32C61DB1900B9AAED /* SettingsModel.swift in Sources */,
 				C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */,
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
+				C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */,
 				C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
@@ -786,14 +806,18 @@
 				C4AADEC12C845CDA00D47510 /* CameraScanVM.swift in Sources */,
 				C47FCA432C61A4CA005C07D1 /* ExhibitsDetailModel.swift in Sources */,
 				C47499AA2C6062830064D824 /* CamerascanView.swift in Sources */,
+				C4AE0E8D2C85570A000A0A72 /* ArtworkVM.swift in Sources */,
 				C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */,
 				C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */,
 				C429E7EF2C61BFE900B9AAED /* LocationPermission.swift in Sources */,
+				C41040D32C86A49C00CA6F4A /* ExhibitsDetailVM.swift in Sources */,
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
+				C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */,
 				C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */,
 				C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */,
 				C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */,
+				C4AE0E912C855B23000A0A72 /* ExhibitsInfoView.swift in Sources */,
 				C429E7E82C61B6FA00B9AAED /* SettingsView.swift in Sources */,
 				C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */,
 				C48457F62C4C00F200745A56 /* eyesonApp.swift in Sources */,
@@ -1156,6 +1180,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1172,7 +1204,7 @@
 				minimumVersion = 1.0.4;
 			};
 		};
-		C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
+		C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/fuzzzlove/swiftui-image-viewer.git";
 			requirement = {
@@ -1191,6 +1223,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C41040D52C86A75900CA6F4A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C41040D42C86A75900CA6F4A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		C429E8012C61E2EB00B9AAED /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */;
@@ -1201,9 +1238,9 @@
 			package = C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */;
 			productName = Glur;
 		};
-		C466110B2C677C4A00049492 /* SwiftUIImageViewer */ = {
+		C4E8F9662C86D71900EC81F3 /* SwiftUIImageViewer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C466110A2C677C4A00049492 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
+			package = C4E8F9652C86D71900EC81F3 /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */;
 			productName = SwiftUIImageViewer;
 		};
 		C4EF82D92C67B93F00A358D7 /* Shimmer */ = {
