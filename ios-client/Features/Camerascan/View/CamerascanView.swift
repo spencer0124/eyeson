@@ -15,6 +15,9 @@ struct CamerascanView: View {
     
     @State private var navigateToCameraInfo = false
     
+    
+    
+    
 
     var body: some View {
         
@@ -123,8 +126,10 @@ struct CamerascanView: View {
 struct AnalyzeImage: View {
     var image: UIImage?
     
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ImageSearchViewModel()
     @State private var navigateToDescription = false
+    @State private var hasLoadedData = false
 
     var body: some View {
         VStack {
@@ -144,12 +149,14 @@ struct AnalyzeImage: View {
                    
                    
                     
-                        Text(viewModel.searchResults)
-                            .font(.subheadline)
+                    Text(viewModel.searchResults)
+                        .font(.subheadline)
                     
                     .onAppear {
-                                            navigateToDescription = true
-                                        }
+                                hasLoadedData = true
+                                navigateToDescription = true
+                                
+                            }
                     
                     
                 } else {
@@ -165,6 +172,11 @@ struct AnalyzeImage: View {
         .onChange(of: image) { newImage in
             if let image = newImage {
                 viewModel.searchImage(image: image)
+            }
+        }
+        .onAppear() {
+            if(hasLoadedData) {
+                dismiss()
             }
         }
         .background() {

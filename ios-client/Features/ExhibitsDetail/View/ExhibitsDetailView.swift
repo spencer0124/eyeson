@@ -12,13 +12,14 @@ struct ExhibitsDetailView: View {
     @StateObject private var viewModel = ExhibitsDetailViewModel()
     @State private var isNavigatingToExhibitInfo = false
     @State private var searchText = ""
+    @State private var hasLoadedData = false
 
     var exhibit: ExhibitList
 
     var body: some View {
         VStack {
             if viewModel.isLoading {
-                ProgressView("Loading...")
+                ProgressView("로딩중...")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
@@ -60,7 +61,10 @@ struct ExhibitsDetailView: View {
             Spacer()
         }
         .onAppear {
-            viewModel.fetchExhibits()
+            if !hasLoadedData {
+                viewModel.fetchExhibits()
+                hasLoadedData = true
+            }
         }
         .background(
             NavigationLink(

@@ -13,29 +13,20 @@ import Shimmer
 import Lottie
 
 struct ArtworkDetailView: View {
+    var eng_id: String
     
     @Environment(\.presentationMode) var presentationMode
-
-    @State private var isImagePresented = false
     @State private var isBottomSheetPresented = false
 
     var body: some View {
-        image
-            .resizable()
-            .scaledToFit()
-            .cornerRadius(12)
-            .frame(width: 260, height: 260)
-            .onTapGesture {
-                isImagePresented = true
-            }
-            .fullScreenCover(isPresented: $isImagePresented) {
                 ZStack {
-                    Color.black
-//                        .edgesIgnoringSafeArea(.all)
+                    Color.white
+
                     SwiftUIImageViewer(image: image)
-                        .overlay(alignment: .topTrailing) {
-                            closeButton
-                        }
+//                        .overlay(alignment: .topTrailing) {
+//                                                    closeButton
+//                                                }
+
                     VStack {
                         Spacer()
                         Button(action: {
@@ -66,11 +57,6 @@ struct ArtworkDetailView: View {
                         
                     }
                 )
-                // sheet가 bottom safe area 무시하도록 설정
-//                .edgesIgnoringSafeArea(.all)
-
-            }
-           
     }
     
 
@@ -80,7 +66,7 @@ struct ArtworkDetailView: View {
 
     private var closeButton: some View {
         Button {
-            isImagePresented = false
+            // action
         } label: {
             Image(systemName: "xmark")
                 .font(.headline)
@@ -151,5 +137,5 @@ struct ArtworkDetailView: View {
 }
 
 #Preview {
-    ArtworkDetailView()
+    ArtworkDetailView(eng_id: "photo/JeongyeonMoon_Golden.jpg")
 }

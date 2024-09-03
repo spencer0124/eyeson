@@ -11,6 +11,7 @@ class DescriptionViewModel: ObservableObject {
     @Published var descriptionText: String = ""
     @Published var explanationText: String = ""
     @Published var commentText: String = ""
+    @Published var image_url: String = ""
     @Published var meta: [String: String] = [:]
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
@@ -34,6 +35,7 @@ class DescriptionViewModel: ObservableObject {
                         self.explanationText = json["explanation"] as? String ?? "No explanation available."
                         self.commentText = json["comment"] as? String ?? "No comment available."
                         self.meta = json["meta"] as? [String: String] ?? [:]
+                        self.image_url = json["image_url"] as? String ?? "no url available"
                     } else {
                         self.errorMessage = "Invalid response format."
                     }
