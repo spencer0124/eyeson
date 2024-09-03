@@ -10,6 +10,7 @@ import SwiftUI
 struct CamerascanView: View {
     @State private var scannedImages: [(id: UUID, image: UIImage, date: Date)] = []
     @State private var isShowingScanner = false
+    @State private var isShowingProgress = false
     @State private var isNavigatingToAnalyze = false
     
     @State private var navigateToCameraInfo = false
@@ -74,10 +75,17 @@ struct CamerascanView: View {
 
                     NavigationLink(destination: CameraInfoView(), isActive: $navigateToCameraInfo) {
                                         EmptyView()
-                                    }
+                    };
+                    
+                  
                 }
                 .padding()
                 .navigationBarTitle("작품 촬영", displayMode: .large)
+                
+                
+                
+                
+                
                 .background(
                     NavigationLink(
                         destination: AnalyzeImage(image: scannedImages.last?.image),
@@ -116,6 +124,7 @@ struct AnalyzeImage: View {
     var image: UIImage?
     
     @StateObject private var viewModel = ImageSearchViewModel()
+    @State private var navigateToDescription = false
 
     var body: some View {
         VStack {
@@ -132,11 +141,17 @@ struct AnalyzeImage: View {
                     Text(errorMessage)
                         .foregroundColor(.red)
                 } else if !viewModel.searchResults.isEmpty {
-                    // Since searchResults is now a list of strings, we'll just display them in the List
-                    List(viewModel.searchResults, id: \.self) { result in
-                        Text(result)
+                   
+                   
+                    
+                        Text(viewModel.searchResults)
                             .font(.subheadline)
-                    }
+                    
+                    .onAppear {
+                                            navigateToDescription = true
+                                        }
+                    
+                    
                 } else {
                     Text("No results found.")
                         .padding()
@@ -145,11 +160,17 @@ struct AnalyzeImage: View {
                 Text("No image available")
             }
         }
+        
         // .navigationTitle("이미지 분석중..")
         .onChange(of: image) { newImage in
             if let image = newImage {
                 viewModel.searchImage(image: image)
             }
+        }
+        .background() {
+            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults), isActive: $navigateToDescription) {
+                                EmptyView()
+                            }
         }
     }
 }

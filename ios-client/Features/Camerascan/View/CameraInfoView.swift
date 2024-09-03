@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CameraInfoView: View {
+    
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -118,6 +120,8 @@ struct CameraInfoView: View {
                 Spacer()
             }
             .padding()
+            
+            
         }
         .navigationTitle("촬영 가이드")
     }

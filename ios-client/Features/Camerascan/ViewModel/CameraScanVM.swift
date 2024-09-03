@@ -8,7 +8,7 @@ import Foundation
 import Alamofire
 
 class ImageSearchViewModel: ObservableObject {
-    @Published var searchResults: [String] = []
+    @Published var searchResults: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
@@ -40,7 +40,7 @@ class ImageSearchViewModel: ObservableObject {
                     // Extract the file name where rank is 1
                     if let rank1Result = results.first(where: { $0["rank"] as? Int == 1 }),
                        let fileName = rank1Result["file"] as? String {
-                        self.searchResults = [fileName]
+                        self.searchResults = fileName.replacingOccurrences(of: "photo/", with: "")
                     } else {
                         self.errorMessage = "Rank 1 file not found."
                     }
