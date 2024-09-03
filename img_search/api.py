@@ -80,12 +80,13 @@ def load_data():
 
 class eng_id(BaseModel):
     file: str
-
+    
 @app.post("/get-description/")
 async def get_description(data: eng_id):
     # 데이터 로드
     json_data = load_data()
     first_file = data.file
+    s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
     try:
         matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
@@ -97,7 +98,8 @@ async def get_description(data: eng_id):
         'description': matched.get('description', 'N/A'),
         'explanation': matched.get('explanation', 'N/A'),
         'comment': matched.get('comment', 'N/A'),
-        'meta': matched.get('meta', 'N/A')
+        'meta': matched.get('meta', 'N/A'),
+        'image_url': s3_url
     }
 
 load_dotenv()
