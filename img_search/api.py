@@ -7,7 +7,6 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
-from typing import List
 from dotenv import load_dotenv
 from s3_module import list_images_in_s3, download_image_from_s3
 from cnn_module import load_or_create_feature_vectors, preprocess_query
@@ -60,7 +59,7 @@ async def search_image(file: UploadFile = File(...)):
         results = []
         for n, i in enumerate(indices[0]):
             top_n_id = file_list[i]
-            # print('topn id', top_n_id)
+            print('topn id', top_n_id)
             results.append({
                 'rank': n+1,
                 'file': top_n_id,
@@ -138,7 +137,7 @@ async def describe_image(request: str = Form(...), # original path
                          crop_image: UploadFile = File(...)):
     
     # 이미지 불러오기
-    print('request', request)
+    # print('request', request)
     original_image = download_image_from_s3(request)
     crop_image_data = await crop_image.read()
 

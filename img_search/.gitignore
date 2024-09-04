@@ -1,6 +1,4 @@
 .env
-__pycache__
-data/*
-!data/data.json
+__pycache__/
 temp/
 .DS_Store

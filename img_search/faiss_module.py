@@ -12,6 +12,10 @@ def load_or_create_faiss_index(idx_path, fv):
     if os.path.isfile(idx_path):
         idx = faiss.read_index(idx_path)
     else:
+        feature_dir = os.path.dirname(idx_path)
+        if not os.path.exists(feature_dir):
+            os.makedirs(feature_dir)
+            print(f"Directory {feature_dir} created.")
         idx = make_faiss_idx(fv, idx_path)
     return idx
 
