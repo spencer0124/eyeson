@@ -85,6 +85,8 @@ async def get_description(data: eng_id):
     # 데이터 로드
     json_data = load_data()
     first_file = data.file
+    if first_file[-4].isdigit():
+        first_file[-4] = '1'
     s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
     try:
