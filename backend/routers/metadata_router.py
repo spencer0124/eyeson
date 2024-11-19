@@ -13,7 +13,7 @@ def load_data():
 def get_filename_from_path(s3_key: str) -> str:
     return os.path.basename(s3_key)
 
-@router.get("/images-with-metadata/")
+@router.get("/withImages/")
 async def get_images_with_metadata():
     try:
         data = load_data()
