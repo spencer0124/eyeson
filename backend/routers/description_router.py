@@ -19,11 +19,10 @@ def load_data() -> List[Dict[str, Any]]:
 
 @router.post("/get-description/")
 async def get_description(data: EngId):
-    print(data)
     json_data = load_data()
     first_file = data.file
     if first_file[-4].isdigit():
-        first_file = first_file[:-5]+'1'+first_file[-4:]
+        first_file = first_file[:-5] + '1' + first_file[-4:]
     s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
     try:
