@@ -118,8 +118,8 @@ manager = ConnectionManager()
 
 @router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
-    await manager.connect(websocket, museum)
     try:
+        await manager.connect(websocket, museum)
         while True:
             data = await websocket.receive_text()
             message = manager.format_message(
@@ -132,6 +132,9 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
             await manager.broadcast(museum, message)
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        await websocket.close(code=1006)
 
 @router.get("/museums")
 async def get_active_museums():
