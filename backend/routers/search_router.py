@@ -40,7 +40,7 @@ async def search_image(file: UploadFile = File(...)):
                 'rank': n+1,
                 'file': top_n_id,
             })
-
+        print(results)
         return {"results": results}
 
     except Exception as e:

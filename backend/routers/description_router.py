@@ -19,6 +19,7 @@ def load_data() -> List[Dict[str, Any]]:
 
 @router.post("/get-description/")
 async def get_description(data: EngId):
+    print(data)
     json_data = load_data()
     first_file = data.file
     if first_file[-4].isdigit():
