@@ -1,28 +1,28 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi.responses import HTMLResponse
 from typing import List, Dict
 from datetime import datetime
+from services.chat_services import format_message, validate_username, validate_museum_name
 
 router = APIRouter()
 
-# ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
         self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artwork)
-        self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
 
-    def generate_username(self, museum: str) -> str:
-        """박물관별로 유저 이름을 자동으로 생성 ('익명1', '익명2'...)"""
-        if museum not in self.username_counters:
-            self.username_counters[museum] = 1  # 최초 연결 시 카운터를 1로 시작
-        
-        username_number = self.username_counters[museum]
-        self.username_counters[museum] += 1  # 다음 유저를 위해 카운터 증가
-        
-        return f"익명{username_number}"
+    async def connect(self, websocket: WebSocket, museum: str, username: str):
+        if not validate_museum_name(museum):
+            raise HTTPException(status_code=400, detail="Invalid museum name")
+        if not validate_username(username):
+            raise HTTPException(status_code=400, detail="Invalid username")
+            
+        # CORS check (if needed)
+        origin = websocket.headers.get('origin')
+        allowed_origins = ["http://43.201.93.53:8000", "http://localhost:8000", "*"]  # 원하는 CORS origin 설정
 
-    async def connect(self, websocket: WebSocket, museum: str):
-        username = self.generate_username(museum)  # 유저 이름을 자동으로 생성
+        if origin not in allowed_origins:
+            raise HTTPException(status_code=403, detail="CORS policy violation")
         
         await websocket.accept()
         
@@ -33,7 +33,7 @@ class ConnectionManager:
         self.user_info[websocket] = (museum, username, None)  # `None` is the default for artwork
         
         # 입장 메시지 전송
-        system_message = self.format_message(
+        system_message = format_message(
             message_type="system",
             content=f"{username} joined the museum chat",
             username="System",
@@ -53,7 +53,7 @@ class ConnectionManager:
             del self.user_info[websocket]
             
             # 퇴장 메시지 전송
-            system_message = self.format_message(
+            system_message = format_message(
                 message_type="system",
                 content=f"{username} left the museum chat",
                 username="System",
@@ -77,48 +77,23 @@ class ConnectionManager:
     def get_active_museums(self) -> List[str]:
         """현재 활성화된 박물관 채팅방 목록"""
         return list(self.active_connections.keys())
-    
-    async def update_artwork(self, websocket: WebSocket, new_artwork: str):
-        """유저가 보는 작품을 변경하고, 해당 작품을 채팅방에 브로드캐스트"""
-        if websocket in self.user_info:
-            museum, username, _ = self.user_info[websocket]
-            self.user_info[websocket] = (museum, username, new_artwork)  # Update artwork
-            
-            # 작품 변경 메시지 전송
-            system_message = self.format_message(
-                message_type="system",
-                content=f"{username} is now viewing {new_artwork}",
-                username="System",
-                museum=museum,
-                active_users=self.get_active_users(museum)
-            )
-            await self.broadcast(museum, system_message)
-
-    def format_message(
-        self, message_type: str, content: str, username: str, museum: str, active_users: List[str]
-    ) -> Dict[str, str]:
-        """채팅 메시지 포맷 통일"""
-        return {
-            "type": message_type,
-            "content": content,
-            "username": username,
-            "museum": museum,
-            "timestamp": datetime.now().isoformat(),
-            "active_users": active_users
-        }
 
 manager = ConnectionManager()
 
-@router.websocket("/ws/{museum}")
-async def websocket_endpoint(websocket: WebSocket, museum: str):
-    await manager.connect(websocket, museum)
+@router.websocket("/ws/{museum}/{username}")
+async def websocket_endpoint(
+    websocket: WebSocket, 
+    museum: str, 
+    username: str
+):
+    await manager.connect(websocket, museum, username)
     try:
         while True:
             data = await websocket.receive_text()
-            message = manager.format_message(
+            message = format_message(
                 message_type="message",
                 content=data,
-                username=manager.user_info[websocket][1],  # 유저 이름 가져오기
+                username=username,
                 museum=museum,
                 active_users=manager.get_active_users(museum)
             )
@@ -136,6 +111,9 @@ async def get_active_museums():
 
 @router.get("/museums/{museum}/users")
 async def get_museum_users(museum: str):
+    if not validate_museum_name(museum):
+        raise HTTPException(status_code=400, detail="Invalid museum name")
+        
     users = manager.get_active_users(museum)
     return {
         "museum": museum,
