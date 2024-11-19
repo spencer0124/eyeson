@@ -36,7 +36,7 @@
             }
             
             // WebSocket 연결 (자동으로 익명 사용자 생성)
-            socket = new WebSocket(`ws://43.201.93.53:8000/ws/${museumName}`);
+            socket = new WebSocket(`ws://0.0.0.0:8000/ws/${museumName}`);
             
             socket.onopen = function(event) {
                 console.log('WebSocket is connected!');

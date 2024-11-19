@@ -116,7 +116,7 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-@router.websocket("ws/{museum}")
+@router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
     await manager.connect(websocket, museum)
     try:
