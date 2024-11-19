@@ -17,7 +17,7 @@ def load_data() -> List[Dict[str, Any]]:
     with open(data_path, "r") as f:
         return json.load(f)
 
-@router.post("/getOrigin/")
+@router.post("/get-origin/")
 async def get_description(data: EngId):
     json_data = load_data()
     first_file = data.file
@@ -39,7 +39,7 @@ async def get_description(data: EngId):
         'image_url': s3_url
     }
 
-@router.post("/gptPlus/")
+@router.post("/gptplus/")
 async def describe_image(request: str = Form(...), crop_image: UploadFile = File(...)):
     try:
         original_image = download_image_from_s3(request)
