@@ -1,37 +1,39 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
 from typing import List, Dict
 from datetime import datetime
-from services.chat_services import format_message, validate_username, validate_museum_name
 
 router = APIRouter()
 
+# ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
-        # 박물관별 WebSocket 연결을 저장하는 딕셔너리
-        # Key: 박물관명, Value: WebSocket 리스트
         self.active_connections: Dict[str, List[WebSocket]] = {}
-        # 사용자 정보를 저장하는 딕셔너리 
-        # Key: WebSocket, Value: (박물관명, 사용자명)
-        self.user_info: Dict[WebSocket, tuple] = {}
+        self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artwork)
+        self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
 
-    async def connect(self, websocket: WebSocket, museum: str, username: str):
-        # 유효성 검사
-        if not validate_museum_name(museum):
-            raise HTTPException(status_code=400, detail="Invalid museum name")
-        if not validate_username(username):
-            raise HTTPException(status_code=400, detail="Invalid username")
-            
+    def generate_username(self, museum: str) -> str:
+        """박물관별로 유저 이름을 자동으로 생성 ('익명1', '익명2'...)"""
+        if museum not in self.username_counters:
+            self.username_counters[museum] = 1  # 최초 연결 시 카운터를 1로 시작
+        
+        username_number = self.username_counters[museum]
+        self.username_counters[museum] += 1  # 다음 유저를 위해 카운터 증가
+        
+        return f"익명{username_number}"
+
+    async def connect(self, websocket: WebSocket, museum: str):
+        username = self.generate_username(museum)  # 유저 이름을 자동으로 생성
+        
         await websocket.accept()
         
-        # 박물관 채팅방이 없다면 새로 생성
         if museum not in self.active_connections:
             self.active_connections[museum] = []
-            
+        
         self.active_connections[museum].append(websocket)
-        self.user_info[websocket] = (museum, username)
+        self.user_info[websocket] = (museum, username, None)  # `None` is the default for artwork
         
         # 입장 메시지 전송
-        system_message = format_message(
+        system_message = self.format_message(
             message_type="system",
             content=f"{username} joined the museum chat",
             username="System",
@@ -42,17 +44,16 @@ class ConnectionManager:
 
     async def disconnect(self, websocket: WebSocket):
         if websocket in self.user_info:
-            museum, username = self.user_info[websocket]
+            museum, username, _ = self.user_info[websocket]
             self.active_connections[museum].remove(websocket)
             
-            # 박물관 채팅방에 아무도 없으면 삭제
             if not self.active_connections[museum]:
                 del self.active_connections[museum]
                 
             del self.user_info[websocket]
             
             # 퇴장 메시지 전송
-            system_message = format_message(
+            system_message = self.format_message(
                 message_type="system",
                 content=f"{username} left the museum chat",
                 username="System",
@@ -76,23 +77,48 @@ class ConnectionManager:
     def get_active_museums(self) -> List[str]:
         """현재 활성화된 박물관 채팅방 목록"""
         return list(self.active_connections.keys())
+    
+    async def update_artwork(self, websocket: WebSocket, new_artwork: str):
+        """유저가 보는 작품을 변경하고, 해당 작품을 채팅방에 브로드캐스트"""
+        if websocket in self.user_info:
+            museum, username, _ = self.user_info[websocket]
+            self.user_info[websocket] = (museum, username, new_artwork)  # Update artwork
+            
+            # 작품 변경 메시지 전송
+            system_message = self.format_message(
+                message_type="system",
+                content=f"{username} is now viewing {new_artwork}",
+                username="System",
+                museum=museum,
+                active_users=self.get_active_users(museum)
+            )
+            await self.broadcast(museum, system_message)
+
+    def format_message(
+        self, message_type: str, content: str, username: str, museum: str, active_users: List[str]
+    ) -> Dict[str, str]:
+        """채팅 메시지 포맷 통일"""
+        return {
+            "type": message_type,
+            "content": content,
+            "username": username,
+            "museum": museum,
+            "timestamp": datetime.now().isoformat(),
+            "active_users": active_users
+        }
 
 manager = ConnectionManager()
 
-@router.websocket("/ws/{museum}/{username}")
-async def websocket_endpoint(
-    websocket: WebSocket, 
-    museum: str, 
-    username: str
-):
-    await manager.connect(websocket, museum, username)
+@router.websocket("/ws/{museum}")
+async def websocket_endpoint(websocket: WebSocket, museum: str):
+    await manager.connect(websocket, museum)
     try:
         while True:
             data = await websocket.receive_text()
-            message = format_message(
+            message = manager.format_message(
                 message_type="message",
                 content=data,
-                username=username,
+                username=manager.user_info[websocket][1],  # 유저 이름 가져오기
                 museum=museum,
                 active_users=manager.get_active_users(museum)
             )
@@ -102,7 +128,6 @@ async def websocket_endpoint(
 
 @router.get("/museums")
 async def get_active_museums():
-    """현재 활성화된 박물관 채팅방 목록 조회"""
     museums = manager.get_active_museums()
     return {
         "museums": museums,
@@ -111,10 +136,6 @@ async def get_active_museums():
 
 @router.get("/museums/{museum}/users")
 async def get_museum_users(museum: str):
-    """특정 박물관 채팅방의 현재 접속자 목록 조회"""
-    if not validate_museum_name(museum):
-        raise HTTPException(status_code=400, detail="Invalid museum name")
-        
     users = manager.get_active_users(museum)
     return {
         "museum": museum,
