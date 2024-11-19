@@ -3,13 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload</title>
+    <title>WebSocket Chat Test</title>
 </head>
 <body>
-    <h1>Upload an Image</h1>
-    <form action="http://127.0.0.1:8000/search/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" required>
-        <button type="submit">Upload</button>
-    </form>
+    <h2>WebSocket Chat Test</h2>
+    <div>
+        <label for="museum">Museum Name:</label>
+        <input type="text" id="museum" placeholder="Enter museum name">
+    </div>
+    <div>
+        <button id="connectBtn">Connect to Chat</button>
+    </div>
+    <div>
+        <h3>Chat Messages:</h3>
+        <ul id="messages"></ul>
+    </div>
+    <div>
+        <textarea id="messageInput" placeholder="Enter your message"></textarea>
+        <button id="sendMessageBtn">Send Message</button>
+    </div>
+
+    <script>
+        let socket;
+        let museumName;
+        let username;
+
+        document.getElementById('connectBtn').addEventListener('click', function() {
+            museumName = document.getElementById('museum').value;
+            if (!museumName) {
+                alert("Please enter a museum name.");
+                return;
+            }
+            
+            // WebSocket 연결 (자동으로 익명 사용자 생성)
+            socket = new WebSocket(`ws://127.0.0.1:8000/ws/${museumName}/`);
+            
+            socket.onopen = function(event) {
+                console.log('WebSocket is connected!');
+            };
+            
+            socket.onmessage = function(event) {
+                const message = JSON.parse(event.data);
+                const messageElement = document.createElement("li");
+                messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
+                document.getElementById("messages").appendChild(messageElement);
+            };
+
+            socket.onclose = function(event) {
+                console.log('WebSocket is closed!');
+            };
+        });
+
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            const message = document.getElementById('messageInput').value;
+            if (socket && message) {
+                socket.send(message); // 서버로 메시지 전송
+                document.getElementById('messageInput').value = ''; // 메시지 입력칸 비우기
+            }
+        });
+    </script>
 </body>
 </html>
