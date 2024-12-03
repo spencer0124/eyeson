@@ -17,12 +17,13 @@ struct ArtworkView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var isImagePresented = false
     @State private var isBottomSheetPresented = false
+    @State private var capturedImage: UIImage? = nil
 
     var body: some View {
         
         ScrollView {
         VStack(alignment: .leading, spacing: 0) {
-            if viewModel.isLoading {
+            if viewModel.isLoadingFetchDescription {
                 ProgressView("로딩중...")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
@@ -76,6 +77,8 @@ struct ArtworkView: View {
                                                 Spacer()
                                                 Button(action: {
                                                     withAnimation {
+                                                        captureScreenshotAndRequestDescription()
+                                                        
                                                             isBottomSheetPresented = true
                                                     }
                                                 }, label: {
@@ -158,48 +161,74 @@ struct ArtworkView: View {
 
 
     private var bottomSheet: some View {
-            VStack(alignment: .leading) {
-//                HStack {
-//                    Spacer()
-//                    Button(action: {
-//                        withAnimation {
-//                                isBottomSheetPresented = false
-//                            }
-//                                    }) {
-//                                        Image(systemName: "xmark")
-//                                            .foregroundColor(.black)
-//                                            .padding()
-//                                            .background(Color.white)
-//                                            .cornerRadius(15)
-//                                    }
-//                }
-//                
-                
-                
-                HStack {
+        VStack {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    if viewModel.isLoadingRequestDescription {
+                        VStack {
+                            Spacer()
+                            ProgressView("해설 로딩중...")
+                                .padding()
+//                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else if !viewModel.descriptionText.isEmpty {
+                        Text(viewModel.descriptionText)
+                            .padding()
+                    } else {
+                        Text("설명 텍스트가 없습니다.")
+                            .padding()
+                    }
+                    
                     Spacer()
-                    ProgressView("해설 불러오는 중")
-                    Spacer()
+                        .frame(height: 60)
                 }
-                
-                           
-
-                
-               
-                Spacer()
-                    .frame(height: 60)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            
+            Divider()
+            
+            Button(action: {
+                isBottomSheetPresented = false
+            }) {
+                Text("닫기")
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
+            .padding()
+        }
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
             .background(Color.white)
             .cornerRadius(20)
             .shadow(radius: 20)
             .ignoresSafeArea()
+            .onAppear() {
+                captureScreenshotAndRequestDescription()
+            }
         }
+    
+    private func captureScreenshotAndRequestDescription() {
+            let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+            let renderer = UIGraphicsImageRenderer(size: window?.bounds.size ?? CGSize.zero)
+            
+            let image = renderer.image { context in
+                window?.layer.render(in: context.cgContext)
+            }
+        
+            capturedImage = image
+       
+            viewModel.requestDescriptionWithScreenshot(image: image, file: "photo/" + eng_id)
+        }
+    
+    
 
 }
 
 
 
 #Preview {
-    ArtworkView(eng_id: "ByeongyunLee_Bird.JPG")
+    ArtworkView(eng_id: "JeongyeonMoon_Golden.jpg")
 }

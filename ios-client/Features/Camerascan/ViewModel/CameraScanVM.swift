@@ -33,6 +33,8 @@ class ImageSearchViewModel: ObservableObject {
         .responseJSON { response in
             self.isLoading = false
             
+            print("Full response: \(response)")
+            
             switch response.result {
             case .success(let data):
                 if let json = data as? [String: Any],

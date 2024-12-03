@@ -13,20 +13,21 @@ class DescriptionViewModel: ObservableObject {
     @Published var commentText: String = ""
     @Published var image_url: String = ""
     @Published var meta: [String: String] = [:]
-    @Published var isLoading: Bool = false
+    @Published var isLoadingFetchDescription: Bool = false
+    @Published var isLoadingRequestDescription: Bool = false
     @Published var errorMessage: String?
 
     func fetchDescription(for file: String) {
-        isLoading = true
+        isLoadingFetchDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/get-description/"
+        let url = "http://43.201.93.53:8000/description/get-origin/"
         let parameters: [String: String] = ["file": file]
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .responseJSON { response in
-                self.isLoading = false
+                self.isLoadingFetchDescription = false
                 
                 switch response.result {
                 case .success(let data):
@@ -43,5 +44,58 @@ class DescriptionViewModel: ObservableObject {
                     self.errorMessage = "Failed to fetch description: \(error.localizedDescription)"
                 }
             }
+    }
+    
+    
+    func requestDescriptionWithScreenshot(image: UIImage, file: String) {
+        isLoadingRequestDescription = true
+        errorMessage = nil
+        
+        let url = "http://43.201.93.53:8000/description/gptplus/"
+        let headers: HTTPHeaders = [
+            "Content-Type": "multipart/form-data"
+        ]
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            self.errorMessage = "Failed to process image."
+            self.isLoadingRequestDescription = false
+            return
+        }
+        
+        print("Request URL: \(url)")
+        print("Headers: \(headers)")
+        print("File Content: \(file)")
+
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(Data(file.utf8), withName: "request")
+            multipartFormData.append(imageData, withName: "crop_image", fileName: "image.jpg", mimeType: "image/jpeg")
+        }, to: url, headers: headers) { $0.timeoutInterval = 180 }
+
+
+//        .validate()
+        .validate(statusCode: 200..<600)
+        .responseData { response in
+            self.isLoadingRequestDescription = false
+            
+            print("Full response: \(response)")
+            
+            switch response.result {
+            case .success(let data):
+                if let utf8Text = String(data: data, encoding: .utf8) {
+                    // Convert the UTF-8 string to JSON
+                    if let jsonData = utf8Text.data(using: .utf8),
+                       let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                        self.descriptionText = json["description"] as? String ?? "No description available."
+                    } else {
+                        self.errorMessage = "Failed to parse the JSON response."
+                    }
+                } else {
+                    self.errorMessage = "Failed to decode response as UTF-8."
+                }
+            case .failure(let error):
+                self.errorMessage = "Failed to fetch description: \(error.localizedDescription)"
+            }
+        }
     }
 }

@@ -28,12 +28,11 @@
       }
     },
     {
-      "identity" : "swiftui-image-viewer",
+      "identity" : "swiftui-image-viewer-custom",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/fuzzzlove/swiftui-image-viewer.git",
+      "location" : "https://github.com/spencer0124/swiftui-image-viewer-custom",
       "state" : {
-        "revision" : "ca77123064ae046eac2be01654ee756085c2b182",
-        "version" : "1.0.0"
+        "revision" : "861766e6ca99233e6566b7e6e1ec130662719428"
       }
     },
     {
@@ -41,8 +40,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/markiv/SwiftUI-Shimmer",
       "state" : {
-        "revision" : "e3aa4226b0fafe345ca1c920f516b6a2f3e0aacc",
-        "version" : "1.5.0"
+        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version" : "1.5.1"
       }
     }
   ],

@@ -114,10 +114,20 @@ struct CamerascanView: View {
     private func addScannedImages(images: [UIImage], date: Date) {
         let newEntries = images.map { (UUID(), $0, date) }
         
+        // 새로운 이미지가 잘 들어오는지 확인
+            print("새로 추가된 이미지 개수: \(newEntries.count)")
+        
         // Remove all entries with the same date, then add the new entry
         for newEntry in newEntries {
+            print("새 이미지 ID: \(newEntry), 날짜: \(formattedDate(newEntry.2))")
             scannedImages.removeAll(where: { formattedDate($0.date) == formattedDate(newEntry.2) })
             scannedImages.append(newEntry)
+            
+            // 현재 scannedImages 배열의 상태 출력
+                    print("현재 scannedImages 배열:")
+                    for entry in scannedImages {
+                        print("ID: \(entry.id), 날짜: \(formattedDate(entry.date))")
+                    }
         }
     }
 }
@@ -130,15 +140,13 @@ struct AnalyzeImage: View {
     @StateObject private var viewModel = ImageSearchViewModel()
     @State private var navigateToDescription = false
     @State private var hasLoadedData = false
+    @State private var showContent = false
 
     var body: some View {
         VStack {
             if let image = image {
                 // Uncomment and adjust the image display if needed
-                // Image(uiImage: image)
-                //     .resizable()
-                //     .scaledToFit()
-                //     .frame(maxHeight: 400)
+                
                 
                 if viewModel.isLoading {
                     ProgressView("이미지 분석중...")
@@ -146,19 +154,58 @@ struct AnalyzeImage: View {
                     Text(errorMessage)
                         .foregroundColor(.red)
                 } else if !viewModel.searchResults.isEmpty {
-                   
-                   
-                    
-                    Text(viewModel.searchResults)
-                        .font(.subheadline)
-                    
-                    .onAppear {
-                                hasLoadedData = true
+                    ZStack {
+                        Color("backgroundColor")
+                            .ignoresSafeArea()
+                        if showContent {
+                        VStack {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 400)
+                            Text("일치하는 작품을 찾았어요!")
+                                .font(.title2)
+                            //                        Text(viewModel.searchResults)
+                            //                            .font(.subheadline)
+                            Button(action: {
                                 navigateToDescription = true
-                                
+                            }) {
+                                Text("작품 보기")
+                                    .font(.system(size: 15))
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .background(Color(hex: "404293"))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
                             }
-                    
-                    
+                            .padding(.horizontal, 41)
+                            Button(action: {
+                                dismiss()
+                            }) {
+                                Text("취소")
+                                    .font(.system(size: 15))
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 10)
+                                    .background(Color.white)
+                                    .foregroundColor(.black)
+                                    .cornerRadius(10)
+                            }
+                            .padding(.horizontal, 41)
+                            
+                            
+                        }
+                    }
+                }
+                .onAppear {
+                    hasLoadedData = true
+                   navigateToDescription = true
+                        
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            showContent = true
+                            navigateToDescription = true
+                                                }
+
+                            }
                 } else {
                     Text("No results found.")
                         .padding()
@@ -170,11 +217,17 @@ struct AnalyzeImage: View {
         
         // .navigationTitle("이미지 분석중..")
         .onChange(of: image) { newImage in
+            
             if let image = newImage {
+               
                 viewModel.searchImage(image: image)
             }
         }
         .onAppear() {
+            if let image = image {
+                print("called here #1")
+                    viewModel.searchImage(image: image)
+                }
             if(hasLoadedData) {
                 dismiss()
             }
