@@ -18,7 +18,7 @@ def generate_image_description(original_dtype, base64_image, crop_dtype, crop_ba
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4v",
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "당신은 미술품을 객관적으로, 간결하게 묘사해주는 미술관 큐레이터입니다."},
                 {"role": "user", "content": [
