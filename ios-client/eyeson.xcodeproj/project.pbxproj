@@ -1000,15 +1000,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "눈와";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "전시 작품을 촬영하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1017,9 +1016,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1039,15 +1040,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "눈와";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "주변 인원수를 파악하기 위해 블루투스 권한이 필요합니다";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "전시 작품을 촬영하기 위해 카메라 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 전시 검색을 위해 위치 권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1056,9 +1056,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
