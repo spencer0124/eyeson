@@ -2,6 +2,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
 from typing import List, Dict
 from datetime import datetime, date
 import asyncio
+from starlette.websockets import WebSocketState
 
 router = APIRouter()
 
@@ -12,6 +13,7 @@ class ConnectionManager:
         self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artwork)
         self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
         self.message_history: Dict[str, List[dict]] = {}  # 박물관별 메시지 기록
+        self.cleanup_task = asyncio.create_task(self.cleanup_old_messages())  # 백그라운드 작업 시작
 
     def generate_username(self, museum: str) -> str:
         """박물관별로 유저 이름을 자동으로 생성 ('익명1', '익명2'...)"""
@@ -145,6 +147,17 @@ class ConnectionManager:
         for message in today_messages:
             await websocket.send_json(message)
 
+    async def cleanup_old_messages(self):
+        """백그라운드 작업으로 오래된 메시지 정리"""
+        while True:
+            await asyncio.sleep(3600)  # 매시간 실행
+            today_str = date.today().isoformat()
+            for museum in self.message_history:
+                self.message_history[museum] = [
+                    msg for msg in self.message_history[museum]
+                    if msg["timestamp"].startswith(today_str)
+                ]
+
 manager = ConnectionManager()
 
 @router.websocket("/ws/{museum}")
@@ -152,7 +165,8 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
     print("WebSocket endpoint called")  # 추가된 로그
     try:
         await manager.connect(websocket, museum)
-        if websocket.client_state != websocket.CONNECTED:
+        # 연결이 거부된 경우, WebSocket의 상태가 CONNECTED가 아님
+        if websocket.application_state != WebSocketState.CONNECTED:
             return  # 연결이 거부된 경우 더 이상 진행하지 않음
 
         while True:
@@ -170,7 +184,7 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
         await manager.disconnect(websocket)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        await websocket.close(code=1006)
+        await websocket.close(code=1008, reason="Internal server error")
 
 @router.get("/museums")
 async def get_active_museums():
