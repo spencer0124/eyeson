@@ -26,11 +26,13 @@ class ConnectionManager:
         
         # CORS check (if needed)
         origin = websocket.headers.get('origin')
-        allowed_origins = ["http://43.201.93.53:8000", "http://0.0.0.0:8000", "*"]  # 원하는 CORS origin 설정
+        print(f"WebSocket origin: {origin}")  # Origin 값 로깅
+        allowed_origins = ["http://43.201.93.53:8000"]
 
-        if origin not in allowed_origins:
-            raise HTTPException(status_code=403, detail="CORS policy violation")
-        
+        if origin not in allowed_origins and "*" not in allowed_origins:
+            await websocket.close(code=1008)  # 정책 위반 시 연결 종료
+            return
+
         await websocket.accept()
         
         if museum not in self.active_connections:
