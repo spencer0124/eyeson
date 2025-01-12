@@ -162,21 +162,26 @@ class ConnectionManager:
     async def archive_and_clear_old_messages(self):
         """하루가 지나면 Redis 데이터를 로그 파일로 저장하고 삭제"""
         yesterday = (date.today() - timedelta(days=1)).isoformat()
+        print(f"[DEBUG] Processing date: {yesterday}")
         redis_keys = self.redis_client.keys(f"chat:*:{yesterday}")
+        print(f"[DEBUG] Redis keys found: {redis_keys}")
 
         for redis_key in redis_keys:
             museum = redis_key.split(":")[1]
             messages = self.redis_client.lrange(redis_key, 0, -1)
+            print(f"[DEBUG] Messages for {redis_key}: {messages}")
 
             # 로그 파일에 저장
-            log_filename = f"logs/museum_{museum}_{yesterday}.log"
+            log_filename = f"logs/museum{museum}_{yesterday}.log"
             with open(log_filename, "a", encoding="utf-8") as f:
                 for message in messages:
                     f.write(message + "\n")
+                    print(f"[DEBUG] Writing message to log: {message}")
 
             # Redis에서 삭제
             self.redis_client.delete(redis_key)
-            print(f"{redis_key}의 메시지가 로그 파일 {log_filename}로 저장되고 삭제되었습니다.")
+            print(f"[DEBUG] Deleted Redis key: {redis_key}")
+
 
     async def update_last_seen(self, unique_key: str):
         """Redis에 유저의 마지막 접속 시간 업데이트"""
