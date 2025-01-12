@@ -32,8 +32,8 @@ class ConnectionManager:
         user_agent = websocket.headers.get("user-agent", "unknown")
         return f"{museum}-{client_ip}-{user_agent}"
 
-    def generate_username(self, museum: str, unique_key: str) -> str:
-        """익명 ID를 생성하거나 기존 ID를 반환"""
+    def generate_username(self, museum: str, unique_key: str, artworkid: str) -> str:
+        """익명 ID를 생성하거나 기존 ID를 반환 (artworkid 포함)"""
         if unique_key not in self.user_id_map:
             # 익명 ID 생성
             if museum not in self.username_counters:
@@ -41,7 +41,8 @@ class ConnectionManager:
             username_number = self.username_counters[museum]
             self.username_counters[museum] += 1
             self.user_id_map[unique_key] = f"익명{username_number}"
-        return self.user_id_map[unique_key]
+        # 유저 이름에 artworkid 추가
+        return f"{self.user_id_map[unique_key]} ({artworkid})"
 
     async def connect(self, websocket: WebSocket, museum: str):
         """유저 연결 처리"""
@@ -64,7 +65,7 @@ class ConnectionManager:
 
         # 고유 키 생성 및 익명 ID 가져오기
         unique_key = self.generate_unique_key(websocket, museum)
-        username = self.generate_username(museum, unique_key)
+        username = self.generate_username(museum, unique_key, artworkid)
 
         # 마지막 접속 시간 갱신
         self.last_seen[unique_key] = datetime.now(timezone.utc)
@@ -84,6 +85,26 @@ class ConnectionManager:
             active_users=self.get_active_users(museum)
         )
         await self.broadcast(museum, system_message)
+
+    async def update_artwork(self, websocket: WebSocket, new_artworkid: str):
+        """유저가 보는 작품을 변경하고, 채팅방에 알림"""
+        if websocket in self.user_info:
+            museum, old_username, _ = self.user_info[websocket]
+            unique_key = self.generate_unique_key(websocket, museum)
+            new_username = self.generate_username(museum, unique_key, new_artworkid)
+
+            # 유저 정보 업데이트
+            self.user_info[websocket] = (museum, new_username, new_artworkid)
+
+            # 작품 변경 메시지 전송
+            system_message = self.format_message(
+                message_type="system",
+                content=f"{old_username} is now viewing {new_artworkid}",
+                username="System",
+                museum=museum,
+                active_users=self.get_active_users(museum)
+            )
+            await self.broadcast(museum, system_message)
 
     async def disconnect(self, websocket: WebSocket):
         """유저가 채팅방을 떠날 때 호출"""
@@ -131,7 +152,7 @@ class ConnectionManager:
                     await connection.send_json(message)
                 except Exception as e:
                     print(f"Error sending message to {self.user_info[connection][1]}: {e}")
-                    
+
     def get_active_users(self, museum: str) -> List[str]:
         """특정 박물관 채팅방의 현재 접속자 목록"""
         if museum not in self.active_connections:
