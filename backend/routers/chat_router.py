@@ -1,36 +1,28 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
-from datetime import datetime, date, timedelta, timezone
 import asyncio
 from starlette.websockets import WebSocketState
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import os
+import redis
 import json
+from datetime import datetime, date, timedelta, timezone
+import os
 
 router = APIRouter()
 
 # ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: Dict[str, List[WebSocket]] = {}
-        self.user_info: Dict[WebSocket, tuple] = {}
-        self.username_counters: Dict[str, int] = {}
-        self.message_history: Dict[str, Dict[str, List[dict]]] = {}
-        self.user_id_map: Dict[str, str] = {}
-        self.last_seen: Dict[str, datetime] = {}
-        self.lock = asyncio.Lock()
+        # Redis 클라이언트 초기화
+        self.redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+
+        # 스케줄러 설정
         self.cleanup_interval = timedelta(hours=24)
-
-        # 스케줄러 설정 (하지만 즉시 시작하지 않음)
         self.scheduler = AsyncIOScheduler()
-        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)
-        self.scheduler.add_job(self.cleanup_old_users, 'interval', hours=1)
-        os.makedirs("logs", exist_ok=True)
-
-    def start_scheduler(self):
-        """스케줄러를 명시적으로 시작"""
+        self.scheduler.add_job(self.archive_and_clear_old_messages, 'cron', hour=0, minute=0)  # 매일 자정 실행
         self.scheduler.start()
 
+        os.makedirs("logs", exist_ok=True)
 
     def generate_unique_key(self, websocket: WebSocket, museum: str) -> str:
         """유저를 고유하게 식별하기 위한 키 생성"""
@@ -183,44 +175,41 @@ class ConnectionManager:
         }
 
     async def add_message_to_history(self, museum: str, message: dict):
-        """메시지를 저장소에 추가"""
+        """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
-        print(f"저장 요청: {message}")  # 디버그 로그
-        async with self.lock:
-            if museum not in self.message_history:
-                self.message_history[museum] = {}
-            if today_str not in self.message_history[museum]:
-                self.message_history[museum][today_str] = []
-            self.message_history[museum][today_str].append(message)
-        print(f"현재 저장된 메시지 히스토리: {self.message_history}")  # 디버그 로그
+        redis_key = f"chat:{museum}:{today_str}"
 
-    async def send_history(self, websocket: WebSocket, museum: str):
-        """접속하는 유저에게 오늘의 메시지 히스토리 전송"""
+        # Redis 리스트에 메시지 추가
+        self.redis_client.rpush(redis_key, json.dumps(message))
+        print(f"메시지 저장: {message}")
+
+    async def get_messages_for_museum(self, museum: str):
+        """Redis에서 특정 박물관의 오늘 메시지 가져오기"""
         today_str = date.today().isoformat()
-        async with self.lock:
-            today_messages = self.message_history.get(museum, {}).get(today_str, [])
-        for message in today_messages:
-            await websocket.send_json(message)
+        redis_key = f"chat:{museum}:{today_str}"
 
-    async def write_messages_to_files(self):
-        """하루가 끝날 때마다 각 박물관별 메시지 히스토리를 파일로 저장"""
+        # Redis 리스트에서 메시지 로드
+        messages = self.redis_client.lrange(redis_key, 0, -1)
+        return [json.loads(message) for message in messages]
+
+    async def archive_and_clear_old_messages(self):
+        """하루가 지나면 Redis 데이터를 로그 파일로 저장하고 삭제"""
         yesterday = (date.today() - timedelta(days=1)).isoformat()
-        print("메시지 히스토리 확인:", self.message_history)  # 디버깅 로그 추가
-        async with self.lock:
-            for museum, dates in self.message_history.items():
-                if yesterday in dates:
-                    messages = dates[yesterday]
-                    log_filename = f"logs/museum_{museum}_{yesterday}.log"
-                    try:
-                        with open(log_filename, "a", encoding="utf-8") as f:
-                            for message in messages:
-                                f.write(json.dumps(message, ensure_ascii=False) + "\n")
-                        print(f"Saved {len(messages)} messages for museum {museum} to {log_filename}")
-                    except Exception as e:
-                        print(f"Error writing messages to file for museum {museum}: {e}")
-                    # 메시지 기록 삭제
-                    del dates[yesterday]
+        redis_keys = self.redis_client.keys(f"chat:*:{yesterday}")
 
+        for redis_key in redis_keys:
+            museum = redis_key.split(":")[1]
+            messages = self.redis_client.lrange(redis_key, 0, -1)
+
+            # 로그 파일에 저장
+            log_filename = f"logs/museum_{museum}_{yesterday}.log"
+            with open(log_filename, "a", encoding="utf-8") as f:
+                for message in messages:
+                    f.write(message + "\n")
+
+            # Redis에서 삭제
+            self.redis_client.delete(redis_key)
+            print(f"{redis_key}의 메시지가 로그 파일 {log_filename}로 저장되고 삭제되었습니다.")
 
     async def shutdown(self):
         """ConnectionManager 종료 시 호출되어야 하는 함수"""
@@ -235,29 +224,31 @@ manager = ConnectionManager()
 
 @router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
-    print("WebSocket endpoint called")  # 추가된 로그
     try:
         await manager.connect(websocket, museum)
-        # 연결이 거부된 경우, WebSocket의 상태가 CONNECTED가 아님
-        if websocket.application_state != WebSocketState.CONNECTED:
-            return  # 연결이 거부된 경우 더 이상 진행하지 않음
+
+        # 연결된 사용자에게 Redis에 저장된 오늘의 메시지 보내기
+        today_messages = await manager.get_messages_for_museum(museum)
+        for message in today_messages:
+            await websocket.send_json(message)
 
         while True:
             data = await websocket.receive_text()
             message = manager.format_message(
                 message_type="message",
                 content=data,
-                username=manager.user_info[websocket][1],  # 유저 이름 (이미 artworkid 포함)
+                username=manager.user_info[websocket][1],  # 유저 이름
                 museum=museum,
                 active_users=manager.get_active_users(museum)
             )
-            await manager.add_message_to_history(museum, message)  # 메시지 저장
-            await manager.broadcast(museum, message)
+            await manager.add_message_to_history(museum, message)  # Redis에 메시지 저장
+            await manager.broadcast(museum, message)  # 메시지 브로드캐스트
+
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        await websocket.close(code=1008, reason="Internal server error")  # 유효한 코드로 변경
+        await websocket.close(code=1008, reason="Internal server error")
 
 @router.get("/museums")
 async def get_active_museums():

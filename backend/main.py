@@ -24,13 +24,18 @@ app.include_router(description_router.router, prefix="/description", tags=["desc
 app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"])
 app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 
-@app.on_event("startup")
-async def startup_event():
-    """서버 시작 시 호출되는 이벤트"""
-    manager.start_scheduler()  # 스케줄러 명시적으로 시작
-
 @app.get("/")
 async def read_root(request: Request):
     query = request.url.query  # 쿼리 파라미터 가져오기
     redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
     return RedirectResponse(url=redirect_url)
+
+@app.on_event("startup")
+async def startup_event():
+    print("서버가 시작되었습니다.")
+    manager.start_scheduler()  # 스케줄러 시작
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("서버가 종료됩니다.")
+    manager.scheduler.shutdown(wait=False)  # 스케줄러 종료
