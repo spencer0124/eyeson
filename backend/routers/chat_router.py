@@ -83,6 +83,8 @@ class ConnectionManager:
         for message in today_messages:
             await websocket.send_json(message)
 
+        self.broadcast(museum, "today okkk")
+
         # 입장 메시지 전송
         system_message = self.format_message(
             message_type="system",
@@ -168,17 +170,12 @@ class ConnectionManager:
         """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
         redis_key = f"chat:{museum}:{today_str}"
-
-        # Redis 리스트에 메시지 추가
         self.redis_client.rpush(redis_key, json.dumps(message))
-        print(f"메시지 저장: {message}")
 
     async def get_messages_for_museum(self, museum: str):
         """Redis에서 특정 박물관의 오늘 메시지 가져오기"""
         today_str = date.today().isoformat()
         redis_key = f"chat:{museum}:{today_str}"
-
-        # Redis 리스트에서 메시지 로드
         messages = self.redis_client.lrange(redis_key, 0, -1)
         return [json.loads(message) for message in messages]
 
