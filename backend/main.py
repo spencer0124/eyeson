@@ -30,11 +30,6 @@ async def read_root(request: Request):
     redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
     return RedirectResponse(url=redirect_url)
 
-@app.on_event("startup")
-async def startup_event():
-    print("서버가 시작되었습니다.")
-    manager.start_scheduler()  # 스케줄러 시작
-
 @app.on_event("shutdown")
 async def shutdown_event():
     print("서버가 종료됩니다.")

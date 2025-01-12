@@ -174,7 +174,7 @@ class ConnectionManager:
             "active_users": active_users
         }
 
-    async def add_message_to_history(self, museum: str, message: dict):
+    async def sudo (self, museum: str, message: dict):
         """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
         redis_key = f"chat:{museum}:{today_str}"
