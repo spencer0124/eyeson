@@ -123,6 +123,15 @@ class ConnectionManager:
             
             print(f"Cleaned up {len(keys_to_remove)} old users.")
 
+    async def broadcast(self, museum: str, message: dict):
+        """특정 박물관 채팅방의 모든 사용자에게 메시지 전송"""
+        if museum in self.active_connections:
+            for connection in self.active_connections[museum]:
+                try:
+                    await connection.send_json(message)
+                except Exception as e:
+                    print(f"Error sending message to {self.user_info[connection][1]}: {e}")
+                    
     def get_active_users(self, museum: str) -> List[str]:
         """특정 박물관 채팅방의 현재 접속자 목록"""
         if museum not in self.active_connections:
