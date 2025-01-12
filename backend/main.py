@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
@@ -24,5 +24,7 @@ app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"]
 app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 
 @app.get("/")
-async def read_root():
-    return RedirectResponse(url="/static/index.html")
+async def read_root(request: Request):
+    query = request.url.query  # 쿼리 파라미터 가져오기
+    redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
+    return RedirectResponse(url=redirect_url)
