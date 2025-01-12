@@ -27,10 +27,12 @@ class ConnectionManager:
         self.cleanup_interval = timedelta(hours=24)
         self.scheduler = AsyncIOScheduler()
         self.scheduler.add_job(self.archive_and_clear_old_messages, 'cron', hour=0, minute=0)  # 매일 자정 실행
-        self.scheduler.start()
 
         os.makedirs("logs", exist_ok=True)
 
+    def start_scheduler(self):
+        self.scheduler.start()
+        
     def generate_unique_key(self, websocket: WebSocket, museum: str) -> str:
         """유저를 고유하게 식별하기 위한 키 생성"""
         client_ip = websocket.client.host  # 유저의 IP 주소
@@ -206,12 +208,14 @@ class ConnectionManager:
 
     async def shutdown(self):
         """ConnectionManager 종료 시 호출되어야 하는 함수"""
-        self.scheduler.shutdown(wait=False)
-        self.cleanup_task.cancel()
-        try:
-            await self.cleanup_task
-        except asyncio.CancelledError:
-            pass
+        print("Shutting down ConnectionManager...")
+        self.scheduler.shutdown(wait=False)  # 스케줄러 종료
+        if hasattr(self, 'cleanup_task') and self.cleanup_task:
+            self.cleanup_task.cancel()
+            try:
+                await self.cleanup_task
+            except asyncio.CancelledError:
+                pass
 
 manager = ConnectionManager()
 
