@@ -182,7 +182,15 @@ class ConnectionManager:
             "active_users": active_users
         }
 
-    async def sudo (self, museum: str, message: dict):
+    async def send_history(self, websocket: WebSocket, museum: str):
+        """접속하는 유저에게 오늘의 메시지 히스토리 전송"""
+        today_str = date.today().isoformat()
+        async with self.lock:
+            today_messages = self.message_history.get(museum, {}).get(today_str, [])
+        for message in today_messages:
+            await websocket.send_json(message)
+
+    async def save_message_to_redis(self, museum: str, message: dict):
         """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
         redis_key = f"chat:{museum}:{today_str}"
