@@ -190,6 +190,18 @@ class ConnectionManager:
         for message in today_messages:
             await websocket.send_json(message)
 
+    async def add_message_to_history(self, museum: str, message: dict):
+        """메시지를 저장소에 추가"""
+        today_str = date.today().isoformat()
+        print(f"저장 요청: {message}")  # 디버그 로그
+        async with self.lock:
+            if museum not in self.message_history:
+                self.message_history[museum] = {}
+            if today_str not in self.message_history[museum]:
+                self.message_history[museum][today_str] = []
+            self.message_history[museum][today_str].append(message)
+        print(f"현재 저장된 메시지 히스토리: {self.message_history}")  # 디버그 로그
+        
     async def save_message_to_redis(self, museum: str, message: dict):
         """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
