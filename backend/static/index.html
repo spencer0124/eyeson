@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Chat Test</title>
+    <title>Museum WebSocket Chat</title>
 </head>
 <body>
-    <h2>WebSocket Chat Test</h2>
+    <h2>Museum WebSocket Chat</h2>
     <div>
         <label for="museum">Museum Name:</label>
         <input type="text" id="museum" placeholder="Enter museum name">
+    </div>
+    <div>
+        <label for="artworkid">Artwork ID:</label>
+        <input type="text" id="artworkid" placeholder="Enter artwork ID">
     </div>
     <div>
         <button id="connectBtn">Connect to Chat</button>
@@ -26,18 +30,55 @@
     <script>
         let socket;
         let museumName;
-        let username;
+        let artworkid;
+
+        // Function to parse query parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const pairs = queryString.split("&");
+            for (let pair of pairs) {
+                const [key, value] = pair.split("=");
+                if (key) {
+                    params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+                }
+            }
+            return params;
+        }
+
+        // Auto-connect if query parameters are present
+        window.onload = function() {
+            const params = getQueryParams();
+            if (params["Museum"]) {
+                museumName = params["Museum"];
+                artworkid = params["artworkid"] || "unknown";
+
+                // Connect to WebSocket with artworkid
+                connectWebSocket(museumName, artworkid);
+            }
+        }
 
         document.getElementById('connectBtn').addEventListener('click', function() {
             museumName = document.getElementById('museum').value;
+            artworkid = document.getElementById('artworkid').value || "unknown";
             if (!museumName) {
                 alert("Please enter a museum name.");
                 return;
             }
             
             // WebSocket 연결 (자동으로 익명 사용자 생성)
-            socket = new WebSocket(`ws://43.201.93.53:8000/chat/ws/${museumName}`);
-            
+            connectWebSocket(museumName, artworkid);
+        });
+
+        function connectWebSocket(museum, artworkidParam) {
+            // If already connected, close the existing connection
+            if (socket) {
+                socket.close();
+            }
+
+            // WebSocket URL with query parameter
+            socket = new WebSocket(`ws://43.201.93.53:8000/chat/ws/${museum}?artworkid=${encodeURIComponent(artworkidParam)}`);
+
             socket.onopen = function(event) {
                 console.log('WebSocket is connected!');
             };
@@ -53,7 +94,7 @@
                 console.log(event);
                 console.log('WebSocket is closed!');
             };
-        });
+        }
 
         document.getElementById('sendMessageBtn').addEventListener('click', function() {
             const message = document.getElementById('messageInput').value;

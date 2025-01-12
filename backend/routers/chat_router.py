@@ -1,30 +1,39 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from typing import List, Dict
-from datetime import datetime, date
+from datetime import datetime, date, timedelta, timezone
 import asyncio
 from starlette.websockets import WebSocketState
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import os
+import json
 
 router = APIRouter()
 
-# ConnectionManager 클래스 (이전 코드 유지)
+# ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
         self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artwork)
         self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
-        self.message_history: Dict[str, List[dict]] = {}  # 박물관별 메시지 기록
-        self.cleanup_task = asyncio.create_task(self.cleanup_old_messages())  # 백그라운드 작업 시작
+        self.message_history: Dict[str, Dict[str, List[dict]]] = {}  # 박물관별, 날짜별 메시지 기록
+        self.lock = asyncio.Lock()  # message_history 보호를 위한 락
+        self.scheduler = AsyncIOScheduler()
+        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)  # 매일 자정에 실행
+        self.scheduler.start()
 
-    def generate_username(self, museum: str) -> str:
-        """박물관별로 유저 이름을 자동으로 생성 ('익명1', '익명2'...)"""
+        # 로그 디렉토리 생성
+        os.makedirs("logs", exist_ok=True)
+
+    def generate_username(self, museum: str, artworkid: str) -> str:
+        """박물관별로 유저 이름을 자동으로 생성 ('익명1 (artworkid)', '익명2 (artworkid)'...)"""
         if museum not in self.username_counters:
             self.username_counters[museum] = 1  # 최초 연결 시 카운터를 1로 시작
 
         username_number = self.username_counters[museum]
         self.username_counters[museum] += 1  # 다음 유저를 위해 카운터 증가
 
-        return f"익명{username_number}"
+        return f"익명{username_number} ({artworkid})"
 
     async def connect(self, websocket: WebSocket, museum: str):
         origin = websocket.headers.get('origin')
@@ -44,8 +53,10 @@ class ConnectionManager:
             self.active_connections[museum] = []
 
         self.active_connections[museum].append(websocket)
-        username = self.generate_username(museum)  # 유저 이름을 자동으로 생성
-        self.user_info[websocket] = (museum, username, None)  # `None`은 기본 artwork
+        # Get 'artworkid' from query params
+        artworkid = websocket.query_params.get('artworkid', 'unknown')
+        username = self.generate_username(museum, artworkid)  # 유저 이름을 자동으로 생성
+        self.user_info[websocket] = (museum, username, artworkid)  # artworkid 저장
 
         # 저장된 오늘의 메시지 전송
         await self.send_history(websocket, museum)
@@ -62,7 +73,7 @@ class ConnectionManager:
 
     async def disconnect(self, websocket: WebSocket):
         if websocket in self.user_info:
-            museum, username, _ = self.user_info[websocket]
+            museum, username, artworkid = self.user_info[websocket]
             self.active_connections[museum].remove(websocket)
 
             if not self.active_connections[museum]:
@@ -84,7 +95,10 @@ class ConnectionManager:
         """특정 박물관 채팅방의 모든 사용자에게 메시지 전송"""
         if museum in self.active_connections:
             for connection in self.active_connections[museum]:
-                await connection.send_json(message)
+                try:
+                    await connection.send_json(message)
+                except Exception as e:
+                    print(f"Error sending message to {self.user_info[connection][1]}: {e}")
 
     def get_active_users(self, museum: str) -> List[str]:
         """특정 박물관 채팅방의 현재 접속자 목록"""
@@ -100,7 +114,7 @@ class ConnectionManager:
         """유저가 보는 작품을 변경하고, 해당 작품을 채팅방에 브로드캐스트"""
         if websocket in self.user_info:
             museum, username, _ = self.user_info[websocket]
-            self.user_info[websocket] = (museum, username, new_artwork)  # Update artwork
+            self.user_info[websocket] = (museum, username, new_artwork)  # 작품 ID 업데이트
 
             # 작품 변경 메시지 전송
             system_message = self.format_message(
@@ -121,47 +135,58 @@ class ConnectionManager:
             "content": content,
             "username": username,
             "museum": museum,
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "active_users": active_users
         }
 
     async def add_message_to_history(self, museum: str, message: dict):
-        """메시지를 저장소에 추가하고, 하루가 지난 메시지는 제거"""
-        if museum not in self.message_history:
-            self.message_history[museum] = []
-
-        self.message_history[museum].append(message)
-
-        # 오늘 날짜의 메시지만 유지
+        """메시지를 저장소에 추가"""
         today_str = date.today().isoformat()
-        self.message_history[museum] = [
-            msg for msg in self.message_history[museum]
-            if msg["timestamp"].startswith(today_str)
-        ]
+        async with self.lock:
+            if museum not in self.message_history:
+                self.message_history[museum] = {}
+            if today_str not in self.message_history[museum]:
+                self.message_history[museum][today_str] = []
+            self.message_history[museum][today_str].append(message)
 
     async def send_history(self, websocket: WebSocket, museum: str):
         """접속하는 유저에게 오늘의 메시지 히스토리 전송"""
-        today_messages = [
-            msg for msg in self.message_history.get(museum, [])
-            if msg["timestamp"].startswith(date.today().isoformat())
-        ]
+        today_str = date.today().isoformat()
+        async with self.lock:
+            today_messages = self.message_history.get(museum, {}).get(today_str, [])
         for message in today_messages:
             await websocket.send_json(message)
 
-    async def cleanup_old_messages(self):
-        """백그라운드 작업으로 오래된 메시지 정리"""
-        while True:
-            await asyncio.sleep(3600)  # 매시간 실행
-            today_str = date.today().isoformat()
-            for museum in self.message_history:
-                self.message_history[museum] = [
-                    msg for msg in self.message_history[museum]
-                    if msg["timestamp"].startswith(today_str)
-                ]
+    async def write_messages_to_files(self):
+        """하루가 끝날 때마다 각 박물관별 메시지 히스토리를 파일로 저장"""
+        yesterday = (date.today() - timedelta(days=1)).isoformat()
+        async with self.lock:
+            for museum, dates in self.message_history.items():
+                if yesterday in dates:
+                    messages = dates[yesterday]
+                    log_filename = f"logs/museum_{museum}_{yesterday}.log"
+                    try:
+                        with open(log_filename, "a", encoding="utf-8") as f:
+                            for message in messages:
+                                f.write(json.dumps(message, ensure_ascii=False) + "\n")
+                        print(f"Saved {len(messages)} messages for museum {museum} to {log_filename}")
+                    except Exception as e:
+                        print(f"Error writing messages to file for museum {museum}: {e}")
+                    # 메시지 기록 삭제
+                    del dates[yesterday]
+
+    async def shutdown(self):
+        """ConnectionManager 종료 시 호출되어야 하는 함수"""
+        self.scheduler.shutdown(wait=False)
+        self.cleanup_task.cancel()
+        try:
+            await self.cleanup_task
+        except asyncio.CancelledError:
+            pass
 
 manager = ConnectionManager()
 
-@router.websocket("/ws/{museum}")
+@router.websocket("/chat/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
     print("WebSocket endpoint called")  # 추가된 로그
     try:
@@ -175,7 +200,7 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
             message = manager.format_message(
                 message_type="message",
                 content=data,
-                username=manager.user_info[websocket][1],  # 유저 이름 가져오기
+                username=manager.user_info[websocket][1],  # 유저 이름 (이미 artworkid 포함)
                 museum=museum,
                 active_users=manager.get_active_users(museum)
             )

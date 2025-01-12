@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from routers import search_router, description_router, metadata_router, chat_router
+from routers import search_router, description_router, metadata_router, chat_router, manager
 
 app = FastAPI()
 
@@ -26,3 +26,7 @@ app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 @app.get("/")
 async def read_root():
     return RedirectResponse(url="/static/index.html")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await manager.shutdown()
