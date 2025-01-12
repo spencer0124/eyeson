@@ -13,6 +13,14 @@ router = APIRouter()
 # ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
+        self.active_connections: Dict[str, List[WebSocket]] = {}
+        self.user_info: Dict[WebSocket, tuple] = {}
+        self.username_counters: Dict[str, int] = {}
+        self.message_history: Dict[str, Dict[str, List[dict]]] = {}
+        self.user_id_map: Dict[str, str] = {}
+        self.last_seen: Dict[str, datetime] = {}
+        self.lock = asyncio.Lock()
+
         # Redis 클라이언트 초기화
         self.redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
