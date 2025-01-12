@@ -19,13 +19,16 @@ struct ExhibitsDetailView: View {
     var body: some View {
         VStack {
             if viewModel.isLoading {
-                ProgressView("로딩중...")
+                ProgressView("로딩중")
             } else if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else {
                 List {
-                    Section(header: Text("나의 모든 순간")) {
+                    Section(header: Text("나의 모든 순간")
+                        .foregroundColor(.black)
+                        .accessibilityLabel("전시제목: 나의 모든 순간")
+                    ) {
                         ForEach(viewModel.exhibits.filter { exhibit in
                             searchText.isEmpty || exhibit.title.localizedCaseInsensitiveContains(searchText)
                         }) { exhibit in
@@ -39,15 +42,18 @@ struct ExhibitsDetailView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 65, height: 55)
+                                        .accessibilityLabel("작품 이미지")
                                         
                                     Spacer()
                                         .frame(width: 20)
                                     VStack(alignment: .leading) {
                                         Text(exhibit.title)
                                             .font(.headline)
+                                            .accessibilityLabel("작품제목: \(exhibit.title)")
                                         Text(exhibit.artist)
                                             .font(.subheadline)
-                                            .foregroundColor(.secondary)
+                                            .foregroundColor(.black)
+                                            .accessibilityLabel("작가: \(exhibit.title)")
                                     }
                                 }
                                 .padding(.vertical, 4)

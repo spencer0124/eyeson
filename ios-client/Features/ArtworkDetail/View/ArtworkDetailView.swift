@@ -35,13 +35,16 @@ struct ArtworkDetailView: View {
                             }
                         }, label: {
                             Text("해설 요청하기")
-                                .font(.system(size: 15))
+//                                .font(.system(size: 15))
                                 .foregroundColor(.white)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
+//                                .padding(.horizontal, 20)
+//                                .padding(.vertical, 10)
+                                .padding()
                                 .background(Color.gray)
                                 .cornerRadius(10)
                         })
+                        .accessibilityHidden(isBottomSheetPresented)
+                        
                         Spacer()
                             .frame(height: 100)
                     }
@@ -108,7 +111,7 @@ struct ArtworkDetailView: View {
             
             HStack {
                 Spacer()
-                Text("그림 분석중...")
+                Text("그림 분석중")
                     .font(.system(size: 25))
                     .foregroundColor(.gray)
                     .shimmering(

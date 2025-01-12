@@ -17,7 +17,7 @@ struct SettingsView: View {
     var body: some View {
         
                 Form {
-                    Section(header: Text("권한 설정")) {
+                    Section(header: Text("권한 설정").foregroundColor(.black)) {
 //                        Button(action: {
 //                                openSettings()
 //                            }) {
@@ -42,7 +42,7 @@ struct SettingsView: View {
                                             .foregroundColor(.primary) // To keep the default text color
                                         }
                     
-                    Section(header: Text("언어 설정")) {
+                    Section(header: Text("언어 설정").foregroundColor(.black)) {
                        Picker(selection: $selectedLanguage, label: Text("")) {
                            Text("한국어 (Korean)").tag("Korean")
 //                           Text("영어 (English)").tag("English")

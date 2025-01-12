@@ -12,7 +12,7 @@ struct ExhibitsView: View {
     @State private var searchText = ""
     
     let exhibits: [ExhibitList] = [
-        ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11"),
+        ExhibitList(image: "image_museum", mainText: "나의 모든 순간", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11"),
 //        ExhibitList(image: "image_museum", mainText: "abcd", subText1: "수원", subText2: "SKKU", subText3: "9.4-9.11"),
     ]
     
@@ -37,15 +37,21 @@ struct ExhibitsView: View {
                                        VStack(alignment: .leading) {
                                            Text(exhibit.mainText)
                                                .font(.headline)
+                                               .accessibilityLabel("전시제목: \(exhibit.mainText)")
                                            HStack {
                                                Text(exhibit.subText1)
+                                                   .accessibilityLabel("전시장소: \(exhibit.subText1)")
                                                Text("|")
+                                                   .accessibilityHidden(true)
                                                Text(exhibit.subText2)
+                                                   .accessibilityLabel("전시갤러리: \(exhibit.subText2)")
                                                Text("|")
+                                                   .accessibilityHidden(true)
                                                Text(exhibit.subText3)
+                                                   .accessibilityLabel("전시기간: \(dateAccessibilityLabel(for: exhibit.subText3))")
                                            }
                                            .font(.subheadline)
-                                           .foregroundColor(.secondary)
+                                           .foregroundColor(.black)
                                        }
                                    }
                                    .padding(.vertical, 4)
@@ -54,7 +60,7 @@ struct ExhibitsView: View {
                                
                            }
                        }
-                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "전시관 검색하기")
                        
                        Spacer()
                    }
@@ -69,6 +75,18 @@ struct ExhibitsView: View {
            .tint(.black)
         
 }
+    
+    func dateAccessibilityLabel(for dateText: String) -> String {
+        // 날짜 형식이 "9.4-9.11"이라 가정하고 처리
+        let components = dateText.split(separator: "-")
+        if components.count == 2 {
+            let start = components[0].replacingOccurrences(of: ".", with: "월 ") + "일"
+            let end = components[1].replacingOccurrences(of: ".", with: "월 ") + "일"
+            return "\(start)부터 \(end)까지"
+        }
+        return dateText // 기본적으로 원래 텍스트를 반환
+    }
+
 }
 
 #Preview {

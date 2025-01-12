@@ -30,7 +30,7 @@ struct CamerascanView: View {
                         isShowingScanner = true
                     }) {
                         Text("카메라로 작품 촬영하기")
-                            .font(.system(size: 15))
+//                            .font(.system(size: 15))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
                             .background(Color(hex: "404293"))
@@ -51,15 +51,18 @@ struct CamerascanView: View {
                         }
                     }
                     
+                    Spacer()
+                        .frame(height: 20)
+                    
                     Button(action: {
                         navigateToCameraInfo = true
                     }) {
                         Text("촬영 가이드 보기")
-                            .font(.system(size: 15))
+//                            .font(.system(size: 15))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
-                            .background(Color.white)
-                            .foregroundColor(.black)
+                            .background(Color(hex: "404293"))
+                            .foregroundColor(.white)
                             .cornerRadius(10)
                     }
                     .padding(.horizontal, 41)
@@ -78,7 +81,15 @@ struct CamerascanView: View {
 
                     NavigationLink(destination: CameraInfoView(), isActive: $navigateToCameraInfo) {
                                         EmptyView()
-                    };
+                    }
+                    .accessibilityHidden(true)
+                    
+                    NavigationLink(
+                        destination: AnalyzeImage(image: scannedImages.last?.image),
+                        isActive: $isNavigatingToAnalyze,
+                        label: { EmptyView() }
+                    )
+                    .accessibilityHidden(true)
                     
                   
                 }
@@ -89,16 +100,16 @@ struct CamerascanView: View {
                 
                 
                 
-                .background(
-                    NavigationLink(
-                        destination: AnalyzeImage(image: scannedImages.last?.image),
-                        isActive: $isNavigatingToAnalyze,
-                        label: { EmptyView() }
-                    )
+//                .background(
+//                    NavigationLink(
+//                        destination: AnalyzeImage(image: scannedImages.last?.image),
+//                        isActive: $isNavigatingToAnalyze,
+//                        label: { EmptyView() }
+//                    )
                     
                     
                     
-                )
+//                )
             }
         
     }
@@ -149,7 +160,7 @@ struct AnalyzeImage: View {
                 
                 
                 if viewModel.isLoading {
-                    ProgressView("이미지 분석중...")
+                    ProgressView("이미지 분석중")
                 } else if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)

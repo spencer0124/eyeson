@@ -20,6 +20,9 @@
 		C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */; };
 		C429E7FF2C61E25E00B9AAED /* NearByModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FE2C61E25E00B9AAED /* NearByModel.swift */; };
 		C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C429E8012C61E2EB00B9AAED /* Lottie */; };
+		C4392C392D2A90CC00F4BBC4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4392C382D2A90CC00F4BBC4 /* ChatView.swift */; };
+		C4392C3B2D2A90D300F4BBC4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */; };
+		C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = C4392C3D2D2A97D500F4BBC4 /* Starscream */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46611062C67754500049492 /* ArtworkDetailView.swift */; };
@@ -89,6 +92,8 @@
 		C429E7FA2C61E25000B9AAED /* NearbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyView.swift; sourceTree = "<group>"; };
 		C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyViewModel.swift; sourceTree = "<group>"; };
 		C429E7FE2C61E25E00B9AAED /* NearByModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByModel.swift; sourceTree = "<group>"; };
+		C4392C382D2A90CC00F4BBC4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C46611062C67754500049492 /* ArtworkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkDetailView.swift; sourceTree = "<group>"; };
 		C4734E9C2C630FFA00110334 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
@@ -131,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */,
 				C4AC18D92C86F59E000C1869 /* Kingfisher in Frameworks */,
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
 				C4EC9B482C86FF39002F49AD /* SwiftUIImageViewer in Frameworks */,
@@ -250,9 +256,35 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		C42CEF0A2D2912DB00EAAB31 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				C42CEF0C2D2912E600EAAB31 /* ViewModel */,
+				C42CEF0B2D2912E000EAAB31 /* View */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		C42CEF0B2D2912E000EAAB31 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C4392C382D2A90CC00F4BBC4 /* ChatView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C42CEF0C2D2912E600EAAB31 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C42CEF0A2D2912DB00EAAB31 /* Chat */,
 				C46611022C67751400049492 /* ArtworkDetail */,
 				C4734E982C630FD300110334 /* Artwork */,
 				C429E7F62C61E22600B9AAED /* Nearby */,
@@ -568,6 +600,7 @@
 				C4EF82D92C67B93F00A358D7 /* Shimmer */,
 				C4AC18D82C86F59E000C1869 /* Kingfisher */,
 				C4EC9B472C86FF39002F49AD /* SwiftUIImageViewer */,
+				C4392C3D2D2A97D500F4BBC4 /* Starscream */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -650,6 +683,7 @@
 				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				C4AC18D72C86F59E000C1869 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				C4EC9B462C86FF39002F49AD /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */,
+				C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -801,7 +835,9 @@
 				C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */,
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */,
+				C4392C392D2A90CC00F4BBC4 /* ChatView.swift in Sources */,
 				C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */,
+				C4392C3B2D2A90D300F4BBC4 /* ChatViewModel.swift in Sources */,
 				C4AB17CD2C86E5B2009F1A20 /* FullScreenImageView.swift in Sources */,
 				C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */,
 				C48458222C4C033500745A56 /* DocumentScanner.swift in Sources */,
@@ -1013,7 +1049,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1053,7 +1089,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1194,6 +1230,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
 		C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/Glur";
@@ -1233,6 +1277,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		C4392C3D2D2A97D500F4BBC4 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
 		};
 		C455A01B2C609B6300A3F786 /* Glur */ = {
 			isa = XCSwiftPackageProductDependency;

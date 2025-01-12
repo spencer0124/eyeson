@@ -16,6 +16,9 @@ class DescriptionViewModel: ObservableObject {
     @Published var isLoadingFetchDescription: Bool = false
     @Published var isLoadingRequestDescription: Bool = false
     @Published var errorMessage: String?
+    
+    @Published var isDescriptionLoaded = false // 해설 로딩 완료 여부
+    @Published var descriptionRequestError: String? = nil // 에러 메시지 저장
 
     func fetchDescription(for file: String) {
         isLoadingFetchDescription = true
@@ -87,14 +90,23 @@ class DescriptionViewModel: ObservableObject {
                     if let jsonData = utf8Text.data(using: .utf8),
                        let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
                         self.descriptionText = json["description"] as? String ?? "No description available."
+                        // ✅ 성공적으로 데이터를 받아온 경우 isDescriptionLoaded를 true로 설정
+                        self.isDescriptionLoaded = true
+                        self.descriptionRequestError = nil // 에러 초기화
                     } else {
                         self.errorMessage = "Failed to parse the JSON response."
+                        self.descriptionRequestError = self.errorMessage
+                        self.isDescriptionLoaded = true // JSON 파싱 실패도 알림 표시
                     }
                 } else {
                     self.errorMessage = "Failed to decode response as UTF-8."
+                    self.descriptionRequestError = self.errorMessage
+                    self.isDescriptionLoaded = true
                 }
             case .failure(let error):
                 self.errorMessage = "Failed to fetch description: \(error.localizedDescription)"
+                self.descriptionRequestError = self.errorMessage
+                self.isDescriptionLoaded = true
             }
         }
     }
