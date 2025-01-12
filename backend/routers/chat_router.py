@@ -1,4 +1,5 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from typing import List, Dict
 from datetime import datetime, date
 import asyncio
@@ -6,7 +7,7 @@ from starlette.websockets import WebSocketState
 
 router = APIRouter()
 
-# ConnectionManager 클래스
+# ConnectionManager 클래스 (이전 코드 유지)
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
@@ -184,7 +185,7 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
         await manager.disconnect(websocket)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        await websocket.close(code=1008, reason="Internal server error")
+        await websocket.close(code=1008, reason="Internal server error")  # 유효한 코드로 변경
 
 @router.get("/museums")
 async def get_active_museums():
@@ -202,3 +203,14 @@ async def get_museum_users(museum: str):
         "users": users,
         "total": len(users)
     }
+
+# 리다이렉트 경로 추가
+@router.get("/chat/redirect/")
+async def redirect_chat(request: Request):
+    """
+    /chat/redirect/ 경로로 들어오는 모든 요청을 /static/index.html로 리다이렉트합니다.
+    쿼리 파라미터(Museum, artworkid)는 그대로 전달됩니다.
+    """
+    query = request.url.query
+    redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
+    return RedirectResponse(url=redirect_url)
