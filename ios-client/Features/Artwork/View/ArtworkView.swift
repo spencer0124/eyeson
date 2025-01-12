@@ -75,10 +75,30 @@ struct ArtworkView: View {
                                 .fullScreenCover(isPresented: $isImagePresented) {
                                     ZStack {
                                             Color.white
-                                        SwiftUIImageViewer(imageURLString: viewModel.image_url)
-                                                .overlay(alignment: .topTrailing) {
+                                        
+                                        ZStack {
+                                            SwiftUIImageViewer(imageURLString: viewModel.image_url)
+                                                .accessibilityLabel("\(viewModel.meta["title"] ?? " ") 작품 이미지")
+                                            
+                                            VStack {
+                                                Spacer()
+                                                    .frame(height: 10)
+                                                HStack {
+                                                    Spacer()
                                                     closeButton
+                                                        .accessibilityLabel("닫기 버튼")
+                                                        .accessibilityHint("작품 상세정보 화면으로 돌아간다")
+                                                    Spacer()
+                                                        .frame(width: 10)
                                                 }
+                                                Spacer()
+                                            }
+                                            
+                                        }
+                                        
+                                        
+                                                
+                                                
                                             VStack {
                                                 Spacer()
                                                 Button(action: {
@@ -131,14 +151,15 @@ struct ArtworkView: View {
                                         )
                                     
                                     // ✅ alert modifier 추가
-                                           .alert(isPresented: $viewModel.isDescriptionLoaded) {
-                                               if let error = viewModel.descriptionRequestError {
-                                                   return Alert(title: Text("오류"), message: Text(error), dismissButton: .default(Text("확인")))
-                                               } else {
-                                                   return Alert(title: Text("해설 완료"), message: Text("해설 생성이 완료되었습니다."), dismissButton: .default(Text("확인")))
-                                               }
-
-                                           }
+//                                           .alert(isPresented: $viewModel.isDescriptionLoaded) {
+////                                               $viewModel.isDescriptionLoaded = false
+//                                               if let error = viewModel.descriptionRequestError {
+//                                                   return Alert(title: Text("오류"), message: Text(error), dismissButton: .default(Text("확인")))
+//                                               } else {
+//                                                   return Alert(title: Text("해설 완료"), message: Text("해설 생성이 완료되었습니다."), dismissButton: .default(Text("확인")))
+//                                               }
+//
+//                                           }
                                     }
                                 
                     }
