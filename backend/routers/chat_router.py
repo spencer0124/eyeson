@@ -1,5 +1,4 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Request
-from fastapi.responses import RedirectResponse
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
 from datetime import datetime, date, timedelta, timezone
 import asyncio
@@ -14,37 +13,43 @@ router = APIRouter()
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
-        self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artwork)
+        self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artworkid)
         self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
         self.message_history: Dict[str, Dict[str, List[dict]]] = {}  # 박물관별, 날짜별 메시지 기록
-        self.lock = asyncio.Lock()  # message_history 보호를 위한 락
+        self.user_id_map: Dict[str, str] = {}  # 고유 식별자 -> 익명 ID 매핑
+        self.last_seen: Dict[str, datetime] = {}  # 고유 식별자 -> 마지막 접속 시간
+        self.lock = asyncio.Lock()  # 동시성 보호를 위한 락
+        self.cleanup_interval = timedelta(hours=24)  # 정리 간격 (24시간)
         self.scheduler = AsyncIOScheduler()
-        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)  # 매일 자정에 실행
+        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)  # 매일 자정 메시지 기록 저장
+        self.scheduler.add_job(self.cleanup_old_users, 'interval', hours=1)  # 매시간 오래된 유저 정리
         self.scheduler.start()
-
-        # 로그 디렉토리 생성
         os.makedirs("logs", exist_ok=True)
 
-    def generate_username(self, museum: str, artworkid: str) -> str:
-        """박물관별로 유저 이름을 자동으로 생성 ('익명1 (artworkid)', '익명2 (artworkid)'...)"""
-        if museum not in self.username_counters:
-            self.username_counters[museum] = 1  # 최초 연결 시 카운터를 1로 시작
+    def generate_unique_key(self, websocket: WebSocket, museum: str) -> str:
+        """유저를 고유하게 식별하기 위한 키 생성"""
+        client_ip = websocket.client.host  # 유저의 IP 주소
+        user_agent = websocket.headers.get("user-agent", "unknown")
+        return f"{museum}-{client_ip}-{user_agent}"
 
-        username_number = self.username_counters[museum]
-        self.username_counters[museum] += 1  # 다음 유저를 위해 카운터 증가
-
-        return f"익명{username_number} ({artworkid})"
+    def generate_username(self, museum: str, unique_key: str) -> str:
+        """익명 ID를 생성하거나 기존 ID를 반환"""
+        if unique_key not in self.user_id_map:
+            # 익명 ID 생성
+            if museum not in self.username_counters:
+                self.username_counters[museum] = 1
+            username_number = self.username_counters[museum]
+            self.username_counters[museum] += 1
+            self.user_id_map[unique_key] = f"익명{username_number}"
+        return self.user_id_map[unique_key]
 
     async def connect(self, websocket: WebSocket, museum: str):
+        """유저 연결 처리"""
         origin = websocket.headers.get('origin')
-        print(f"WebSocket origin: {origin}")  # Origin 값 로깅
-
-        allowed_origins = ["http://43.201.93.53:8000"]  # 필요한 Origin만 추가
-
-        # '*'이 포함되어 있으면 모든 Origin 허용
+        print(f"WebSocket origin: {origin}")
+        allowed_origins = ["http://43.201.93.53:8000"]
         if "*" not in allowed_origins and origin not in allowed_origins:
             await websocket.close(code=1008, reason="CORS policy violation")
-            print("CORS policy violation: Connection closed")
             return
 
         await websocket.accept()
@@ -53,10 +58,19 @@ class ConnectionManager:
             self.active_connections[museum] = []
 
         self.active_connections[museum].append(websocket)
-        # Get 'artworkid' from query params
+
+        # Get artworkid from query params
         artworkid = websocket.query_params.get('artworkid', 'unknown')
-        username = self.generate_username(museum, artworkid)  # 유저 이름을 자동으로 생성
-        self.user_info[websocket] = (museum, username, artworkid)  # artworkid 저장
+
+        # 고유 키 생성 및 익명 ID 가져오기
+        unique_key = self.generate_unique_key(websocket, museum)
+        username = self.generate_username(museum, unique_key)
+
+        # 마지막 접속 시간 갱신
+        self.last_seen[unique_key] = datetime.now(timezone.utc)
+
+        # 유저 정보 저장
+        self.user_info[websocket] = (museum, username, artworkid)
 
         # 저장된 오늘의 메시지 전송
         await self.send_history(websocket, museum)
@@ -72,13 +86,12 @@ class ConnectionManager:
         await self.broadcast(museum, system_message)
 
     async def disconnect(self, websocket: WebSocket):
+        """유저가 채팅방을 떠날 때 호출"""
         if websocket in self.user_info:
             museum, username, artworkid = self.user_info[websocket]
             self.active_connections[museum].remove(websocket)
-
             if not self.active_connections[museum]:
                 del self.active_connections[museum]
-
             del self.user_info[websocket]
 
             # 퇴장 메시지 전송
@@ -91,14 +104,24 @@ class ConnectionManager:
             )
             await self.broadcast(museum, system_message)
 
-    async def broadcast(self, museum: str, message: dict):
-        """특정 박물관 채팅방의 모든 사용자에게 메시지 전송"""
-        if museum in self.active_connections:
-            for connection in self.active_connections[museum]:
-                try:
-                    await connection.send_json(message)
-                except Exception as e:
-                    print(f"Error sending message to {self.user_info[connection][1]}: {e}")
+    async def cleanup_old_users(self):
+        """오래된 유저 정보를 정리"""
+        now = datetime.now(timezone.utc)
+        async with self.lock:
+            keys_to_remove = []
+            for unique_key, last_seen_time in self.last_seen.items():
+                if now - last_seen_time > self.cleanup_interval:
+                    # 마지막 접속 시간 기준으로 오래된 유저 식별
+                    keys_to_remove.append(unique_key)
+            
+            # 오래된 유저 정보 삭제
+            for key in keys_to_remove:
+                if key in self.user_id_map:
+                    del self.user_id_map[key]
+                if key in self.last_seen:
+                    del self.last_seen[key]
+            
+            print(f"Cleaned up {len(keys_to_remove)} old users.")
 
     def get_active_users(self, museum: str) -> List[str]:
         """특정 박물관 채팅방의 현재 접속자 목록"""
@@ -109,22 +132,6 @@ class ConnectionManager:
     def get_active_museums(self) -> List[str]:
         """현재 활성화된 박물관 채팅방 목록"""
         return list(self.active_connections.keys())
-
-    async def update_artwork(self, websocket: WebSocket, new_artwork: str):
-        """유저가 보는 작품을 변경하고, 해당 작품을 채팅방에 브로드캐스트"""
-        if websocket in self.user_info:
-            museum, username, _ = self.user_info[websocket]
-            self.user_info[websocket] = (museum, username, new_artwork)  # 작품 ID 업데이트
-
-            # 작품 변경 메시지 전송
-            system_message = self.format_message(
-                message_type="system",
-                content=f"{username} is now viewing {new_artwork}",
-                username="System",
-                museum=museum,
-                active_users=self.get_active_users(museum)
-            )
-            await self.broadcast(museum, system_message)
 
     def format_message(
         self, message_type: str, content: str, username: str, museum: str, active_users: List[str]
