@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from routers import search_router, description_router, metadata_router, chat_router
+from routers.chat_router import manager
 
 app = FastAPI()
 
@@ -22,6 +23,11 @@ app.include_router(search_router.router, prefix="/search", tags=["search"])
 app.include_router(description_router.router, prefix="/description", tags=["description"])
 app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"])
 app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
+
+@app.on_event("startup")
+async def startup_event():
+    """서버 시작 시 호출되는 이벤트"""
+    manager.start_scheduler()  # 스케줄러 명시적으로 시작
 
 @app.get("/")
 async def read_root(request: Request):

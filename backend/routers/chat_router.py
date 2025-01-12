@@ -13,18 +13,24 @@ router = APIRouter()
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
-        self.user_info: Dict[WebSocket, tuple] = {}  # (museum, username, artworkid)
-        self.username_counters: Dict[str, int] = {}  # 박물관별 유저 이름 카운터
-        self.message_history: Dict[str, Dict[str, List[dict]]] = {}  # 박물관별, 날짜별 메시지 기록
-        self.user_id_map: Dict[str, str] = {}  # 고유 식별자 -> 익명 ID 매핑
-        self.last_seen: Dict[str, datetime] = {}  # 고유 식별자 -> 마지막 접속 시간
-        self.lock = asyncio.Lock()  # 동시성 보호를 위한 락
-        self.cleanup_interval = timedelta(hours=24)  # 정리 간격 (24시간)
+        self.user_info: Dict[WebSocket, tuple] = {}
+        self.username_counters: Dict[str, int] = {}
+        self.message_history: Dict[str, Dict[str, List[dict]]] = {}
+        self.user_id_map: Dict[str, str] = {}
+        self.last_seen: Dict[str, datetime] = {}
+        self.lock = asyncio.Lock()
+        self.cleanup_interval = timedelta(hours=24)
+
+        # 스케줄러 설정 (하지만 즉시 시작하지 않음)
         self.scheduler = AsyncIOScheduler()
-        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)  # 매일 자정 메시지 기록 저장
-        self.scheduler.add_job(self.cleanup_old_users, 'interval', hours=1)  # 매시간 오래된 유저 정리
-        self.scheduler.start()
+        self.scheduler.add_job(self.write_messages_to_files, 'cron', hour=0, minute=0)
+        self.scheduler.add_job(self.cleanup_old_users, 'interval', hours=1)
         os.makedirs("logs", exist_ok=True)
+
+    def start_scheduler(self):
+        """스케줄러를 명시적으로 시작"""
+        self.scheduler.start()
+
 
     def generate_unique_key(self, websocket: WebSocket, museum: str) -> str:
         """유저를 고유하게 식별하기 위한 키 생성"""
