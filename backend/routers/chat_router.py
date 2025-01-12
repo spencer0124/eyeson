@@ -185,12 +185,14 @@ class ConnectionManager:
     async def add_message_to_history(self, museum: str, message: dict):
         """메시지를 저장소에 추가"""
         today_str = date.today().isoformat()
+        print(f"저장 요청: {message}")  # 디버그 로그
         async with self.lock:
             if museum not in self.message_history:
                 self.message_history[museum] = {}
             if today_str not in self.message_history[museum]:
                 self.message_history[museum][today_str] = []
             self.message_history[museum][today_str].append(message)
+        print(f"현재 저장된 메시지 히스토리: {self.message_history}")  # 디버그 로그
 
     async def send_history(self, websocket: WebSocket, museum: str):
         """접속하는 유저에게 오늘의 메시지 히스토리 전송"""
@@ -203,6 +205,7 @@ class ConnectionManager:
     async def write_messages_to_files(self):
         """하루가 끝날 때마다 각 박물관별 메시지 히스토리를 파일로 저장"""
         yesterday = (date.today() - timedelta(days=1)).isoformat()
+        print("메시지 히스토리 확인:", self.message_history)  # 디버깅 로그 추가
         async with self.lock:
             for museum, dates in self.message_history.items():
                 if yesterday in dates:
@@ -217,6 +220,7 @@ class ConnectionManager:
                         print(f"Error writing messages to file for museum {museum}: {e}")
                     # 메시지 기록 삭제
                     del dates[yesterday]
+
 
     async def shutdown(self):
         """ConnectionManager 종료 시 호출되어야 하는 함수"""
