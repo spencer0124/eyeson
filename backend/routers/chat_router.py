@@ -83,8 +83,6 @@ class ConnectionManager:
         for message in today_messages:
             await websocket.send_json(message)
 
-        self.broadcast(museum, "today okkk")
-
         # 입장 메시지 전송
         system_message = self.format_message(
             message_type="system",
@@ -94,26 +92,6 @@ class ConnectionManager:
             active_users=self.get_active_users(museum)
         )
         await self.broadcast(museum, system_message)
-
-    async def update_artwork(self, websocket: WebSocket, new_artworkid: str):
-        """유저가 보는 작품을 변경하고, 채팅방에 알림"""
-        if websocket in self.user_info:
-            museum, old_username, _ = self.user_info[websocket]
-            unique_key = self.generate_unique_key(websocket, museum)
-            new_username = self.generate_username(museum, unique_key, new_artworkid)
-
-            # 유저 정보 업데이트
-            self.user_info[websocket] = (museum, new_username, new_artworkid)
-
-            # 작품 변경 메시지 전송
-            system_message = self.format_message(
-                message_type="system",
-                content=f"{old_username} is now viewing {new_artworkid}",
-                username="System",
-                museum=museum,
-                active_users=self.get_active_users(museum)
-            )
-            await self.broadcast(museum, system_message)
 
     async def disconnect(self, websocket: WebSocket):
         """유저가 채팅방을 떠날 때 호출"""
@@ -241,12 +219,6 @@ manager = ConnectionManager()
 async def websocket_endpoint(websocket: WebSocket, museum: str):
     try:
         await manager.connect(websocket, museum)
-
-        # Redis에 저장된 오늘의 메시지 보내기
-        today_messages = await manager.get_messages_for_museum(museum)
-        for message in today_messages:
-            await websocket.send_json(message)
-
         while True:
             data = await websocket.receive_text()
             message = manager.format_message(
