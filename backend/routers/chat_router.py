@@ -72,14 +72,16 @@ class ConnectionManager:
         unique_key = self.generate_unique_key(websocket, museum)
         username = self.generate_username(museum, unique_key, artworkid)
 
-        # 마지막 접속 시간 갱신
-        self.last_seen[unique_key] = datetime.now(timezone.utc)
+        # 마지막 접속 시간 갱신 (Redis에 저장)
+        await self.update_last_seen(unique_key)
 
         # 유저 정보 저장
         self.user_info[websocket] = (museum, username, artworkid)
 
         # 저장된 오늘의 메시지 전송
-        await self.send_history(websocket, museum)
+        today_messages = await self.get_messages_for_museum(museum)
+        for message in today_messages:
+            await websocket.send_json(message)
 
         # 입장 메시지 전송
         system_message = self.format_message(
@@ -129,25 +131,6 @@ class ConnectionManager:
                 active_users=self.get_active_users(museum)
             )
             await self.broadcast(museum, system_message)
-
-    async def cleanup_old_users(self):
-        """오래된 유저 정보를 정리"""
-        now = datetime.now(timezone.utc)
-        async with self.lock:
-            keys_to_remove = []
-            for unique_key, last_seen_time in self.last_seen.items():
-                if now - last_seen_time > self.cleanup_interval:
-                    # 마지막 접속 시간 기준으로 오래된 유저 식별
-                    keys_to_remove.append(unique_key)
-            
-            # 오래된 유저 정보 삭제
-            for key in keys_to_remove:
-                if key in self.user_id_map:
-                    del self.user_id_map[key]
-                if key in self.last_seen:
-                    del self.last_seen[key]
-            
-            print(f"Cleaned up {len(keys_to_remove)} old users.")
 
     async def broadcast(self, museum: str, message: dict):
         """특정 박물관 채팅방의 모든 사용자에게 메시지 전송"""
@@ -217,6 +200,34 @@ class ConnectionManager:
             # Redis에서 삭제
             self.redis_client.delete(redis_key)
             print(f"{redis_key}의 메시지가 로그 파일 {log_filename}로 저장되고 삭제되었습니다.")
+
+    async def update_last_seen(self, unique_key: str):
+        """Redis에 유저의 마지막 접속 시간 업데이트"""
+        now = datetime.now(timezone.utc).isoformat()
+        redis_key = f"user:last_seen:{unique_key}"
+        
+        # Redis에 유저의 마지막 접속 시간 저장 및 TTL 설정 (24시간)
+        self.redis_client.set(redis_key, now, ex=24 * 60 * 60)
+        print(f"Updated last_seen for {unique_key} at {now}")
+
+    async def cleanup_old_users(self):
+        """오래된 유저 정보를 Redis에서 정리"""
+        # Redis에 저장된 모든 last_seen 키 가져오기
+        keys = self.redis_client.keys("user:last_seen:*")
+        now = datetime.now(timezone.utc)
+
+        cleaned_count = 0
+        for key in keys:
+            # Redis에서 마지막 접속 시간 불러오기
+            last_seen = self.redis_client.get(key)
+            if last_seen:
+                last_seen_time = datetime.fromisoformat(last_seen)
+                if now - last_seen_time > timedelta(hours=24):
+                    # 24시간 이상 지난 유저를 Redis에서 제거
+                    self.redis_client.delete(key)
+                    cleaned_count += 1
+
+        print(f"Cleaned up {cleaned_count} old users.")
 
     async def shutdown(self):
         """ConnectionManager 종료 시 호출되어야 하는 함수"""
