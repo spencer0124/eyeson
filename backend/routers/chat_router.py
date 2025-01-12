@@ -186,7 +186,7 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-@router.websocket("/chat/ws/{museum}")
+@router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
     print("WebSocket endpoint called")  # 추가된 로그
     try:
