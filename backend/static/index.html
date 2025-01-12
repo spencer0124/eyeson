@@ -49,8 +49,8 @@
         // Auto-connect if query parameters are present
         window.onload = function() {
             const params = getQueryParams();
-            if (params["Museum"]) {
-                museumName = params["Museum"];
+            if (params["museum"]) {
+                museumName = params["museum"];
                 artworkid = params["artworkid"] || "unknown";
 
                 // Connect to WebSocket with artworkid

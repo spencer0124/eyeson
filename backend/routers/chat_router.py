@@ -230,10 +230,10 @@ async def get_museum_users(museum: str):
     }
 
 # 리다이렉트 경로 추가
-@router.get("/chat/redirect/")
+@router.get("/redirect/")
 async def redirect_chat(request: Request):
     """
-    /chat/redirect/ 경로로 들어오는 모든 요청을 /static/index.html로 리다이렉트합니다.
+    /redirect/ 경로로 들어오는 모든 요청을 /static/index.html로 리다이렉트합니다.
     쿼리 파라미터(Museum, artworkid)는 그대로 전달됩니다.
     """
     query = request.url.query
