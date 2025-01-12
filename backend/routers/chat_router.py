@@ -16,7 +16,6 @@ class ConnectionManager:
         self.active_connections: Dict[str, List[WebSocket]] = {}
         self.user_info: Dict[WebSocket, tuple] = {}
         self.username_counters: Dict[str, int] = {}
-        self.message_history: Dict[str, Dict[str, List[dict]]] = {}
         self.user_id_map: Dict[str, str] = {}
         self.last_seen: Dict[str, datetime] = {}
         self.lock = asyncio.Lock()
@@ -182,26 +181,6 @@ class ConnectionManager:
             "active_users": active_users
         }
 
-    async def send_history(self, websocket: WebSocket, museum: str):
-        """접속하는 유저에게 오늘의 메시지 히스토리 전송"""
-        today_str = date.today().isoformat()
-        async with self.lock:
-            today_messages = self.message_history.get(museum, {}).get(today_str, [])
-        for message in today_messages:
-            await websocket.send_json(message)
-
-    async def add_message_to_history(self, museum: str, message: dict):
-        """메시지를 저장소에 추가"""
-        today_str = date.today().isoformat()
-        print(f"저장 요청: {message}")  # 디버그 로그
-        async with self.lock:
-            if museum not in self.message_history:
-                self.message_history[museum] = {}
-            if today_str not in self.message_history[museum]:
-                self.message_history[museum][today_str] = []
-            self.message_history[museum][today_str].append(message)
-        print(f"현재 저장된 메시지 히스토리: {self.message_history}")  # 디버그 로그
-        
     async def save_message_to_redis(self, museum: str, message: dict):
         """Redis에 메시지를 저장"""
         today_str = date.today().isoformat()
@@ -255,7 +234,7 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
     try:
         await manager.connect(websocket, museum)
 
-        # 연결된 사용자에게 Redis에 저장된 오늘의 메시지 보내기
+        # Redis에 저장된 오늘의 메시지 보내기
         today_messages = await manager.get_messages_for_museum(museum)
         for message in today_messages:
             await websocket.send_json(message)
@@ -269,7 +248,7 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
                 museum=museum,
                 active_users=manager.get_active_users(museum)
             )
-            await manager.add_message_to_history(museum, message)  # Redis에 메시지 저장
+            await manager.save_message_to_redis(museum, message)  # Redis에 메시지 저장
             await manager.broadcast(museum, message)  # 메시지 브로드캐스트
 
     except WebSocketDisconnect:
