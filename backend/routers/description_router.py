@@ -57,3 +57,22 @@ async def describe_image(request: str = Form(...), crop_image: UploadFile = File
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.post("/gptplus2/")
+async def describe_image(original_image: UploadFile = File(...), crop_image: UploadFile = File(...)):
+    try:
+        original_image_data = await original_image.read()
+        crop_image_data = await crop_image.read()
+
+        #byte_original_image = image_to_bytes(original_image)
+        original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
+        crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
+
+        original_dtype = dtype_is(original_image.filename)
+        crop_dtype = dtype_is(crop_image.filename)
+
+        description = generate_image_description(original_dtype, original_base64_image, crop_dtype, crop_base64_image)
+        return {"description": description}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
