@@ -39,8 +39,8 @@ async def get_description(data: EngId):
         'image_url': s3_url
     }
 
-@router.post("/gptplus/")
-async def describe_image(request: str = Form(...), crop_image: UploadFile = File(...)):
+@router.post("/gpt-artwork/")
+async def describe_image_with_artwork(request: str = Form(...), crop_image: UploadFile = File(...)):
     try:
         original_image = download_image_from_s3(request)
         crop_image_data = await crop_image.read()
@@ -58,8 +58,8 @@ async def describe_image(request: str = Form(...), crop_image: UploadFile = File
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.post("/gptplus2/")
-async def describe_image(original_image: UploadFile = File(...), crop_image: UploadFile = File(...)):
+@router.post("/gpt-nonartwork/")
+async def describe_image_without_artwork(original_image: UploadFile = File(...), crop_image: UploadFile = File(...)):
     try:
         original_image_data = await original_image.read()
         crop_image_data = await crop_image.read()
