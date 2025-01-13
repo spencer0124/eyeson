@@ -24,6 +24,7 @@
 		C4392C3B2D2A90D300F4BBC4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */; };
 		C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = C4392C3D2D2A97D500F4BBC4 /* Starscream */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
+		C453D29D2D3593D300B45B7E /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = C453D29C2D3593D300B45B7E /* BetterSafariView */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46611062C67754500049492 /* ArtworkDetailView.swift */; };
 		C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4734E9C2C630FFA00110334 /* ArtworkView.swift */; };
@@ -143,6 +144,7 @@
 				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
 				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
+				C453D29D2D3593D300B45B7E /* BetterSafariView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +603,7 @@
 				C4AC18D82C86F59E000C1869 /* Kingfisher */,
 				C4EC9B472C86FF39002F49AD /* SwiftUIImageViewer */,
 				C4392C3D2D2A97D500F4BBC4 /* Starscream */,
+				C453D29C2D3593D300B45B7E /* BetterSafariView */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -684,6 +687,7 @@
 				C4AC18D72C86F59E000C1869 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				C4EC9B462C86FF39002F49AD /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */,
 				C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */,
+				C453D29B2D3593D200B45B7E /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -1049,7 +1053,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1089,7 +1093,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = zoyoong.eyeson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1238,6 +1242,14 @@
 				minimumVersion = 4.0.8;
 			};
 		};
+		C453D29B2D3593D200B45B7E /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stleamist/BetterSafariView";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/joogps/Glur";
@@ -1282,6 +1294,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
+		};
+		C453D29C2D3593D300B45B7E /* BetterSafariView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C453D29B2D3593D200B45B7E /* XCRemoteSwiftPackageReference "BetterSafariView" */;
+			productName = BetterSafariView;
 		};
 		C455A01B2C609B6300A3F786 /* Glur */ = {
 			isa = XCSwiftPackageProductDependency;
