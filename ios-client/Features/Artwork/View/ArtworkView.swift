@@ -256,32 +256,32 @@ struct ActionButtonsView: View {
 //            .accessibilityHint("그림을 누르면 확대/축소나 자세한 설명 듣기가 가능합니다")
             .accessibilityAddTraits(.isButton)
 
-//            Button(action: {
-//                showSafari = true
-//            }) {
-//                Text("작품 감상평 공유하기")
-//                    .frame(maxWidth: .infinity)
-//                    .padding(.vertical, 10)
-//                    .background(Color(hex: "404293"))
-//                    .foregroundColor(.white)
-//                    .cornerRadius(10)
-//            }
-//            .padding(.horizontal, 20)
-//            .accessibilityLabel("작품 감상평 공유하기") // 레이블 수정
-//            .accessibilityHint("작품 감상평을 공유하기 위해 웹페이지를 엽니다.") // 힌트 수정
-//            .accessibilityAddTraits(.isButton)
-//            .fullScreenCover(isPresented: $showSafari) {
-//                if let artworkId = viewModel.meta["title"],
-//                   let url = URL(string: "http://43.201.93.53:8000/?museum=1&artworkid=\(artworkId)") {
-//                    SafariView(
-//                        url: url,
-//                        configuration: SafariView.Configuration(
-//                            entersReaderIfAvailable: false,
-//                            barCollapsingEnabled: true
-//                        )
-//                    )
-//                }
-//            }
+            Button(action: {
+                showSafari = true
+            }) {
+                Text("작품 감상평 공유하기")
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color(hex: "404293"))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal, 20)
+            .accessibilityLabel("작품 감상평 공유하기") // 레이블 수정
+            .accessibilityHint("작품 감상평을 공유하기 위해 웹페이지를 엽니다.") // 힌트 수정
+            .accessibilityAddTraits(.isButton)
+            .fullScreenCover(isPresented: $showSafari) {
+                if let artworkId = viewModel.meta["title"],
+                   let url = URL(string: "http://43.201.93.53:8000/?museum=1&artworkid=\(artworkId)") {
+                    SafariView(
+                        url: url,
+                        configuration: SafariView.Configuration(
+                            entersReaderIfAvailable: false,
+                            barCollapsingEnabled: true
+                        )
+                    )
+                }
+            }
         }
     }
 }
