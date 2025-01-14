@@ -15,7 +15,9 @@ struct CamerascanView: View {
     
     @State private var navigateToCameraInfo = false
     
-    
+    // picker
+    @State private var SelectedCameraOption = 0
+    var CameraOptions = ["전시관 모드", "자유촬영 모드"]
     
     
 
@@ -26,11 +28,12 @@ struct CamerascanView: View {
                     .ignoresSafeArea()
                 
                 VStack {
+                    
+
                     Button(action: {
                         isShowingScanner = true
                     }) {
                         Text("카메라로 작품 촬영하기")
-//                            .font(.system(size: 15))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
                             .background(Color(hex: "404293"))
@@ -58,7 +61,6 @@ struct CamerascanView: View {
                         navigateToCameraInfo = true
                     }) {
                         Text("촬영 가이드 보기")
-//                            .font(.system(size: 15))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
                             .background(Color(hex: "404293"))
@@ -78,6 +80,38 @@ struct CamerascanView: View {
                             isShowingScanner = false
                         }
                     }
+                    
+                    VStack {
+                        Spacer()
+                            .frame(height: 30)
+                            Picker("촬영 모드", selection: $SelectedCameraOption) {
+                                ForEach(0 ..< CameraOptions.count) {
+                                    Text(CameraOptions[$0])
+                                    
+                                  }
+                            }.pickerStyle(.segmented)
+
+                        Spacer()
+                            .frame(height: 15)
+                        
+                    
+                            
+                        HStack(alignment: .top) {
+                                Image(systemName: "info.circle")
+
+                                Spacer()
+                                    .frame(width: 10)
+                                
+                                if(SelectedCameraOption == 0) {
+                                    Text("전시관에 등록된 작품 중에서\n일치하는 작품을 검색합니다")
+                                } else {
+                                    Text("자유롭게 작품을 촬영하여\nAI 해설을 제공받습니다")
+                                }
+                                Spacer()
+                            }
+                        
+                        
+                    }.padding(.horizontal, 41)
 
                     NavigationLink(destination: CameraInfoView(), isActive: $navigateToCameraInfo) {
                                         EmptyView()
@@ -85,7 +119,7 @@ struct CamerascanView: View {
                     .accessibilityHidden(true)
                     
                     NavigationLink(
-                        destination: AnalyzeImage(image: scannedImages.last?.image),
+                        destination: AnalyzeImage(image: scannedImages.last?.image, SelectedCameraOption: $SelectedCameraOption),
                         isActive: $isNavigatingToAnalyze,
                         label: { EmptyView() }
                     )
@@ -95,21 +129,7 @@ struct CamerascanView: View {
                 }
                 .padding()
                 .navigationBarTitle("작품 촬영", displayMode: .large)
-                
-                
-                
-                
-                
-//                .background(
-//                    NavigationLink(
-//                        destination: AnalyzeImage(image: scannedImages.last?.image),
-//                        isActive: $isNavigatingToAnalyze,
-//                        label: { EmptyView() }
-//                    )
-                    
-                    
-                    
-//                )
+
             }
         
     }
@@ -149,16 +169,16 @@ struct AnalyzeImage: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ImageSearchViewModel()
-    @State private var navigateToDescription = false
+    @State private var navigateToDescription = false // 전시관 모드
+    @State private var navigateToCustomCameraMode = false // 자유촬영 모드
     @State private var hasLoadedData = false
     @State private var showContent = false
+    
+    @Binding var SelectedCameraOption: Int
 
     var body: some View {
         VStack {
             if let image = image {
-                // Uncomment and adjust the image display if needed
-                
-                
                 if viewModel.isLoading {
                     ProgressView("이미지 분석중")
                 } else if let errorMessage = viewModel.errorMessage {
@@ -246,7 +266,10 @@ struct AnalyzeImage: View {
         .background() {
             NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults), isActive: $navigateToDescription) {
                                 EmptyView()
-                            }
+            }
+            NavigationLink(destination: FreeCameraMode(image: image), isActive: $navigateToCustomCameraMode) { // New NavigationLink
+                            EmptyView()
+                        }
         }
     }
 }

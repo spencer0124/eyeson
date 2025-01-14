@@ -25,6 +25,8 @@
 		C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = C4392C3D2D2A97D500F4BBC4 /* Starscream */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C453D29D2D3593D300B45B7E /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = C453D29C2D3593D300B45B7E /* BetterSafariView */; };
+		C453D2A32D3645D000B45B7E /* FreeCameraModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453D2A22D3645D000B45B7E /* FreeCameraModeView.swift */; };
+		C453D2A52D3645DA00B45B7E /* FreeCameraModeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453D2A42D3645DA00B45B7E /* FreeCameraModeVM.swift */; };
 		C455A01C2C609B6300A3F786 /* Glur in Frameworks */ = {isa = PBXBuildFile; productRef = C455A01B2C609B6300A3F786 /* Glur */; };
 		C46611072C67754500049492 /* ArtworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46611062C67754500049492 /* ArtworkDetailView.swift */; };
 		C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4734E9C2C630FFA00110334 /* ArtworkView.swift */; };
@@ -96,6 +98,8 @@
 		C4392C382D2A90CC00F4BBC4 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		C453D2A22D3645D000B45B7E /* FreeCameraModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeCameraModeView.swift; sourceTree = "<group>"; };
+		C453D2A42D3645DA00B45B7E /* FreeCameraModeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeCameraModeVM.swift; sourceTree = "<group>"; };
 		C46611062C67754500049492 /* ArtworkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkDetailView.swift; sourceTree = "<group>"; };
 		C4734E9C2C630FFA00110334 /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
 		C47499A92C6062830064D824 /* CamerascanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerascanView.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 		C4475F3B2C4EA26E00DFBD90 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				C453D29F2D3645A800B45B7E /* FreeCameraMode */,
 				C42CEF0A2D2912DB00EAAB31 /* Chat */,
 				C46611022C67751400049492 /* ArtworkDetail */,
 				C4734E982C630FD300110334 /* Artwork */,
@@ -357,6 +362,31 @@
 				C48458212C4C033500745A56 /* DocumentScanner.swift */,
 				C48458232C4C048C00745A56 /* TextRecognizer.swift */,
 				C4AADEC02C845CDA00D47510 /* CameraScanVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C453D29F2D3645A800B45B7E /* FreeCameraMode */ = {
+			isa = PBXGroup;
+			children = (
+				C453D2A12D3645C000B45B7E /* ViewModel */,
+				C453D2A02D3645BB00B45B7E /* View */,
+			);
+			path = FreeCameraMode;
+			sourceTree = "<group>";
+		};
+		C453D2A02D3645BB00B45B7E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C453D2A22D3645D000B45B7E /* FreeCameraModeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C453D2A12D3645C000B45B7E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C453D2A42D3645DA00B45B7E /* FreeCameraModeVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -840,6 +870,7 @@
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */,
 				C4392C392D2A90CC00F4BBC4 /* ChatView.swift in Sources */,
+				C453D2A32D3645D000B45B7E /* FreeCameraModeView.swift in Sources */,
 				C429E7F12C61C00C00B9AAED /* LocationInfo.swift in Sources */,
 				C4392C3B2D2A90D300F4BBC4 /* ChatViewModel.swift in Sources */,
 				C4AB17CD2C86E5B2009F1A20 /* FullScreenImageView.swift in Sources */,
@@ -858,6 +889,7 @@
 				C47499B02C6062B20064D824 /* ExhibitsView.swift in Sources */,
 				C48458242C4C048C00745A56 /* TextRecognizer.swift in Sources */,
 				C4AE0E8F2C855713000A0A72 /* ArtwordModel.swift in Sources */,
+				C453D2A52D3645DA00B45B7E /* FreeCameraModeVM.swift in Sources */,
 				C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */,
 				C429E7ED2C61BCD800B9AAED /* NotificationPermission.swift in Sources */,
 				C4734E9D2C630FFA00110334 /* ArtworkView.swift in Sources */,
