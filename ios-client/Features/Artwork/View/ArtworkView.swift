@@ -7,7 +7,7 @@
 
 import SwiftUI
 import UIKit
-import SwiftUIImageViewer
+import SwiftUIImageViewer2
 import Kingfisher
 import SafariServices
 import BetterSafariView
@@ -153,7 +153,7 @@ struct ArtworkImageView: View {
                     ZStack {
                         Color.white
                         ZStack {
-                            SwiftUIImageViewer(imageURLString: viewModel.image_url)
+                            SwiftUIImageViewer2(imageURLString: viewModel.image_url)
                                 .accessibilityLabel("\(viewModel.meta["title"] ?? " ") 작품 이미지")
                                 .accessibility(sortPriority: 2)
                             VStack {

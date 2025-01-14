@@ -1,5 +1,5 @@
 {
-  "originHash" : "967f273eda3d37edceeb32afb1f856110cb7015052502644750d90f7a9ca65e7",
+  "originHash" : "86d24d701cea191ec0ca2ead79167e8660a66da8929480a61a6cb923fe5fe30a",
   "pins" : [
     {
       "identity" : "bettersafariview",
@@ -29,15 +29,6 @@
       }
     },
     {
-      "identity" : "lottie-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios",
-      "state" : {
-        "revision" : "fe4c6fe3a0aa66cdeb51d549623c82ca9704b9a5",
-        "version" : "4.5.0"
-      }
-    },
-    {
       "identity" : "starscream",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daltoniam/Starscream",
@@ -60,16 +51,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/spencer0124/swiftui-image-viewer-custom",
       "state" : {
-        "revision" : "861766e6ca99233e6566b7e6e1ec130662719428"
-      }
-    },
-    {
-      "identity" : "swiftui-shimmer",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/markiv/SwiftUI-Shimmer",
-      "state" : {
-        "revision" : "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
-        "version" : "1.5.1"
+        "revision" : "7aca9f1c86e66e20d947fe5e5dd51ad2ca643427"
       }
     },
     {

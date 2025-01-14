@@ -7,7 +7,8 @@
 
 import SwiftUI
 import Kingfisher
-import ImageViewer
+//import ImageViewer
+import SwiftUIImageViewer2
 
 struct FreeCameraModeView: View {
     var originalImage: UIImage? // 원본 전체 이미지만 파라미터로 전달받음
@@ -87,7 +88,7 @@ struct FreeCameraModeView: View {
                     ZStack {
                         Color.white
                         ZStack {
-                            ImageViewer(image: .constant(Image(uiImage: originalImage!)), viewerShown: $showImageViewer)
+                            SwiftUIImageViewer2(uiImage: originalImage)
                                 .accessibilityLabel("촬영된 이미지")
                                 .accessibility(sortPriority: 2)
                         }

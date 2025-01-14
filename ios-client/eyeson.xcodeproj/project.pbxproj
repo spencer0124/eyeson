@@ -19,7 +19,6 @@
 		C429E7FB2C61E25000B9AAED /* NearbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FA2C61E25000B9AAED /* NearbyView.swift */; };
 		C429E7FD2C61E25700B9AAED /* NearbyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FC2C61E25700B9AAED /* NearbyViewModel.swift */; };
 		C429E7FF2C61E25E00B9AAED /* NearByModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7FE2C61E25E00B9AAED /* NearByModel.swift */; };
-		C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C429E8012C61E2EB00B9AAED /* Lottie */; };
 		C4392C392D2A90CC00F4BBC4 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4392C382D2A90CC00F4BBC4 /* ChatView.swift */; };
 		C4392C3B2D2A90D300F4BBC4 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4392C3A2D2A90D300F4BBC4 /* ChatViewModel.swift */; };
 		C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = C4392C3D2D2A97D500F4BBC4 /* Starscream */; };
@@ -57,8 +56,7 @@
 		C4BCFB8E2C4DF32C001F943B /* bluetoothScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB8D2C4DF32C001F943B /* bluetoothScan.swift */; };
 		C4BCFB912C4DF679001F943B /* peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB902C4DF679001F943B /* peripheral.swift */; };
 		C4BCFB932C4DF700001F943B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFB922C4DF700001F943B /* BLEManager.swift */; };
-		C4EC9B482C86FF39002F49AD /* SwiftUIImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = C4EC9B472C86FF39002F49AD /* SwiftUIImageViewer */; };
-		C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = C4EF82D92C67B93F00A358D7 /* Shimmer */; };
+		C4D613252D36A07600FE1293 /* SwiftUIImageViewer2 in Frameworks */ = {isa = PBXBuildFile; productRef = C4D613242D36A07600FE1293 /* SwiftUIImageViewer2 */; };
 		F29EDF6706F47C2ADDC39832 /* Pods_eyesonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F807439606D1330482835A12 /* Pods_eyesonTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,12 +142,10 @@
 				C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */,
 				C4AC18D92C86F59E000C1869 /* Kingfisher in Frameworks */,
 				C455A01C2C609B6300A3F786 /* Glur in Frameworks */,
-				C4EC9B482C86FF39002F49AD /* SwiftUIImageViewer in Frameworks */,
 				C453D2A82D3654D900B45B7E /* ImageViewer in Frameworks */,
-				C4EF82DA2C67B93F00A358D7 /* Shimmer in Frameworks */,
+				C4D613252D36A07600FE1293 /* SwiftUIImageViewer2 in Frameworks */,
 				C453D2AA2D3654D900B45B7E /* ImageViewerRemote in Frameworks */,
 				33FFCB832A54128949093252 /* Pods_eyeson.framework in Frameworks */,
-				C429E8022C61E2EB00B9AAED /* Lottie in Frameworks */,
 				C453D29D2D3593D300B45B7E /* BetterSafariView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,14 +593,12 @@
 			name = eyeson;
 			packageProductDependencies = (
 				C455A01B2C609B6300A3F786 /* Glur */,
-				C429E8012C61E2EB00B9AAED /* Lottie */,
-				C4EF82D92C67B93F00A358D7 /* Shimmer */,
 				C4AC18D82C86F59E000C1869 /* Kingfisher */,
-				C4EC9B472C86FF39002F49AD /* SwiftUIImageViewer */,
 				C4392C3D2D2A97D500F4BBC4 /* Starscream */,
 				C453D29C2D3593D300B45B7E /* BetterSafariView */,
 				C453D2A72D3654D900B45B7E /* ImageViewer */,
 				C453D2A92D3654D900B45B7E /* ImageViewerRemote */,
+				C4D613242D36A07600FE1293 /* SwiftUIImageViewer2 */,
 			);
 			productName = eyeson;
 			productReference = C48457F22C4C00F200745A56 /* eyeson.app */;
@@ -683,13 +677,11 @@
 			mainGroup = C48457E92C4C00F200745A56;
 			packageReferences = (
 				C455A01A2C609B6300A3F786 /* XCRemoteSwiftPackageReference "Glur" */,
-				C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				C4AC18D72C86F59E000C1869 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				C4EC9B462C86FF39002F49AD /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */,
 				C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */,
 				C453D29B2D3593D200B45B7E /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				C453D2A62D3654D900B45B7E /* XCRemoteSwiftPackageReference "swiftui-image-viewer" */,
+				C4D613232D36A07600FE1293 /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */,
 			);
 			productRefGroup = C48457F32C4C00F200745A56 /* Products */;
 			projectDirPath = "";
@@ -1229,14 +1221,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
-			};
-		};
 		C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream";
@@ -1277,30 +1261,17 @@
 				minimumVersion = 7.12.0;
 			};
 		};
-		C4EC9B462C86FF39002F49AD /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */ = {
+		C4D613232D36A07600FE1293 /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/spencer0124/swiftui-image-viewer-custom";
 			requirement = {
 				kind = revision;
-				revision = 861766e6ca99233e6566b7e6e1ec130662719428;
-			};
-		};
-		C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
+				revision = 7aca9f1c86e66e20d947fe5e5dd51ad2ca643427;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C429E8012C61E2EB00B9AAED /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C429E8002C61E2EB00B9AAED /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
 		C4392C3D2D2A97D500F4BBC4 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C4392C3C2D2A97D500F4BBC4 /* XCRemoteSwiftPackageReference "Starscream" */;
@@ -1331,15 +1302,10 @@
 			package = C4AC18D72C86F59E000C1869 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		C4EC9B472C86FF39002F49AD /* SwiftUIImageViewer */ = {
+		C4D613242D36A07600FE1293 /* SwiftUIImageViewer2 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C4EC9B462C86FF39002F49AD /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */;
-			productName = SwiftUIImageViewer;
-		};
-		C4EF82D92C67B93F00A358D7 /* Shimmer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C4EF82D82C67B93F00A358D7 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
-			productName = Shimmer;
+			package = C4D613232D36A07600FE1293 /* XCRemoteSwiftPackageReference "swiftui-image-viewer-custom" */;
+			productName = SwiftUIImageViewer2;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
