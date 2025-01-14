@@ -54,7 +54,7 @@ class DescriptionViewModel: ObservableObject {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gptplus/"
+        let url = "http://43.201.93.53:8000/description/gpt-artwork/"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]
@@ -81,7 +81,16 @@ class DescriptionViewModel: ObservableObject {
         .responseData { response in
             self.isLoadingRequestDescription = false
             
-            print("Full response: \(response)")
+//            print("Full response: \(response)")
+            
+            print("--- fetchDescription Response Start ---")
+                            print("Request: \(String(describing: response.request))") // 요청 정보
+                            print("Response: \(String(describing: response.response))") // HTTP 응답 정보 (상태 코드 등)
+                            print("Result: \(response.result)") // 결과 (성공/실패)
+                            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                                print("Response Body (UTF-8): \(utf8Text)") // 응답 본문 (JSON 또는 문자열)
+                            }
+                            print("--- fetchDescription Response End ---")
             
             switch response.result {
             case .success(let data):

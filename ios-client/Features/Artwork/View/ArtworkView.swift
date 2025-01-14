@@ -154,6 +154,7 @@ struct ArtworkImageView: View {
                         ZStack {
                             SwiftUIImageViewer(imageURLString: viewModel.image_url)
                                 .accessibilityLabel("\(viewModel.meta["title"] ?? " ") 작품 이미지")
+                                .accessibility(sortPriority: 2)
                             VStack {
                                 Spacer()
                                     .frame(height: 10)
@@ -162,6 +163,7 @@ struct ArtworkImageView: View {
                                     closeButton
                                         .accessibilityLabel("닫기 버튼")
                                         .accessibilityHint("작품 상세정보 화면으로 돌아간다")
+                                        .accessibility(sortPriority: 3)
                                     Spacer()
                                         .frame(width: 10)
                                 }
@@ -169,12 +171,12 @@ struct ArtworkImageView: View {
                             }
                         }
                         
+                        
                         VStack {
                             Spacer()
                             Button(action: {
                                 withAnimation {
                                     captureScreenshotAndRequestDescription()
-                                    
                                     isBottomSheetPresented = true
                                 }
                             }, label: {
@@ -203,11 +205,13 @@ struct ArtworkImageView: View {
                             .accessibilityHint("현재 화면에서 확대한 부분에 대해 자세하게 설명해줍니다") // 동작에 대한 힌트 추가
                             .accessibilityAddTraits(.isButton) // 접근성 요소에 버튼 특성 추가
                             .contentShape(Rectangle()) // 더 큰 터치 영역 제공
+                            .accessibility(sortPriority: 1)
                             
                             Spacer()
                                 .frame(height: 100)
                         }
                     }
+                    .accessibilityElement(children: .contain)
                     .overlay(
                         VStack {
                             Spacer()
