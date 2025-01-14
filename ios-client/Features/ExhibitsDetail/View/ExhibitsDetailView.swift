@@ -53,7 +53,7 @@ struct ExhibitsDetailView: View {
                                         Text(exhibit.artist)
                                             .font(.subheadline)
                                             .foregroundColor(.black)
-                                            .accessibilityLabel("작가: \(exhibit.title)")
+                                            .accessibilityLabel("작가: \(exhibit.artist)")
                                     }
                                 }
                                 .padding(.vertical, 4)
@@ -62,7 +62,7 @@ struct ExhibitsDetailView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-                .searchable(text: $searchText, placement: .automatic)
+                .searchable(text: $searchText, placement: .automatic, prompt: "작품 검색하기")
             }
             Spacer()
         }
