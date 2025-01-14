@@ -129,7 +129,7 @@ struct CamerascanView: View {
                     .accessibilityHidden(true)
                     
                     NavigationLink(
-                        destination: FreeCameraModeView(image: scannedImages.last?.image), isActive: $navigateToCustomCameraMode,
+                        destination: FreeCameraModeView(originalImage: scannedImages.last?.image), isActive: $navigateToCustomCameraMode,
                         label: { EmptyView() }
                     
                     )

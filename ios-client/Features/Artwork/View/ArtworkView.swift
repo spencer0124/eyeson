@@ -46,6 +46,7 @@ struct ArtworkMetaInfoView: View {
     }
 }
 
+// 작품 해설 요청하기 버튼 클릭했을 때
 struct ArtworkImageView: View {
     @ObservedObject var viewModel: DescriptionViewModel
     @Binding var isImagePresented: Bool
