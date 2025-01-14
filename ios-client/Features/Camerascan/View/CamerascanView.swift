@@ -14,22 +14,19 @@ struct CamerascanView: View {
     @State private var isNavigatingToAnalyze = false
     
     @State private var navigateToCameraInfo = false
+    @State private var navigateToCustomCameraMode = false // 자유촬영 모드
     
     // picker
     @State private var SelectedCameraOption = 0
     var CameraOptions = ["전시관 모드", "자유촬영 모드"]
-    
-    
+
 
     var body: some View {
-        
             ZStack {
                 Color("backgroundColor")
                     .ignoresSafeArea()
                 
                 VStack {
-                    
-
                     Button(action: {
                         isShowingScanner = true
                     }) {
@@ -47,7 +44,13 @@ struct CamerascanView: View {
                                 let currentDate = Date()
                                 addScannedImages(images: images, date: currentDate)
                                 if let lastImage = scannedImages.last {
-                                    isNavigatingToAnalyze = true
+                                    if(SelectedCameraOption == 0) {
+                                        isNavigatingToAnalyze = true
+                                    }
+                                    else if(SelectedCameraOption == 1) {
+                                        navigateToCustomCameraMode = true
+                                    }
+                                    
                                 }
                             }
                             isShowingScanner = false
@@ -124,6 +127,14 @@ struct CamerascanView: View {
                         label: { EmptyView() }
                     )
                     .accessibilityHidden(true)
+                    
+                    NavigationLink(
+                        destination: FreeCameraModeView(image: scannedImages.last?.image), isActive: $navigateToCustomCameraMode,
+                        label: { EmptyView() }
+                    
+                    )
+                    
+                    
                     
                   
                 }
@@ -245,8 +256,7 @@ struct AnalyzeImage: View {
                 Text("No image available")
             }
         }
-        
-        // .navigationTitle("이미지 분석중..")
+    
         .onChange(of: image) { newImage in
             
             if let image = newImage {
@@ -267,9 +277,7 @@ struct AnalyzeImage: View {
             NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults), isActive: $navigateToDescription) {
                                 EmptyView()
             }
-            NavigationLink(destination: FreeCameraMode(image: image), isActive: $navigateToCustomCameraMode) { // New NavigationLink
-                            EmptyView()
-                        }
+           
         }
     }
 }

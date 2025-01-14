@@ -7,9 +7,20 @@
 
 import SwiftUI
 
+
+
 struct FreeCameraModeView: View {
+    var image: UIImage?
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let image = image {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+        } else {
+            Text("No image received")
+        }
+        Text("This is the custom camera mode view.")
     }
 }
 
