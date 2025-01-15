@@ -37,7 +37,6 @@ struct ExhibitsView: View {
                                NavigationLink(destination: ExhibitsDetailView(exhibit: exhibit)) {
                                    HStack {
                                        KFImage(URL(string: exhibit.image))
-//                                       Image(exhibit.image)
                                            .resizable()
                                            .scaledToFit()
                                            .frame(width: 65, height: 65)

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import BetterSafariView
 
 struct ExhibitsDetailView: View {
     @StateObject private var viewModel = ExhibitsDetailViewModel()
@@ -14,7 +15,9 @@ struct ExhibitsDetailView: View {
     @State private var searchText = ""
     @State private var hasLoadedData = false
     @State private var sortOrder: SortOrder = .title
-
+    
+    @State var showSafari: Bool = false
+    
     var exhibit: ExhibitList
     
     enum SortOrder {
@@ -36,58 +39,22 @@ struct ExhibitsDetailView: View {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else {
-                List {
-                    Section(header: Text("나의 모든 순간")
-                        .foregroundColor(.black)
-                        .accessibilityLabel("전시제목: 나의 모든 순간")
-                    ) {
-                        ForEach(viewModel.exhibits.filter { exhibit in
-                            searchText.isEmpty || exhibit.title.localizedCaseInsensitiveContains(searchText)
-                        }
-                        
-                            .sorted {
-                                                            switch sortOrder {
-                                                            case .title:
-                                                                return $0.title < $1.title
-                                                            case .artist:
-                                                                return $0.artist < $1.artist
-                                                            }
-                                                        }
-                        ) { exhibit in
-                            NavigationLink(destination: ArtworkView(eng_id: exhibit.id)) {
-                                HStack {
-                                    KFImage(URL(string: exhibit.imageUrl))
-                                        .placeholder {
-                                        ProgressView()
-                                            .frame(width: 65, height: 55)
-                                        }
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 65, height: 55)
-                                        .accessibilityLabel("작품 이미지")
-                                        
-                                    Spacer()
-                                        .frame(width: 20)
-                                    VStack(alignment: .leading) {
-                                        Text(exhibit.title)
-                                            .font(.headline)
-                                            .accessibilityLabel("작품제목: \(exhibit.title)")
-                                        Text(exhibit.artist)
-                                            .font(.subheadline)
-                                            .foregroundColor(.black)
-                                            .accessibilityLabel("작가: \(exhibit.artist)")
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        }
-                    }
-                }
-                .listStyle(PlainListStyle())
-                .searchable(text: $searchText, placement: .automatic, prompt: "작품 검색하기")
+                ExhibitsListView(exhibit: exhibit, searchText: $searchText, sortOrder: $sortOrder, viewModel: viewModel) // List 부분을 Subview로 분리
             }
             Spacer()
         }
+        .fullScreenCover(isPresented: $showSafari) {
+            if let url = URL(string: exhibit.ParamInfoUrl) {
+                SafariView(
+                    url: url,
+                    configuration: SafariView.Configuration(
+                        entersReaderIfAvailable: false,
+                        barCollapsingEnabled: true
+                    )
+                )
+            }
+        }
+        
         .onAppear {
             if !hasLoadedData {
                 viewModel.fetchExhibits()
@@ -106,38 +73,86 @@ struct ExhibitsDetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    isNavigatingToExhibitInfo = true
+//                    isNavigatingToExhibitInfo = true
+                    showSafari = true // 전시정보 보여줄 웹뷰 켜기
+                    
                 }) {
                     HStack(spacing: 2) {
                         Text("전시정보")
                     }
+                    
                 }
             }
         }
     }
+    
+    struct ExhibitsListView: View {
+        let exhibit: ExhibitList
+        @Binding var searchText: String
+        @Binding var sortOrder: ExhibitsDetailView.SortOrder
+        @ObservedObject var viewModel: ExhibitsDetailViewModel
+
+        var body: some View {
+            List {
+                Section(header: Text(exhibit.ParamExhibitName)
+                    .foregroundColor(.black)
+                    .accessibilityLabel("전시제목: \(exhibit.ParamExhibitName)")
+                ) {
+                    ForEach(viewModel.exhibits.filter { exhibit in
+                        searchText.isEmpty || exhibit.title.localizedCaseInsensitiveContains(searchText)
+                    }
+                    .sorted {
+                        switch sortOrder {
+                        case .title:
+                            return $0.title < $1.title
+                        case .artist:
+                            return $0.artist < $1.artist
+                        }
+                    }
+                    ) { exhibit in
+                        NavigationLink(destination: ArtworkView(eng_id: exhibit.id)) {
+                            HStack {
+                                KFImage(URL(string: exhibit.imageUrl))
+                                    .placeholder {
+                                        ProgressView()
+                                            .frame(width: 65, height: 55)
+                                    }
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 65, height: 55)
+                                    .accessibilityLabel("작품 이미지")
+
+                                Spacer()
+                                    .frame(width: 20)
+                                VStack(alignment: .leading) {
+                                    Text(exhibit.title)
+                                        .font(.headline)
+                                        .accessibilityLabel("작품제목: \(exhibit.title)")
+                                    Text(exhibit.artist)
+                                        .font(.subheadline)
+                                        .foregroundColor(.black)
+                                        .accessibilityLabel("작가: \(exhibit.artist)")
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                }
+            }
+            .listStyle(PlainListStyle())
+            .searchable(text: $searchText, placement: .automatic, prompt: "작품 검색하기")
+        }
+    }
+
+    // ... (기존 코드) ...
+
 }
     
-    struct CustomButtonsView: View {
-        @Binding var isNavigatingToExhibitInfo: Bool
-        
-        var body: some View {
-            Button(action: {
-                isNavigatingToExhibitInfo = true
-            }) {
-                HStack(spacing: 2) {
-                    Image(systemName: "info.circle")
-                        .foregroundColor(Color.customGray1)
-                    Text("전시정보")
-                        .font(.system(size: 14))
-                        .foregroundColor(Color.customGray1)
-                }
-            }
-        }
-    }
+    
 
 
 
 #Preview {
-    ExhibitsDetailView(exhibit: ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11", endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!))
+    ExhibitsDetailView(exhibit: ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11", endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!, ParamUniqueId: "240904_everymoment", ParamExhibitName: "Every Moment of Mine", ParamInfoUrl: "https://www.startuptoday.kr/news/articleView.html?idxno=43596"))
 }
 

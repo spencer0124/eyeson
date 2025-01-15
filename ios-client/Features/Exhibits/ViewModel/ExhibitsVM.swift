@@ -32,7 +32,10 @@ class ExhibitsVM: ObservableObject {
                             subText1: exhibit.place,
                             subText2: exhibit.gallery,
                             subText3: "\(exhibit.startYear).\(exhibit.startMonth).\(exhibit.startDay)-\(exhibit.EndYear).\(exhibit.EndMonth).\(exhibit.EndDay)",
-                            endDate: Calendar.current.date(from: DateComponents(year: Int(exhibit.EndYear), month: Int(exhibit.EndMonth), day: Int(exhibit.EndDay))) ?? Date() // endDate 계산
+                            endDate: Calendar.current.date(from: DateComponents(year: Int(exhibit.EndYear), month: Int(exhibit.EndMonth), day: Int(exhibit.EndDay))) ?? Date(), // endDate 계산,
+                            ParamUniqueId: exhibit.id,
+                            ParamExhibitName: exhibit.name,
+                            ParamInfoUrl: exhibit.info
                         )
                     }
                 case .failure(let error):

@@ -16,6 +16,9 @@ struct ExhibitList: Identifiable {
     let subText2: String
     let subText3: String
     let endDate: Date
+    let ParamUniqueId: String
+    let ParamExhibitName: String
+    let ParamInfoUrl: String
 }
 
 struct ExhibitInfoResponse: Decodable {
