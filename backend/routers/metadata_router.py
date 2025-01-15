@@ -45,6 +45,7 @@ async def get_images_with_metadata():
 async def get_exhibit_with_metadata():
     try:
         exhibits = load_data(exhibit_path)
+        print('ex',exhibits)
         return {"exhibits" : exhibits}
 
     except Exception as e:
