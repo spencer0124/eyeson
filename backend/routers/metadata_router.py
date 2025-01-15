@@ -5,9 +5,11 @@ from services.s3_service import list_images_in_s3
 
 router = APIRouter()
 data_path = './data/data.json'
+exhibit_path = './data/exhibit.json'
 
-def load_data():
-    with open(data_path, "r") as f:
+# parameter로 path 받아 data_path와 exhibit_path 모두 다루도록 수정정
+def load_data(path):
+    with open(path, "r") as f:
         return json.load(f)
 
 def get_filename_from_path(s3_key: str) -> str:
@@ -16,7 +18,8 @@ def get_filename_from_path(s3_key: str) -> str:
 @router.get("/with-images/")
 async def get_images_with_metadata():
     try:
-        data = load_data()
+        # load_data 인수로 data_path 받게 수정정
+        data = load_data(data_path)
         file_list = list_images_in_s3()
 
         images_with_metadata = []
@@ -37,3 +40,13 @@ async def get_images_with_metadata():
     except Exception as e:
         print(f"An error occurred: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to retrieve images and metadata")
+    
+@router.get("/exhibit_info/")
+async def get_exhibit_with_metadata():
+    try:
+        exhibits = load_data(exhibit_path)
+        return {"exhibits" : exhibits}
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve exhibitions and metadata")
