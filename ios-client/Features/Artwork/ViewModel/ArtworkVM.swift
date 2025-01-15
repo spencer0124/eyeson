@@ -24,7 +24,7 @@ class DescriptionViewModel: ObservableObject {
         isLoadingFetchDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/get-origin/"
+        let url = "http://43.201.93.53:8000/description/get-origin/?uniqueid=2023test"
         let parameters: [String: String] = ["file": file]
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
@@ -54,7 +54,7 @@ class DescriptionViewModel: ObservableObject {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-artwork/"
+        let url = "http://43.201.93.53:8000/description/gpt-artwork/?uniqueid=2023test"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]

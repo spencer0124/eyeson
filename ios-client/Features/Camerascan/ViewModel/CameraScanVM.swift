@@ -21,7 +21,7 @@ class ImageSearchViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/search/"
+        let url = "http://43.201.93.53:8000/search/?uniqueid=2023test"
         
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
