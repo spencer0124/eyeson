@@ -41,11 +41,10 @@ async def get_images_with_metadata():
         print(f"An error occurred: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to retrieve images and metadata")
     
-@router.get("/exhibit_info/")
+@router.get("/exhibit-info/")
 async def get_exhibit_with_metadata():
     try:
         exhibits = load_data(exhibit_path)
-        print('ex',exhibits)
         return {"exhibits" : exhibits}
 
     except Exception as e:
