@@ -57,7 +57,7 @@ struct ExhibitsDetailView: View {
         
         .onAppear {
             if !hasLoadedData {
-                viewModel.fetchExhibits()
+                viewModel.fetchExhibits(uniqueId: exhibit.ParamUniqueId)
                 hasLoadedData = true
             }
         }

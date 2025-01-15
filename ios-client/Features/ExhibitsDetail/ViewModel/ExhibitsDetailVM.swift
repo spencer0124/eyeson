@@ -14,11 +14,11 @@ class ExhibitsDetailViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
-    func fetchExhibits() {
+    func fetchExhibits(uniqueId: String) {
         isLoading = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/metadata/with-images/?uniqueid=2023test"
+        let url = "http://43.201.93.53:8000/metadata/with-images/?uniqueid=\(uniqueId)"
         
         AF.request(url).responseJSON { response in
             self.isLoading = false
