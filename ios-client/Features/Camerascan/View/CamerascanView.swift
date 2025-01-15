@@ -27,6 +27,7 @@ struct CamerascanView: View {
                     .ignoresSafeArea()
                 
                 VStack {
+                    
                     Button(action: {
                         isShowingScanner = true
                     }) {
@@ -95,23 +96,46 @@ struct CamerascanView: View {
                             }.pickerStyle(.segmented)
 
                         Spacer()
-                            .frame(height: 15)
-                        
+                            .frame(height: 25)
                     
-                            
-                        HStack(alignment: .top) {
-                                Image(systemName: "info.circle")
+                        VStack {
+//                            Spacer()
+                            HStack(alignment: .top) {
+                                    Image(systemName: "info.circle")
 
-                                Spacer()
-                                    .frame(width: 10)
+                                    Spacer()
+                                        .frame(width: 10)
+                                    
+                                    if(SelectedCameraOption == 0) {
+                                        VStack(alignment: .leading) {
+                                            Picker("촬영 모드", selection: $SelectedCameraOption) {
+                                                ForEach(0 ..< CameraOptions.count) {
+                                                    Text(CameraOptions[$0])
+                                                    
+                                                  }
+                                            }
+                                            .padding(.horizontal, -10)
+                                            .padding(.vertical, -9)
+                                            
+                                            Text("선택된 전시관에 등록된 작품 중에서\n일치하는 작품을 검색합니다")
+                                            Spacer()
+                                        }
+    //
+                                        
+                                    } else {
+                                        VStack(alignment: .leading){
+                                            Text("자유롭게 작품을 촬영하여\nAI 해설을 제공받습니다")
+                                            Spacer()
+                                        }
+                                        
+                                    }
                                 
-                                if(SelectedCameraOption == 0) {
-                                    Text("전시관에 등록된 작품 중에서\n일치하는 작품을 검색합니다")
-                                } else {
-                                    Text("자유롭게 작품을 촬영하여\nAI 해설을 제공받습니다")
+                                    Spacer()
                                 }
-                                Spacer()
-                            }
+                                .frame(height: 100)
+                            Spacer()
+                        }
+                        .frame(maxHeight: 100)
                         
                         
                     }.padding(.horizontal, 41)

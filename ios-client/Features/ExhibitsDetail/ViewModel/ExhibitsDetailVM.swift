@@ -18,7 +18,7 @@ class ExhibitsDetailViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/metadata/with-images/"
+        let url = "http://43.201.93.53:8000/metadata/with-images/?uniqueid=2023test"
         
         AF.request(url).responseJSON { response in
             self.isLoading = false

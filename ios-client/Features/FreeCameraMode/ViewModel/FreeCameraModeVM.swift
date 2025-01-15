@@ -27,7 +27,7 @@ class FreeCameraModeViewModel: ObservableObject {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-nonartwork/"
+        let url = "http://43.201.93.53:8000/description/gpt-nonartwork/?uniqueid=2023test"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]
