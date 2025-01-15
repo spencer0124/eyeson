@@ -13,11 +13,23 @@ struct ExhibitsDetailView: View {
     @State private var isNavigatingToExhibitInfo = false
     @State private var searchText = ""
     @State private var hasLoadedData = false
+    @State private var sortOrder: SortOrder = .title
 
     var exhibit: ExhibitList
+    
+    enum SortOrder {
+           case title, artist
+       }
 
     var body: some View {
         VStack {
+            Picker("정렬 기준", selection: $sortOrder) {
+                            Text("작품제목 순서").tag(SortOrder.title)
+                            Text("작가명 순서").tag(SortOrder.artist)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.horizontal)
+            
             if viewModel.isLoading {
                 ProgressView("로딩중")
             } else if let errorMessage = viewModel.errorMessage {
@@ -31,7 +43,17 @@ struct ExhibitsDetailView: View {
                     ) {
                         ForEach(viewModel.exhibits.filter { exhibit in
                             searchText.isEmpty || exhibit.title.localizedCaseInsensitiveContains(searchText)
-                        }) { exhibit in
+                        }
+                        
+                            .sorted {
+                                                            switch sortOrder {
+                                                            case .title:
+                                                                return $0.title < $1.title
+                                                            case .artist:
+                                                                return $0.artist < $1.artist
+                                                            }
+                                                        }
+                        ) { exhibit in
                             NavigationLink(destination: ArtworkView(eng_id: exhibit.id)) {
                                 HStack {
                                     KFImage(URL(string: exhibit.imageUrl))
