@@ -138,6 +138,6 @@ struct ExhibitsDetailView: View {
 
 
 #Preview {
-    ExhibitsDetailView(exhibit: ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11"))
+    ExhibitsDetailView(exhibit: ExhibitList(image: "image_museum", mainText: "Every Moment of Mine", subText1: "서울", subText2: "노들갤러리", subText3: "9.4-9.11", endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date())!))
 }
 
