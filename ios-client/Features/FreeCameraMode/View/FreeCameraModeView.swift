@@ -61,6 +61,7 @@ struct FreeCameraModeView: View {
             
             .padding()
         }
+            .accessibilityElement(children: .contain)
             .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
             .background(Color.white)
             .cornerRadius(20)
@@ -90,7 +91,7 @@ struct FreeCameraModeView: View {
                         ZStack {
                             SwiftUIImageViewer2(uiImage: originalImage)
                                 .accessibilityLabel("촬영된 이미지")
-                                .accessibility(sortPriority: 2)
+                                .accessibility(sortPriority: 3)
                         }
                         VStack {
                             Spacer()
@@ -125,7 +126,7 @@ struct FreeCameraModeView: View {
                             .accessibilityHint("현재 화면에서 확대한 부분에 대해 자세하게 설명해줍니다") // 동작에 대한 힌트 추가
                             .accessibilityAddTraits(.isButton) // 접근성 요소에 버튼 특성 추가
                             .contentShape(Rectangle()) // 더 큰 터치 영역 제공
-                            .accessibility(sortPriority: 1)
+                            .accessibility(sortPriority: 2)
                             
                             Spacer()
                                 .frame(height: 100)
@@ -139,6 +140,7 @@ struct FreeCameraModeView: View {
                                 bottomSheet
                                     .transition(.move(edge: .bottom))
                                     .animation(.easeInOut)
+                                    .accessibility(sortPriority: 1)
                             }
                             
                             
@@ -147,7 +149,7 @@ struct FreeCameraModeView: View {
                 
                                 
         }
-        .accessibilityLabel("작품 이미지")
+//        .accessibilityLabel("작품 이미지")
         .accessibilityHint("해설을 원하는 부분을 확대한 뒤, 해설 요청하기 버튼을 클릭하세요")
         .onAppear {
             showImageViewer = true

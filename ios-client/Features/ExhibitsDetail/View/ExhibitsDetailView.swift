@@ -121,7 +121,7 @@ struct ExhibitsDetailView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 65, height: 55)
-                                    .accessibilityLabel("작품 이미지")
+                                    .accessibilityLabel("\(exhibit.title) 작품 이미지")
 
                                 Spacer()
                                     .frame(width: 20)
