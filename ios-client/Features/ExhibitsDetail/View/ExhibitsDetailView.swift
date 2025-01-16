@@ -39,7 +39,7 @@ struct ExhibitsDetailView: View {
                 Text(errorMessage)
                     .foregroundColor(.red)
             } else {
-                ExhibitsListView(exhibit: exhibit, searchText: $searchText, sortOrder: $sortOrder, viewModel: viewModel) // List 부분을 Subview로 분리
+                ExhibitsListView(exhibit: exhibit, searchText: $searchText, sortOrder: $sortOrder, paramUniqueId: exhibit.ParamUniqueId, viewModel: viewModel) // List 부분을 Subview로 분리
             }
             Spacer()
         }
@@ -90,6 +90,7 @@ struct ExhibitsDetailView: View {
         let exhibit: ExhibitList
         @Binding var searchText: String
         @Binding var sortOrder: ExhibitsDetailView.SortOrder
+        var paramUniqueId: String
         @ObservedObject var viewModel: ExhibitsDetailViewModel
 
         var body: some View {
@@ -110,7 +111,7 @@ struct ExhibitsDetailView: View {
                         }
                     }
                     ) { exhibit in
-                        NavigationLink(destination: ArtworkView(eng_id: exhibit.id)) {
+                        NavigationLink(destination: ArtworkView(eng_id: exhibit.id, paramUniqueId: paramUniqueId)) {
                             HStack {
                                 KFImage(URL(string: exhibit.imageUrl))
                                     .placeholder {

@@ -298,7 +298,8 @@ struct AnalyzeImage: View {
             }
         }
         .background() {
-            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults), isActive: $navigateToDescription) {
+            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults, paramUniqueId: "240904_everymoment"
+                                                   ), isActive: $navigateToDescription) {
                                 EmptyView()
             }
            

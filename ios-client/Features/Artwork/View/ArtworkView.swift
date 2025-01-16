@@ -54,6 +54,8 @@ struct ArtworkImageView: View {
     @Binding var capturedImage: UIImage?
     @Binding var eng_id: String
     
+    var paramUniqueId: String
+    
     private var closeButton: some View {
         Button {
             isImagePresented = false
@@ -117,11 +119,13 @@ struct ArtworkImageView: View {
             .shadow(radius: 20)
             .ignoresSafeArea()
             .onAppear() {
-                captureScreenshotAndRequestDescription()
+                captureScreenshotAndRequestDescription(paramUniqueId: paramUniqueId)
             }
         }
     
-    private func captureScreenshotAndRequestDescription() {
+    private func captureScreenshotAndRequestDescription(paramUniqueId: String) {
+        
+        
             let window = UIApplication.shared.windows.first { $0.isKeyWindow }
             let renderer = UIGraphicsImageRenderer(size: window?.bounds.size ?? CGSize.zero)
             
@@ -131,7 +135,7 @@ struct ArtworkImageView: View {
         
             capturedImage = image
        
-            viewModel.requestDescriptionWithScreenshot(image: image, file: "photo/" + eng_id)
+        viewModel.requestDescriptionWithScreenshot(image: image, file: "photo/" + eng_id, uniqueId: paramUniqueId)
         }
 
     var body: some View {
@@ -177,7 +181,7 @@ struct ArtworkImageView: View {
                             Spacer()
                             Button(action: {
                                 withAnimation {
-                                    captureScreenshotAndRequestDescription()
+                                    captureScreenshotAndRequestDescription(paramUniqueId: paramUniqueId)
                                     isBottomSheetPresented = true
                                 }
                             }, label: {
@@ -289,6 +293,7 @@ struct ActionButtonsView: View {
 
 struct ArtworkView: View {
     @State var eng_id: String
+    @State var paramUniqueId: String
     
     @StateObject private var viewModel = DescriptionViewModel()
     @Environment(\.presentationMode) var presentationMode
@@ -318,7 +323,7 @@ struct ArtworkView: View {
                     
                     Divider()
                 
-                    ArtworkImageView(viewModel: viewModel, isImagePresented: $isImagePresented, isBottomSheetPresented: $isBottomSheetPresented, capturedImage: $capturedImage, eng_id: $eng_id)
+                    ArtworkImageView(viewModel: viewModel, isImagePresented: $isImagePresented, isBottomSheetPresented: $isBottomSheetPresented, capturedImage: $capturedImage, eng_id: $eng_id, paramUniqueId: paramUniqueId)
                     
                     //asdf
                     
@@ -361,7 +366,7 @@ struct ArtworkView: View {
         .navigationTitle("\(viewModel.meta["title"] ?? " ")")
        
         .onAppear {
-            viewModel.fetchDescription(for: eng_id)
+            viewModel.fetchDescription(for: eng_id, uniqueId: paramUniqueId)
         }
     }
     
@@ -400,5 +405,7 @@ struct ArtworkView: View {
 
 
 #Preview {
-    ArtworkView(eng_id: "JeongyeonMoon_Golden.jpg")
+    ArtworkView(eng_id: "JeongyeonMoon_Golden.jpg"
+                , paramUniqueId: "240904_everymoment"
+    )
 }

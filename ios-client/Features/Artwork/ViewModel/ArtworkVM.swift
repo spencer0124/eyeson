@@ -20,11 +20,11 @@ class DescriptionViewModel: ObservableObject {
     @Published var isDescriptionLoaded = false // 해설 로딩 완료 여부
     @Published var descriptionRequestError: String? = nil // 에러 메시지 저장
 
-    func fetchDescription(for file: String) {
+    func fetchDescription(for file: String, uniqueId: String) {
         isLoadingFetchDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/get-origin/?uniqueid=2023test"
+        let url = "http://43.201.93.53:8000/description/get-origin/?uniqueid=\(uniqueId)"
         let parameters: [String: String] = ["file": file]
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
@@ -50,11 +50,11 @@ class DescriptionViewModel: ObservableObject {
     }
     
     
-    func requestDescriptionWithScreenshot(image: UIImage, file: String) {
+    func requestDescriptionWithScreenshot(image: UIImage, file: String, uniqueId: String) {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-artwork/?uniqueid=2023test"
+        let url = "http://43.201.93.53:8000/description/gpt-artwork/?uniqueid=\(uniqueId)"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]
