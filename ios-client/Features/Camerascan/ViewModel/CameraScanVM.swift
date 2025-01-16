@@ -11,8 +11,37 @@ class ImageSearchViewModel: ObservableObject {
     @Published var searchResults: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    
+    // Array to store exhibit IDs and names
+    @Published var exhibitInfo: [(id: String, name: String)] = []
+    // 전시관 이름을 저장할 배열 추가
+    @Published var exhibitNames: [String] = []
+    
+    func fetchExhibitInfo() {
+            let url = "http://43.201.93.53:8000/metadata/exhibit-info/"
 
-    func searchImage(image: UIImage) {
+            AF.request(url)
+                .responseDecodable(of: ExhibitInfoResponse.self) { response in
+                    switch response.result {
+                    case .success(let data):
+                        // Extract id and name from the response
+                        self.exhibitInfo = data.exhibits.map { ($0.id, $0.name) }
+                        
+                        self.exhibitInfo.sort { $0.name < $1.name }
+                        
+                        // 전시관 이름만 추출하여 exhibitNames에 저장
+                        self.exhibitNames = self.exhibitInfo.map { $0.name }
+                        
+                        print("Exhibit Info: \(self.exhibitInfo)") // Print the fetched data
+                        print("Exhibit Names: \(self.exhibitNames)") // Print the fetched names
+                    case .failure(let error):
+                        print("Error fetching exhibit info: \(error)")
+                    }
+                }
+        }
+
+
+    func searchImage(image: UIImage, uniqueId: String) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             errorMessage = "Failed to convert image to JPEG."
             return
@@ -21,7 +50,7 @@ class ImageSearchViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/search/?uniqueid=2023test"
+        let url = "http://43.201.93.53:8000/search/?uniqueid=\(uniqueId)"
         
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"

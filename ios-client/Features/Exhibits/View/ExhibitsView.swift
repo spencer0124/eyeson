@@ -26,7 +26,7 @@ struct ExhibitsView: View {
                    VStack {
                        Picker("정렬 기준", selection: $sortOrder) {
                                    Text("전시제목 순서").tag(SortOrder.title)
-                                   Text("마감임박 순서").tag(SortOrder.deadline)
+                                   Text("마감일 순서").tag(SortOrder.deadline)
                                }
                                .pickerStyle(SegmentedPickerStyle())
                                .padding(.horizontal)

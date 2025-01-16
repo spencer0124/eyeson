@@ -17,6 +17,7 @@
 		C429E7F32C61DB1900B9AAED /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7F22C61DB1900B9AAED /* SettingsModel.swift */; };
 		C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C429E7F42C61DB2300B9AAED /* SettingViewModel.swift */; };
 		C431FDBD2D38143D007B04A0 /* ExhibitsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C431FDBC2D38143D007B04A0 /* ExhibitsVM.swift */; };
+		C431FDBF2D38A2AF007B04A0 /* CamerascanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C431FDBE2D38A2AF007B04A0 /* CamerascanModel.swift */; };
 		C4392C3E2D2A97D500F4BBC4 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = C4392C3D2D2A97D500F4BBC4 /* Starscream */; };
 		C43E37DD2C605AA5006E32D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */; };
 		C453D29D2D3593D300B45B7E /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = C453D29C2D3593D300B45B7E /* BetterSafariView */; };
@@ -85,6 +86,7 @@
 		C429E7F22C61DB1900B9AAED /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		C429E7F42C61DB2300B9AAED /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		C431FDBC2D38143D007B04A0 /* ExhibitsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExhibitsVM.swift; sourceTree = "<group>"; };
+		C431FDBE2D38A2AF007B04A0 /* CamerascanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerascanModel.swift; sourceTree = "<group>"; };
 		C43E37DC2C605AA5006E32D8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C453D2A22D3645D000B45B7E /* FreeCameraModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeCameraModeView.swift; sourceTree = "<group>"; };
 		C453D2A42D3645DA00B45B7E /* FreeCameraModeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeCameraModeVM.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				C484581F2C4C01E900745A56 /* ScanData.swift */,
 				C4AADEBE2C845CBC00D47510 /* CameraAPIModel.swift */,
+				C431FDBE2D38A2AF007B04A0 /* CamerascanModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C429E7F32C61DB1900B9AAED /* SettingsModel.swift in Sources */,
+				C431FDBF2D38A2AF007B04A0 /* CamerascanModel.swift in Sources */,
 				C429E7F52C61DB2300B9AAED /* SettingViewModel.swift in Sources */,
 				C48457F82C4C00F200745A56 /* ContentView.swift in Sources */,
 				C4AE0E932C8565B5000A0A72 /* CameraInfoView.swift in Sources */,

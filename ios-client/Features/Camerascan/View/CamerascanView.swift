@@ -16,9 +16,14 @@ struct CamerascanView: View {
     @State private var navigateToCameraInfo = false
     @State private var navigateToCustomCameraMode = false // 자유촬영 모드
     
-    // picker
+    @StateObject private var viewModel = ImageSearchViewModel()
+    
+    // 첫 번째 Picker (모드 선택)
     @State private var SelectedCameraOption = 0
     var CameraOptions = ["전시관 모드", "자유촬영 모드"]
+    
+    // 두 번째 Picker (전시관 선택)
+    @State private var selectedExhibitId: String = "" // 선택된 전시관의 인덱스 (viewModel.exhibitInfo 배열에서)
 
 
     var body: some View {
@@ -108,16 +113,19 @@ struct CamerascanView: View {
                                     
                                     if(SelectedCameraOption == 0) {
                                         VStack(alignment: .leading) {
-                                            Picker("촬영 모드", selection: $SelectedCameraOption) {
-                                                ForEach(0 ..< CameraOptions.count) {
-                                                    Text(CameraOptions[$0])
-                                                    
-                                                  }
-                                            }
+                                            Picker("전시관 선택", selection: $selectedExhibitId) {
+                                                    // ViewModel에서 가져온 전시관 목록으로 Picker 구성
+                                                    ForEach(viewModel.exhibitInfo, id: \.id) { exhibit in // 여기를 수정했습니다.
+                                                        Text(exhibit.name).tag(exhibit.id)
+                                                    }
+                                                }
+                                                                            
                                             .padding(.horizontal, -10)
                                             .padding(.vertical, -9)
                                             
-                                            Text("선택된 전시관에 등록된 작품 중에서\n일치하는 작품을 검색합니다")
+//                                            Text("현재 선택된 ID: \(selectedExhibitId)")
+                                            
+                                            Text("선택된 전시에 등록된 작품 중에서\n일치하는 작품을 검색합니다")
                                             Spacer()
                                         }
     //
@@ -146,7 +154,7 @@ struct CamerascanView: View {
                     .accessibilityHidden(true)
                     
                     NavigationLink(
-                        destination: AnalyzeImage(image: scannedImages.last?.image, SelectedCameraOption: $SelectedCameraOption),
+                        destination: AnalyzeImage(image: scannedImages.last?.image, SelectedCameraOption: $SelectedCameraOption, selectedExhibitId: selectedExhibitId),
                         isActive: $isNavigatingToAnalyze,
                         label: { EmptyView() }
                     )
@@ -164,7 +172,14 @@ struct CamerascanView: View {
                 }
                 .padding()
                 .navigationBarTitle("작품 촬영", displayMode: .large)
-
+                .onAppear() {
+                    viewModel.fetchExhibitInfo()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // 약간의 지연을 추가
+                        if selectedExhibitId.isEmpty && !viewModel.exhibitInfo.isEmpty {
+                            selectedExhibitId = viewModel.exhibitInfo[0].id
+                        }
+                    }
+                }
             }
         
     }
@@ -210,6 +225,7 @@ struct AnalyzeImage: View {
     @State private var showContent = false
     
     @Binding var SelectedCameraOption: Int
+    var selectedExhibitId: String
 
     var body: some View {
         VStack {
@@ -284,21 +300,23 @@ struct AnalyzeImage: View {
         .onChange(of: image) { newImage in
             
             if let image = newImage {
-               
-                viewModel.searchImage(image: image)
+                // trash value
+                viewModel.searchImage(image: image, uniqueId: selectedExhibitId)
             }
         }
         .onAppear() {
             if let image = image {
                 print("called here #1")
-                    viewModel.searchImage(image: image)
+                // trash value
+                viewModel.searchImage(image: image, uniqueId: selectedExhibitId)
                 }
             if(hasLoadedData) {
                 dismiss()
             }
         }
+        // trash value
         .background() {
-            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults, paramUniqueId: "240904_everymoment"
+            NavigationLink(destination: ArtworkView(eng_id: viewModel.searchResults, paramUniqueId: selectedExhibitId
                                                    ), isActive: $navigateToDescription) {
                                 EmptyView()
             }

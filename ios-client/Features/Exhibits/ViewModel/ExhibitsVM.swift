@@ -12,7 +12,8 @@ class ExhibitsVM: ObservableObject {
     @Published var exhibitLists: [ExhibitList] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-
+    
+    
     func fetchExhibits() {
         isLoading = true
         errorMessage = nil

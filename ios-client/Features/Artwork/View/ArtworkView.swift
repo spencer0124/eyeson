@@ -242,6 +242,8 @@ struct ActionButtonsView: View {
     @Binding var isImagePresented: Bool
     @Binding var showSafari: Bool
     @ObservedObject var viewModel: DescriptionViewModel
+    
+    @State var paramUniqueId: String
 
 
     var body: some View {
@@ -277,7 +279,8 @@ struct ActionButtonsView: View {
             .accessibilityAddTraits(.isButton)
             .fullScreenCover(isPresented: $showSafari) {
                 if let artworkId = viewModel.meta["title"],
-                   let url = URL(string: "http://43.201.93.53:8000/?museum=1&artworkid=\(artworkId)") {
+                   let url = URL(string: "http://43.201.93.53:8000/?museum=\(paramUniqueId)&artworkid=\(artworkId)") {
+//                    print("webviewurl: \(url)")
                     SafariView(
                         url: url,
                         configuration: SafariView.Configuration(
@@ -287,6 +290,24 @@ struct ActionButtonsView: View {
                     )
                 }
             }
+            
+//            .fullScreenCover(isPresented: $showSafari) {
+//                Group { // Group을 사용하여 View로 변환
+//                    if let artworkId = viewModel.meta["title"],
+//                       let url = URL(string: "http://43.201.93.53:8000/?museum=\(paramUniqueId)&artworkid=\(artworkId)") {
+//                        let _ = print("webviewurl: \(url)") // print 결과를 무시
+//                        SafariView(
+//                            url: url,
+//                            configuration: SafariView.Configuration(
+//                                entersReaderIfAvailable: false,
+//                                barCollapsingEnabled: true
+//                            )
+//                        )
+//                    } else {
+//                        EmptyView() // url이 nil인 경우 빈 View 반환
+//                    }
+//                }
+//            }
         }
     }
 }
@@ -330,7 +351,7 @@ struct ArtworkView: View {
                     ActionButtonsView(
                                 isImagePresented: $isImagePresented,
                                 showSafari: $showSafari,
-                                viewModel: viewModel
+                                viewModel: viewModel, paramUniqueId: paramUniqueId
                                         )
                     
                     
