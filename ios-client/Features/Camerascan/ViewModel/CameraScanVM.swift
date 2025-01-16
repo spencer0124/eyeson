@@ -16,8 +16,11 @@ class ImageSearchViewModel: ObservableObject {
     @Published var exhibitInfo: [(id: String, name: String)] = []
     // 전시관 이름을 저장할 배열 추가
     @Published var exhibitNames: [String] = []
+    // fetchExhibitedInfo의 로딩 여부
+    @Published var isLoading2 = true
     
     func fetchExhibitInfo() {
+            isLoading = true    
             let url = "http://43.201.93.53:8000/metadata/exhibit-info/"
 
             AF.request(url)
@@ -31,6 +34,8 @@ class ImageSearchViewModel: ObservableObject {
                         
                         // 전시관 이름만 추출하여 exhibitNames에 저장
                         self.exhibitNames = self.exhibitInfo.map { $0.name }
+                        
+                        self.isLoading2 = false
                         
                         print("Exhibit Info: \(self.exhibitInfo)") // Print the fetched data
                         print("Exhibit Names: \(self.exhibitNames)") // Print the fetched names

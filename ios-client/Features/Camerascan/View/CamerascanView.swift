@@ -113,15 +113,26 @@ struct CamerascanView: View {
                                     
                                     if(SelectedCameraOption == 0) {
                                         VStack(alignment: .leading) {
+                                            if viewModel.isLoading2 {
+                                                        ProgressView() // Show a progress indicator while loading
+                                                    }
+                                            else {
                                             Picker("전시관 선택", selection: $selectedExhibitId) {
-                                                    // ViewModel에서 가져온 전시관 목록으로 Picker 구성
-                                                    ForEach(viewModel.exhibitInfo, id: \.id) { exhibit in // 여기를 수정했습니다.
-                                                        Text(exhibit.name).tag(exhibit.id)
+                                                // ViewModel에서 가져온 전시관 목록으로 Picker 구성
+                                                ForEach(viewModel.exhibitInfo, id: \.id) { exhibit in // 여기를 수정했습니다.
+                                                    Text(exhibit.name).tag(exhibit.id)
+                                                }
+                                            }
+                                            .onAppear {
+                                                    if selectedExhibitId.isEmpty && !viewModel.exhibitInfo.isEmpty {
+                                                        selectedExhibitId = viewModel.exhibitInfo[0].id // 데이터 로드 후 selectedExhibitId 설정
                                                     }
                                                 }
-                                                                            
                                             .padding(.horizontal, -10)
                                             .padding(.vertical, -9)
+                                        }
+                                                                            
+                                            
                                             
 //                                            Text("현재 선택된 ID: \(selectedExhibitId)")
                                             
@@ -174,11 +185,11 @@ struct CamerascanView: View {
                 .navigationBarTitle("작품 촬영", displayMode: .large)
                 .onAppear() {
                     viewModel.fetchExhibitInfo()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // 약간의 지연을 추가
-                        if selectedExhibitId.isEmpty && !viewModel.exhibitInfo.isEmpty {
-                            selectedExhibitId = viewModel.exhibitInfo[0].id
-                        }
-                    }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // 약간의 지연을 추가
+//                        if selectedExhibitId.isEmpty && !viewModel.exhibitInfo.isEmpty {
+//                            selectedExhibitId = viewModel.exhibitInfo[0].id
+//                        }
+//                    }
                 }
             }
         
