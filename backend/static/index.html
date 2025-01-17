@@ -56,32 +56,22 @@
             if (params["museum"]) {
                 museumName = params["museum"];
                 artworkid = params["artworkid"] || "unknown";
-                document.getElementById('museum').value = museumName;
 
-                // Connect to WebSocket with artworkid
+                const museumMapping = {
+                    "240904_everymoment": "나의 모든 순간",
+                };
+                const displayName = museumMapping[museumName] || museumName;
+                document.getElementById('museum').textContent = displayName;
+
                 connectWebSocket(museumName, artworkid);
             }
         }
 
-        document.getElementById('connectBtn').addEventListener('click', function() {
-            museumName = document.getElementById('museum').value;
-            artworkid = document.getElementById('artworkid').value || "unknown";
-            if (!museumName) {
-                alert("Please enter a museum name.");
-                return;
-            }
-            
-            // WebSocket 연결 (자동으로 익명 사용자 생성)
-            connectWebSocket(museumName, artworkid);
-        });
-
         function connectWebSocket(museum, artworkidParam) {
-            // If already connected, close the existing connection
             if (socket) {
                 socket.close();
             }
 
-            // WebSocket URL with query parameter
             socket = new WebSocket(`ws://43.201.93.53:8000/chat/ws/${museum}?artworkid=${encodeURIComponent(artworkidParam)}`);
 
             socket.onopen = function(event) {
