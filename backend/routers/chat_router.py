@@ -1,7 +1,6 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
 import asyncio
-from starlette.websockets import WebSocketState
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import redis
 import json
@@ -54,7 +53,6 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket, museum: str):
         """유저 연결 처리"""
         origin = websocket.headers.get('origin')
-        print(f"WebSocket origin: {origin}")
         allowed_origins = ["http://43.201.93.53:8000"]
         if "*" not in allowed_origins and origin not in allowed_origins:
             await websocket.close(code=1008, reason="CORS policy violation")
@@ -237,20 +235,3 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
     except Exception as e:
         print(f"Unexpected error: {e}")
         await websocket.close(code=1008, reason="Internal server error")
-
-@router.get("/museums")
-async def get_active_museums():
-    museums = manager.get_active_museums()
-    return {
-        "museums": museums,
-        "total": len(museums)
-    }
-
-@router.get("/museums/{museum}/users")
-async def get_museum_users(museum: str):
-    users = manager.get_active_users(museum)
-    return {
-        "museum": museum,
-        "users": users,
-        "total": len(users)
-    }

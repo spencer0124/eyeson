@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Museum Chat</h2>
-    <div>
+    <!-- <div>
         <label for="museum">Museum Name:</label>
         <input type="text" id="museum" placeholder="Enter museum name">
     </div>
@@ -17,6 +17,10 @@
     </div>
     <div>
         <button id="connectBtn">Connect to Chat</button>
+    </div> -->
+    <div>
+        <h3>Museum Name:</h3>
+        <h3 id="museum"></h3>
     </div>
     <div>
         <h3>Chat Messages:</h3>
@@ -52,6 +56,7 @@
             if (params["museum"]) {
                 museumName = params["museum"];
                 artworkid = params["artworkid"] || "unknown";
+                document.getElementById('museum').value = museumName;
 
                 // Connect to WebSocket with artworkid
                 connectWebSocket(museumName, artworkid);
