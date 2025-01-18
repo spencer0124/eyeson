@@ -23,11 +23,11 @@ class FreeCameraModeViewModel: ObservableObject {
     @Published var descriptionRequestError: String? = nil // 에러 메시지 저장
 
     
-    func requestDescriptionWithScreenshot2(image1: UIImage, image2: UIImage) {
+    func requestDescriptionWithScreenshot2(image1: UIImage, image2: UIImage, promptmode: String) {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-nonartwork/"
+        let url = "http://43.201.93.53:8000/description/gpt-nonartwork/?promptmode=\(promptmode)"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]

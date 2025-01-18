@@ -176,6 +176,7 @@ struct CamerascanView: View {
                         label: { EmptyView() }
                     
                     )
+                    .accessibilityHidden(true)
                     
                     
                     
