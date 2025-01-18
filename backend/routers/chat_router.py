@@ -2,14 +2,13 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from datetime import datetime, date, timedelta, timezone
 import redis
 import json
-from datetime import datetime, date, timedelta, timezone
 import os
 
 router = APIRouter()
 
-# ConnectionManager 클래스
 class ConnectionManager:
     def __init__(self):
         self.active_connections: Dict[str, List[WebSocket]] = {}
@@ -41,13 +40,11 @@ class ConnectionManager:
     def generate_username(self, museum: str, unique_key: str, artworkid: str) -> str:
         """익명 ID를 생성하거나 기존 ID를 반환 (artworkid 포함)"""
         if unique_key not in self.user_id_map:
-            # 익명 ID 생성
             if museum not in self.username_counters:
                 self.username_counters[museum] = 1
             username_number = self.username_counters[museum]
             self.username_counters[museum] += 1
-            self.user_id_map[unique_key] = f"익명{username_number}"
-        # 유저 이름에 artworkid 추가
+            self.user_id_map[unique_key] = f"관람객{username_number}"
         return f"{self.user_id_map[unique_key]} ({artworkid})"
 
     async def connect(self, websocket: WebSocket, museum: str):
@@ -57,18 +54,13 @@ class ConnectionManager:
         if "*" not in allowed_origins and origin not in allowed_origins:
             await websocket.close(code=1008, reason="CORS policy violation")
             return
-
         await websocket.accept()
 
         if museum not in self.active_connections:
             self.active_connections[museum] = []
-
         self.active_connections[museum].append(websocket)
 
-        # Get artworkid from query params
         artworkid = websocket.query_params.get('artworkid', 'unknown')
-
-        # 고유 키 생성 및 익명 ID 가져오기
         unique_key = self.generate_unique_key(websocket, museum)
         username = self.generate_username(museum, unique_key, artworkid)
 
@@ -86,7 +78,7 @@ class ConnectionManager:
         # 입장 메시지 전송
         system_message = self.format_message(
             message_type="system",
-            content=f"{username} joined the museum chat",
+            content=f"{username}이 채팅방에 들어왔습니다.",
             username="System",
             museum=museum,
             active_users=self.get_active_users(museum)
@@ -105,7 +97,7 @@ class ConnectionManager:
             # 퇴장 메시지 전송
             system_message = self.format_message(
                 message_type="system",
-                content=f"{username} left the museum chat",
+                content=f"{username}이 채팅방을 나갔습니다.",
                 username="System",
                 museum=museum,
                 active_users=self.get_active_users(museum)
@@ -120,16 +112,6 @@ class ConnectionManager:
                     await connection.send_json(message)
                 except Exception as e:
                     print(f"Error sending message to {self.user_info[connection][1]}: {e}")
-
-    def get_active_users(self, museum: str) -> List[str]:
-        """특정 박물관 채팅방의 현재 접속자 목록"""
-        if museum not in self.active_connections:
-            return []
-        return [self.user_info[ws][1] for ws in self.active_connections[museum]]
-
-    def get_active_museums(self) -> List[str]:
-        """현재 활성화된 박물관 채팅방 목록"""
-        return list(self.active_connections.keys())
 
     def format_message(
         self, message_type: str, content: str, username: str, museum: str, active_users: List[str]
