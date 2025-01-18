@@ -8,13 +8,8 @@ from routers.chat_router import manager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Application startup: initializing resources...")
     manager.start_scheduler()  # 스케줄러 명시적으로 시작
-
     yield  # 애플리케이션이 실행되는 동안 여기서 멈춤
-    
-    # 애플리케이션 종료 시 실행
-    print("Application shutdown: cleaning up resources...")
     manager.scheduler.shutdown(wait=False)  # 스케줄러 종료
 
 app = FastAPI(lifespan=lifespan)
@@ -39,6 +34,6 @@ app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 @app.get("/")
 async def read_root(request: Request):
     query = request.url.query  # 쿼리 파라미터 가져오기
-    redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
-    # redirect_url = f"/static/temp.html"
+    # redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
+    redirect_url = f"/static/temp.html"
     return RedirectResponse(url=redirect_url)
