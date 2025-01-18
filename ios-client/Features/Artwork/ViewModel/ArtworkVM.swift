@@ -50,11 +50,11 @@ class DescriptionViewModel: ObservableObject {
     }
     
     
-    func requestDescriptionWithScreenshot(image: UIImage, file: String, uniqueId: String) {
+    func requestDescriptionWithScreenshot(image: UIImage, file: String, uniqueId: String, promptmode: String) {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-artwork/?uniqueid=\(uniqueId)"
+        let url = "http://43.201.93.53:8000/description/gpt-artwork/?uniqueid=\(uniqueId)&promptmode=\(promptmode)"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]
