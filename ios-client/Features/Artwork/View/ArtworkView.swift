@@ -134,8 +134,13 @@ struct ArtworkImageView: View {
             }
         
             capturedImage = image
+        
+        let appSettings = AppSettings()
+        
+        print("promptmode - 1: \(appSettings.selectedAIMode)")
+        
        
-        viewModel.requestDescriptionWithScreenshot(image: image, file: "photo/" + eng_id, uniqueId: paramUniqueId)
+        viewModel.requestDescriptionWithScreenshot(image: image, file: "photo/" + eng_id, uniqueId: paramUniqueId, promptmode: appSettings.selectedAIMode)
         }
 
     var body: some View {

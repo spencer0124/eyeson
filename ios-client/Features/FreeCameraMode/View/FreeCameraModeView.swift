@@ -79,9 +79,13 @@ struct FreeCameraModeView: View {
             let screenshot_image = renderer.image { context in
                 window?.layer.render(in: context.cgContext)
             }
-    
+        
+        let appSettings = AppSettings()
+        
+        print("promptmode - 2: \(appSettings.selectedAIMode)")
+        
        
-        viewModel.requestDescriptionWithScreenshot2(image1: originalImage!, image2:screenshot_image)
+        viewModel.requestDescriptionWithScreenshot2(image1: originalImage!, image2:screenshot_image, promptmode: appSettings.selectedAIMode)
         }
 
     var body: some View {

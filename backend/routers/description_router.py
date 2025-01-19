@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import Request, APIRouter, HTTPException, UploadFile, File, Form
 from pydantic import BaseModel
 import json
 import base64
@@ -40,38 +40,39 @@ async def get_description(data: EngId):
     }
 
 @router.post("/gpt-artwork/")
-async def describe_image_with_artwork(request: str = Form(...), crop_image: UploadFile = File(...)):
-    try:
-        original_image = download_image_from_s3(request)
+async def describe_image_with_artwork(request: Request, original_image: str = Form(...), crop_image: UploadFile = File(...)):
+    try:        
+        original_image_data = download_image_from_s3(original_image)
         crop_image_data = await crop_image.read()
 
-        byte_original_image = image_to_bytes(original_image)
+        byte_original_image = image_to_bytes(original_image_data)
         base64_image = base64.b64encode(byte_original_image).decode('utf-8')
         crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
-        original_dtype = dtype_is(request)
+        original_dtype = dtype_is(original_image)
         crop_dtype = dtype_is(crop_image.filename)
 
-        description = generate_image_description(original_dtype, base64_image, crop_dtype, crop_base64_image)
+        prompt_mode = request.query_params.get("promptmode", "promptmode1")
+        description = generate_image_description(prompt_mode, original_dtype, base64_image, crop_dtype, crop_base64_image)
         return {"description": description}
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
 @router.post("/gpt-nonartwork/")
-async def describe_image_without_artwork(original_image: UploadFile = File(...), crop_image: UploadFile = File(...)):
+async def describe_image_without_artwork(request: Request, original_image: UploadFile = File(...), crop_image: UploadFile = File(...)):
     try:
         original_image_data = await original_image.read()
         crop_image_data = await crop_image.read()
 
-        #byte_original_image = image_to_bytes(original_image)
         original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
         crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
         original_dtype = dtype_is(original_image.filename)
         crop_dtype = dtype_is(crop_image.filename)
-
-        description = generate_image_description(original_dtype, original_base64_image, crop_dtype, crop_base64_image)
+        
+        prompt_mode = request.query_params.get("promptmode", "promptmode1")
+        description = generate_image_description(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image)
         return {"description": description}
     
     except Exception as e:
