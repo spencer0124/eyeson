@@ -7,17 +7,38 @@
     <title>Museum Chat</title>
 </head>
 <body>
-    <div class="flex flex-col min-w-10 justify-center items-center">
-        <div>
-            선택된 박물관 :
+    <!-- container -->
+    <div class="flex flex-col items-center w-full">
+        <div class="flex flex-col justify-center items-center bg-zinc-200 min-w-3xl rounded">
+            
+            <!-- title -->
+            <div class="flex flex-row justify-between items-center m-3 w-full">
+                <div class="flex flex-row items-center m-3 font-semibold text-2xl">
+                    <div id="museum">(전시명)</div>
+                    <div>이야기 나누기</div>
+                </div>
+                <div class="flex items-center m-3 font-semibold">
+                    <div id="date-container"></div> 
+                </div> 
+            
+            <!-- chats -->   
+            </div>
+            <div>
+                <!-- 작품 정보 받아서 이미지 넣어야 함 -->
+                <ul id="messages"></ul>
+            </div>
+            
+            <!-- send chat -->
+            <div class="flex w-full">
+                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어보세요"/>
+                <!-- <textarea id="messageInput" placeholder="Enter your message"></textarea> -->
+                <button id="sendMessageBtn" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
+            </div>
         </div>
-        <div>
-            <div id="date-container"></div>
-            <script src="timescript.js"></script>
-        </div>
-        
-        
     </div>
+    
+    
+    <script src="timescript.js"></script>
 
     <!-- <h2>Museum Chat</h2>
     <div>
@@ -42,7 +63,7 @@
     <div>
         <textarea id="messageInput" placeholder="Enter your message"></textarea>
         <button id="sendMessageBtn">Send Message</button>
-    </div> -->
+    </div> 
 
     <script>
         let socket;
