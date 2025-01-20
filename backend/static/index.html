@@ -117,10 +117,19 @@
             
             socket.onmessage = function(event) {
                 const message = JSON.parse(event.data);
-                // const messageElement = document.createElement("li");
+                const messageElement = document.createElement("li");
+
                 // messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
                 // document.getElementById("messages").appendChild(messageElement);
+
+                const artworkImage = document.createElement("img");
+                artworkImage.style.width = "300px";  // 원하는 크기 설정
+                artworkImage.style.height = "auto";
+                artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
                 getArtwork(artworkidParam)
+
+                messageElement.appendChild(artworkImage);
+                document.getElementById("messages").appendChild(messageElement);
             };
 
             socket.onclose = function(event) {
