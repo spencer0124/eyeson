@@ -19,7 +19,9 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }} # ec2 instance pem key
           script: | # 실행할 스크립트
             cd eyeson/backend
+            ls
             conda activate eyeson
+            conda info --envs
             git pull
             sudo fuser -k 8000/tcp
             nohup $(which uvicorn) main:app --host 0.0.0.0 --port 8000 --reload
