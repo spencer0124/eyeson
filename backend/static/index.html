@@ -121,17 +121,6 @@
                 // messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
                 // document.getElementById("messages").appendChild(messageElement);
                 getArtwork(artworkidParam)
-                .then(imgElement => {
-                    // 이미지가 반환되면 메시지 내용과 함께 <li> 요소에 추가
-                    messageElement.innerHTML = `
-                        <div class="flex items-center">
-                            ${imgElement.outerHTML}
-                            <span>[${message.timestamp}] ${message.username}: ${message.content}</span>
-                        </div>
-                    `;
-                    // 메시지 리스트에 추가
-                    document.getElementById("messages").appendChild(messageElement);
-                });
             };
 
             socket.onclose = function(event) {
