@@ -1,5 +1,5 @@
 function getArtwork() {
-    let s3Key = "JeongyeonMoon_Comfort3.jpg"
+    let s3Key = "photo/"+"JeongyeonMoon_Comfort3.jpg"
     const url = `http://43.201.93.53:8000/chat/download-profile?s3_key=${encodeURIComponent(s3Key)}`;
     
     fetch(url)
