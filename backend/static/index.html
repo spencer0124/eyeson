@@ -117,7 +117,7 @@
             
             socket.onmessage = function(event) {
                 const message = JSON.parse(event.data);
-                console.log('mes',message)
+                console.log('mes',artworkidParam)
                 const messageElement = document.createElement("li");
                 messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
                 document.getElementById("messages").appendChild(messageElement);
