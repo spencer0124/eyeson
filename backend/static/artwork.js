@@ -1,4 +1,4 @@
-function getArtwork(id) {
+function getArtwork(id, artworkImg) {
     let s3Key = "photo/"+id
     const url = `http://43.201.93.53:8000/chat/download-profile?s3_key=${encodeURIComponent(s3Key)}`;
     
@@ -9,8 +9,9 @@ function getArtwork(id) {
             const imageUrl = URL.createObjectURL(blob);
 
             // 미리 준비한 <img> 태그의 src 속성에 이미지 URL을 설정
-            const imgElement = document.getElementById("artwork-image");
-            imgElement.src = imageUrl;  // 이미지 표시
+            // const imgElement = document.getElementById("artwork-image");
+            // imgElement.src = imageUrl;  // 이미지 표시
+            artworkImg.src = imageUrl;
         })
         .catch(error => {
             console.error("Error:", error);
