@@ -230,15 +230,11 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
         print(f"Unexpected error: {e}")
         await websocket.close(code=1008, reason="Internal server error")
 
-class S3KeyRequest(BaseModel):
-    s3_key: str
-
-@router.post("/download-profile")
-async def download_profile(request: str):
+@router.get("/download-profile")
+async def download_profile(s3_key: str):
     try:
         # data = await request.json()  # 요청 데이터 파싱
         # s3_key = data.get("s3_key")  # JSON 데이터에서 's3_key' 가져오기
-        s3_key = request.s3_key
 
         if not s3_key:
             raise HTTPException(status_code=400, detail="s3_key is required")
