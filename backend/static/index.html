@@ -117,12 +117,16 @@
             
             socket.onmessage = function(event) {
                 const message = JSON.parse(event.data);
+                const userName = message.username
                 const messageElement = document.createElement("li");
 
                 // messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
                 // document.getElementById("messages").appendChild(messageElement);
 
                 console.log('message',message.username)
+                // if (userName != "System") {
+                //     artworkId = 0
+                // }
                 // const artworkImage = document.createElement("img");
                 // artworkImage.style.width = "30px";  // 원하는 크기 설정
                 // artworkImage.style.height = "auto";
