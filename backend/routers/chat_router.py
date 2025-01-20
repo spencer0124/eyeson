@@ -2,7 +2,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 import redis
 import json
 import os
@@ -128,7 +128,7 @@ class ConnectionManager:
             "content": content,
             "username": username,
             "museum": museum,
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(timezone('Asia/Seoul')).isoformat(),
             "active_users": active_users
         }
 
@@ -163,7 +163,7 @@ class ConnectionManager:
 
     async def update_last_seen(self, unique_key: str):
         """Redis에 유저의 마지막 접속 시간 업데이트"""
-        now = datetime.now().isoformat()
+        now = datetime.now(timezone('Asia/Seoul')).isoformat()
         redis_key = f"user:last_seen:{unique_key}"
         
         # Redis에 유저의 마지막 접속 시간 저장 및 TTL 설정 (24시간)
@@ -174,7 +174,7 @@ class ConnectionManager:
         """오래된 유저 정보를 Redis에서 정리"""
         # Redis에 저장된 모든 last_seen 키 가져오기
         keys = self.redis_client.keys("user:last_seen:*")
-        now = datetime.now()
+        now = datetime.now(timezone('Asia/Seoul'))
 
         cleaned_count = 0
         for key in keys:
