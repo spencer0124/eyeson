@@ -11,7 +11,16 @@ jobs:
     runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
 
     steps:
-      - name: ssh to ec2
+      - uses: actions/checkout@v3
+      
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: false
+          environment-file: environment.yml
+          activate-environment: eyeson
+          
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master # ssh 접속하는 오픈소스
         with:
           host: ${{ secrets.REMOTE_IP }} # 인스턴스 IP
@@ -19,7 +28,8 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }} # ec2 instance pem key
           script: | # 실행할 스크립트
             cd eyeson/backend
-            conda activate eyeson
             git pull
+            source ~/miniconda3/etc/profile.d/conda.sh
+            conda activate eyeson
             sudo fuser -k 8000/tcp
-            python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+            nohup uvicorn main:app --host 0.0.0.0 --port 8000 --reload
