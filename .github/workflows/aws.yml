@@ -35,4 +35,6 @@ jobs:
             source ~/miniconda3/etc/profile.d/conda.sh
             conda activate eyeson
             sudo fuser -k 8000/tcp
-            nohup uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+            nohup uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
+            sleep 5  # 서버가 시작될 때까지 잠시 대기
+            ps aux | grep uvicorn  # uvicorn 프로세스가 실행 중인지 확인
