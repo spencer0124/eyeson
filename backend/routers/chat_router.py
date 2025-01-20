@@ -7,6 +7,9 @@ import redis
 import json
 import os
 import pytz
+from services.s3_service import download_image_from_s3
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 
 KST = pytz.timezone('Asia/Seoul')
 pytz.timezone('Asia/Seoul').localize(datetime.now())
@@ -226,3 +229,20 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
     except Exception as e:
         print(f"Unexpected error: {e}")
         await websocket.close(code=1008, reason="Internal server error")
+
+@router.post("/download-profile")
+async def download_profile(request: Request):
+    try:
+        data = await request.json()  # 요청 데이터 파싱
+        s3_key = data.get("s3_key")  # JSON 데이터에서 's3_key' 가져오기
+
+        if not s3_key:
+            raise HTTPException(status_code=400, detail="s3_key is required")
+
+        # S3에서 이미지 다운로드
+        image = download_image_from_s3(s3_key)
+
+        # 응답으로 성공 메시지 반환
+        return JSONResponse(content={"message": "Image downloaded successfully"}, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
