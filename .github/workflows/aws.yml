@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+    defaults:
+      run:
+        shell: bash -l {0}
 
     steps:
       - uses: actions/checkout@v3
