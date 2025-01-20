@@ -8,7 +8,7 @@ import json
 import os
 import pytz
 from services.s3_service import download_image_from_s3
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
 
 KST = pytz.timezone('Asia/Seoul')
