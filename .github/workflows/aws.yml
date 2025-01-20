@@ -18,7 +18,7 @@ jobs:
         with:
           auto-activate-base: false
           environment-file: environment.yml
-          activate-environment: your_env_name
+          activate-environment: eyeson
           
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master # ssh 접속하는 오픈소스
