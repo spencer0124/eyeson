@@ -122,16 +122,16 @@
                 // messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
                 // document.getElementById("messages").appendChild(messageElement);
 
-                console.log('ids',artworkidParam)
-                const artworkImage = document.createElement("img");
-                artworkImage.style.width = "30px";  // 원하는 크기 설정
-                artworkImage.style.height = "auto";
-                artworkImage.classList.add("artwork-image");
-                artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
-                getArtwork(artworkidParam, artworkImage)
+                console.log('ids',msg)
+                // const artworkImage = document.createElement("img");
+                // artworkImage.style.width = "30px";  // 원하는 크기 설정
+                // artworkImage.style.height = "auto";
+                // artworkImage.classList.add("artwork-image");
+                // artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
+                // getArtwork(artworkidParam, artworkImage)
 
-                messageElement.appendChild(artworkImage);
-                document.getElementById("messages").appendChild(messageElement);
+                // messageElement.appendChild(artworkImage);
+                // document.getElementById("messages").appendChild(messageElement);
             };
 
             socket.onclose = function(event) {
