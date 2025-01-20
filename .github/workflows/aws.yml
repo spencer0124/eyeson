@@ -20,7 +20,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-activate-base: false
-          environment-file: envs/conda.yml
+          environment-file: backend/envs/conda.yml
           activate-environment: eyeson
           
       - name: Deploy to EC2
