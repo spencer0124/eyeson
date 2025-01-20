@@ -34,6 +34,6 @@ app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 @app.get("/")
 async def read_root(request: Request):
     query = request.url.query  # 쿼리 파라미터 가져오기
-    # redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
-    redirect_url = f"/static/temp.html"
+    redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
+    # redirect_url = f"/static/temp.html"
     return RedirectResponse(url=redirect_url)
