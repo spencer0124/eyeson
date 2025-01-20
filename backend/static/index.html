@@ -9,7 +9,7 @@
 <body>
     <!-- container -->
     <div class="flex flex-col items-center w-full">
-        <div class="flex flex-col justify-center items-center bg-zinc-200 min-w-3xl rounded">
+        <div class="flex flex-col justify-center items-center bg-zinc-200 max-w-screen-md rounded">
             
             <!-- title -->
             <div class="flex flex-row justify-between items-center m-3 w-full">
@@ -81,6 +81,7 @@
                     params[decodeURIComponent(key)] = decodeURIComponent(value || '');
                 }
             }
+            console.log('p',params)
             return params;
         }
 

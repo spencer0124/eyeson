@@ -26,6 +26,10 @@
     min-width: 48rem;
 }
 
+.max-w-screen-md {
+    max-width: 768px;
+}
+
 .max-w-3xl {
     max-width: 48rem;
 }
