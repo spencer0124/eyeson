@@ -22,4 +22,4 @@ jobs:
             conda activate eyeson
             git pull
             sudo fuser -k 8000/tcp
-            python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+            nohup $(which uvicorn) main:app --host 0.0.0.0 --port 8000 --reload
