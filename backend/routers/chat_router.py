@@ -6,7 +6,10 @@ from datetime import datetime, date, timedelta, timezone
 import redis
 import json
 import os
+import pytz
 
+KST = pytz.timezone('Asia/Seoul')
+pytz.timezone('Asia/Seoul').localize(datetime.now())
 router = APIRouter()
 
 class ConnectionManager:
@@ -24,7 +27,7 @@ class ConnectionManager:
         # 스케줄러 설정
         self.cleanup_interval = timedelta(hours=24)
         self.scheduler = AsyncIOScheduler()
-        self.scheduler.add_job(self.archive_and_clear_old_messages, 'cron', hour=0, minute=0)  # 매일 자정 실행
+        self.scheduler.add_job(self.archive_and_clear_old_messages, 'cron', hour=0, minute=0, timezone=KST)  # 매일 자정 실행
 
         os.makedirs("logs", exist_ok=True)
 
@@ -128,7 +131,7 @@ class ConnectionManager:
             "content": content,
             "username": username,
             "museum": museum,
-            "timestamp": datetime.now(timezone('Asia/Seoul')).isoformat(),
+            "timestamp": datetime.now(KST).isoformat(),
             "active_users": active_users
         }
 
@@ -140,14 +143,14 @@ class ConnectionManager:
 
     async def get_messages_for_museum(self, museum: str):
         """Redis에서 특정 박물관의 오늘 메시지 가져오기"""
-        today_str = date.today().isoformat()
+        today_str = datetime.now(KST).date().isoformat()
         redis_key = f"chat:{museum}:{today_str}"
         messages = self.redis_client.lrange(redis_key, 0, -1)
         return [json.loads(message) for message in messages]
 
     async def archive_and_clear_old_messages(self):
         """하루가 지나면 Redis 데이터를 로그 파일로 저장하고 삭제"""
-        yesterday = (date.today() - timedelta(days=1)).isoformat()
+        yesterday = (datetime.now(KST).date() - timedelta(days=1)).isoformat()
         redis_keys = self.redis_client.keys(f"chat:*:{yesterday}")
 
         for redis_key in redis_keys:
@@ -163,7 +166,7 @@ class ConnectionManager:
 
     async def update_last_seen(self, unique_key: str):
         """Redis에 유저의 마지막 접속 시간 업데이트"""
-        now = datetime.now(timezone('Asia/Seoul')).isoformat()
+        now = datetime.now(KST).isoformat()
         redis_key = f"user:last_seen:{unique_key}"
         
         # Redis에 유저의 마지막 접속 시간 저장 및 TTL 설정 (24시간)
@@ -174,7 +177,7 @@ class ConnectionManager:
         """오래된 유저 정보를 Redis에서 정리"""
         # Redis에 저장된 모든 last_seen 키 가져오기
         keys = self.redis_client.keys("user:last_seen:*")
-        now = datetime.now(timezone('Asia/Seoul'))
+        now = datetime.now(KST)
 
         cleaned_count = 0
         for key in keys:
