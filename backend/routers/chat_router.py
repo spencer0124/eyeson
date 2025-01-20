@@ -8,8 +8,10 @@ import json
 import os
 import pytz
 from services.s3_service import download_image_from_s3
-from fastapi import HTTPException, Request
-from fastapi.responses import JSONResponse
+from services.image_service import image_to_bytes
+from io import BytesIO
+from fastapi import HTTPException
+from fastapi.responses import StreamingResponse
 
 KST = pytz.timezone('Asia/Seoul')
 pytz.timezone('Asia/Seoul').localize(datetime.now())
@@ -233,16 +235,16 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
 @router.get("/download-profile")
 async def download_profile(s3_key: str):
     try:
-        # data = await request.json()  # 요청 데이터 파싱
-        # s3_key = data.get("s3_key")  # JSON 데이터에서 's3_key' 가져오기
-
         if not s3_key:
             raise HTTPException(status_code=400, detail="s3_key is required")
 
         # S3에서 이미지 다운로드
         image = download_image_from_s3(s3_key)
+        # byte로 변환
+        image_bytes = image_to_bytes(image)
 
-        # 응답으로 성공 메시지 반환
-        return JSONResponse(content={"message": "Image downloaded successfully"}, status_code=200)
+        # 이미지를 StreamingResponse로 반환
+        return StreamingResponse(BytesIO(image_bytes), media_type="image/jpeg")
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
