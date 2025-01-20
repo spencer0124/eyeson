@@ -113,6 +113,12 @@ class ConnectionManager:
                 except Exception as e:
                     print(f"Error sending message to {self.user_info[connection][1]}: {e}")
 
+    def get_active_users(self, museum: str) -> List[str]:
+        """특정 박물관 채팅방의 현재 접속자 목록"""
+        if museum not in self.active_connections:
+            return []
+        return [self.user_info[ws][1] for ws in self.active_connections[museum]]
+    
     def format_message(
         self, message_type: str, content: str, username: str, museum: str, active_users: List[str]
     ) -> Dict[str, str]:
