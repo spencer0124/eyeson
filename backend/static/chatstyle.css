@@ -143,11 +143,12 @@ ul {
     font-size: 0.5rem; /* 12px */
     line-height: 0.75rem; /* 16px */
     align-items: flex-end;
+    justify-content: flex-end;
 }
 
 .contentStyle {
     background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-    min-width: 10rem;
+    min-width: 5rem;
     align-items: center;
     margin: 0.25rem;
     font-size: 0.875rem; /* 14px */
