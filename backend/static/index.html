@@ -125,6 +125,13 @@
                     messageElement.classList.add("sysAlertStyle")
                 }
                 else {
+                    const userElement = document.createElement("div");
+                    userElement.classList.add("userStyle");
+                    userElement.textContent = message.username;
+
+                    const messageContentContainer = document.createElement("div");
+                    messageContentContainer.classList.add("flex", "flex-row", "gap-2");
+
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
                     timestampElement.textContent = message.timestamp;
@@ -133,16 +140,14 @@
                     contentElement.classList.add("contentStyle");
                     contentElement.textContent = message.content;
 
-                    const userElement = document.createElement("div");
-                    userElement.classList.add("userStyle");
-                    userElement.textContent = message.username;
+                    messageContentContainer.appendChild(timestampElement);
+                    messageContentContainer.appendChild(contentElement);
 
                     // messageElement.textContent = `${message.content}`
                     messageElement.classList.add("msgStyle");
 
-                    messageElement.appendChild(timestampElement);
-                    messageElement.appendChild(contentElement);
                     messageElement.appendChild(userElement);
+                    messageElement.appendChild(messageContentContainer);
                 }
 
                 document.getElementById("messages").appendChild(messageElement);
