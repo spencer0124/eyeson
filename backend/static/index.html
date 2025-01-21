@@ -134,12 +134,11 @@
                     userElement.textContent = `${message.username}`
 
                     messageElement.textContent = `${message.content}`
-
                     messageElement.classList.add("msgStyle");
-                }
 
-                messageElement.appendChild(timestampElement);
-                messageElement.appendChild(userElement);
+                    messageElement.appendChild(timestampElement);
+                    messageElement.appendChild(userElement);
+                }
 
                 document.getElementById("messages").appendChild(messageElement);
 
