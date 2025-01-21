@@ -69,6 +69,7 @@ class ConnectionManager:
         self.active_connections[museum].append(websocket)
 
         artworkid = websocket.query_params.get('artworkid', 'unknown')
+        print('py id',artworkid)
         unique_key = self.generate_unique_key(websocket, museum)
         username = self.generate_username(museum, unique_key, artworkid)
 

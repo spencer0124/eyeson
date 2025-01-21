@@ -283,29 +283,17 @@ struct ActionButtonsView: View {
             .accessibilityHint("작품 감상평을 공유하기 위해 웹페이지를 엽니다.") // 힌트 수정
             .accessibilityAddTraits(.isButton)
             .fullScreenCover(isPresented: $showSafari) {
-//                 if let artworkId = viewModel.meta["title"],
-//                    let url = URL(string: "http://43.201.93.53:8000/?museum=\(paramUniqueId)&artworkid=\(artworkId)") {
-// //                    print("webviewurl: \(url)")
-//                     SafariView(
-//                         url: url,
-//                         configuration: SafariView.Configuration(
-//                             entersReaderIfAvailable: false,
-//                             barCollapsingEnabled: true
-//                         )
-//                     )
-//                 }
-                    // 25.1.20. 김지원 download-profile api 위해 eng_id로 수정
-                    if let artworkId = viewModel.eng_id,
-                        let url = URL(string: "http://43.201.93.53:8000/?museum=\(paramUniqueId)&artworkid=\(artworkId)") {
-    //                    print("webviewurl: \(url)")
-                        SafariView(
-                            url: url,
-                            configuration: SafariView.Configuration(
-                                entersReaderIfAvailable: false,
-                                barCollapsingEnabled: true
-                            )
+                if let artworkId = viewModel.meta["title"],
+                   let url = URL(string: "http://43.201.93.53:8000/?museum=\(paramUniqueId)&artworkid=\(artworkId)") {
+//                    print("webviewurl: \(url)")
+                    SafariView(
+                        url: url,
+                        configuration: SafariView.Configuration(
+                            entersReaderIfAvailable: false,
+                            barCollapsingEnabled: true
                         )
-                    }
+                    )
+                }
             }
             
 //            .fullScreenCover(isPresented: $showSafari) {
