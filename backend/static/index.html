@@ -26,6 +26,7 @@
             <div>
                 <!-- 작품 정보 받아서 이미지 넣어야 함 -->
                 <!-- <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 300px; height: auto;" /> -->
+                <div class="msgStyle">msg style</div>
                 <ul id="messages"></ul>
             </div>
             
@@ -119,7 +120,7 @@
                 const userName = message.username
                 const messageElement = document.createElement("li");
                 messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
-                messageElement.classList.add("message");
+                messageElement.classList.add("msgStyle");
                 document.getElementById("messages").appendChild(messageElement);
 
                 // console.log('message',message.username)
