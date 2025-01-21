@@ -130,7 +130,7 @@
                     userElement.textContent = message.username;
 
                     const messageContentContainer = document.createElement("div");
-                    messageContentContainer.classList.add("flex", "flex-row", "gap-2");
+                    messageContentContainer.classList.add("flex", "flex-row");
 
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
@@ -144,7 +144,7 @@
                     messageContentContainer.appendChild(contentElement);
 
                     // messageElement.textContent = `${message.content}`
-                    messageElement.classList.add("msgStyle");
+                    messageElement.classList.add("msgStyle", "flex", "flex-col");
 
                     messageElement.appendChild(userElement);
                     messageElement.appendChild(messageContentContainer);
