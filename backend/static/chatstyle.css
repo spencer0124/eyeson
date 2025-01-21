@@ -18,6 +18,14 @@
     justify-content: space-between;
 }
 
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
 .items-center {
     align-items: center;
 }
@@ -42,12 +50,22 @@
     padding: 0.5rem;
 }
 
+.py-px {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
 .m-2 {
     margin: 0.5rem;
 }
 
 .m-3 {
     margin: 0.75rem;
+}
+
+.text-xl {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
 }
 
 .text-2xl {
@@ -102,7 +120,6 @@
     justify-content: flex-start;
     align-items: center;
     margin: 0.25rem;
-    max-width: 2rem;
     font-size: 0.875rem; /* 14px */
     line-height: 1.25rem; /* 20px */
     font-weight: 300;
