@@ -137,7 +137,7 @@ class ConnectionManager:
             "content": content,
             "username": username,
             "museum": museum,
-            "timestamp": datetime.now(KST).isoformat(),
+            "timestamp": datetime.now(KST).strftime("%I:%M %p"),
             "active_users": active_users
         }
 
