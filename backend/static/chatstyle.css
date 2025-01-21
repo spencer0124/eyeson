@@ -141,8 +141,6 @@ ul {
 
 .contentStyle {
     background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-    display: flex;
-    justify-content: flex-end;
     align-items: center;
     margin: 0.25rem;
     font-size: 0.875rem; /* 14px */
@@ -152,6 +150,12 @@ ul {
     border-width: 0px;
     padding-top: 1px;
     padding-bottom: 1px;
+}
+
+.msgStyle {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .sysMsgStyle {
