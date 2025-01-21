@@ -172,8 +172,8 @@ class ConnectionManager:
 
     async def update_last_seen(self, unique_key: str):
         """Redis에 유저의 마지막 접속 시간 업데이트"""
-        # now = datetime.now(KST).isoformat()
-        now = datetime.now(KST).strftime("%I:%M %p")
+        now = datetime.now(KST).isoformat()
+        # now = datetime.now(KST).strftime("%I:%M %p")
         redis_key = f"user:last_seen:{unique_key}"
         
         # Redis에 유저의 마지막 접속 시간 저장 및 TTL 설정 (24시간)
