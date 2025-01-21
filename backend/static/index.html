@@ -25,7 +25,6 @@
             </div>
             <div>
                 <!-- 작품 정보 받아서 이미지 넣어야 함 -->
-                <div>images</div>
                 <!-- <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 300px; height: auto;" /> -->
                 <ul id="messages"></ul>
             </div>
@@ -119,11 +118,11 @@
                 const message = JSON.parse(event.data);
                 const userName = message.username
                 const messageElement = document.createElement("li");
+                messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
+                messageElement.classList.add("message");
+                document.getElementById("messages").appendChild(messageElement);
 
-                // messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
-                // document.getElementById("messages").appendChild(messageElement);
-
-                console.log('message',message.username)
+                // console.log('message',message.username)
                 // if (userName != "System") {
                 //     artworkId = 0
                 // }
