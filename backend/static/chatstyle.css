@@ -1,3 +1,21 @@
+ul {
+    list-style: none; /* 동그라미 없애기 */
+    padding: 0;       /* 안쪽 여백 제거 */
+}
+
+li {
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.25rem;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    font-weight: 300;
+    border-radius: 0.25rem;
+    border-width: 0px;
+}
+
 .flex {
     display: flex;
 }
