@@ -127,16 +127,21 @@
                 else {
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
-                    timestampElement.textContent = `${message.timestamp}`;
+                    timestampElement.textContent = message.timestamp;
+
+                    const contentElement = document.createElement("div");
+                    contentElement.classList.add("contentStyle");
+                    contentElement.textContent = message.content;
 
                     const userElement = document.createElement("div");
                     userElement.classList.add("userStyle");
-                    userElement.textContent = `${message.username}`
+                    userElement.textContent = message.username;
 
-                    messageElement.textContent = `${message.content}`
-                    messageElement.classList.add("msgStyle");
+                    // messageElement.textContent = `${message.content}`
+                    // messageElement.classList.add("msgStyle");
 
                     messageElement.appendChild(timestampElement);
+                    messageElement.appendChild(contentElement);
                     messageElement.appendChild(userElement);
                 }
 
