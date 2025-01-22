@@ -8,8 +8,8 @@ function getArtwork(title, artworkImg) {
             const imageUrl = URL.createObjectURL(blob);
 
             // 미리 준비한 <img> 태그의 src 속성에 이미지 URL을 설정
-            const imgElement = document.getElementById("artwork-image");
-            imgElement.src = imageUrl;  // 이미지 표시
+            // const imgElement = document.getElementById("artwork-image");
+            // imgElement.src = imageUrl;  // 이미지 표시
             artworkImg.src = imageUrl;
         })
         .catch(error => {
