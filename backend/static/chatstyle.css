@@ -72,6 +72,11 @@ ul {
     margin: 0.75rem;
 }
 
+.text-xs {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+}
+
 .text-xl {
     font-size: 1.25rem; /* 20px */
     line-height: 1.75rem; /* 28px */

@@ -26,12 +26,15 @@
             <!-- chats --> 
             <div class="flex flex-col w-full">
                 <!-- 작품 정보 받아서 이미지 넣어야 함 -->
-                <!-- <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 300px; height: auto;" /> -->
+                
                 <ul>
                     <li class="flex flex-row justify-end items-end m-2">
                         <div class="timestampStyle">time</div>
                         <div class="contentStyle">chat</div>
-                        <div class="userStyle">user</div>
+                        <div>
+                            <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 30px; height: auto;" />
+                            <div class="userStyle">user name</div>
+                        </div>
                     </li>
                 </ul>
                 <ul id="messages"></ul>
@@ -118,29 +121,30 @@
                     contentElement.classList.add("contentStyle");
                     contentElement.textContent = message.content;
 
+                    const userContainerElement = document.createElement("div");
+                    // console.log('param', parsedTitle)
+                    if (userName != "System") {
+                        const artworkImage = document.createElement("img");
+                        artworkImage.style.width = "30px";  // 원하는 크기 설정
+                        artworkImage.style.height = "auto";
+                        artworkImage.classList.add("artwork-image", "text-xs");
+                        artworkImage.alt = "Artwork will appear";  // alt 텍스트 추가
+                        getArtwork(parsedTitle, artworkImage)
+                    }
+
                     const userElement = document.createElement("div");
                     userElement.classList.add("userStyle");
                     userElement.textContent = message.username;
 
+                    userContainerElement.appendChild(artworkImage);
+                    userContainerElement.appendChild(userElement);
+
                     messageElement.appendChild(timestampElement);
                     messageElement.appendChild(contentElement);
-                    messageElement.appendChild(userElement)
+                    messageElement.appendChild(userContainerElement);
                 }
 
                 document.getElementById("messages").appendChild(messageElement);
-
-                console.log('param', parsedTitle)
-                if (userName != "System") {
-                    const artworkImage = document.createElement("img");
-                    artworkImage.style.width = "30px";  // 원하는 크기 설정
-                    artworkImage.style.height = "auto";
-                    artworkImage.classList.add("artwork-image");
-                    artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
-                    getArtwork(parsedTitle, artworkImage)
-
-                    messageElement.appendChild(artworkImage);
-                    document.getElementById("messages").appendChild(messageElement);
-                }
             };
 
             socket.onclose = function(event) {
