@@ -121,6 +121,12 @@
 
                     const contentElement = document.createElement("div");
                     contentElement.classList.add("contentStyle");
+                    contentElement.textContent = message.content;
+
+                    const userContainerElement = document.createElement("div");
+
+                    const userElement = document.createElement("div");
+                    userElement.classList.add("userStyle");
                     
                     // 줄 바꿈을 위한 별도의 <br> 요소 생성
                     const nameElement = document.createElement("span");
@@ -130,17 +136,10 @@
 
                     const titleElement = document.createElement("span");
                     titleElement.textContent = parsedTitle;
-
-                    // 내용 추가
-                    contentElement.appendChild(nameElement);
-                    contentElement.appendChild(breakElement);
-                    contentElement.appendChild(titleElement);
-
-                    const userContainerElement = document.createElement("div");
-
-                    const userElement = document.createElement("div");
-                    userElement.classList.add("userStyle");
-                    userElement.textContent = message.username;
+                    
+                    userElement.appendChild(nameElement);
+                    userElement.appendChild(breakElement);
+                    userElement.appendChild(titleElement);
 
                     const artworkImage = document.createElement("img");
                     artworkImage.style.width = "30px";  // 원하는 크기 설정
