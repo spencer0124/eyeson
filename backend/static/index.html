@@ -15,7 +15,7 @@
             <div class="flex flex-col justify-between items-center m-2 w-full">
                 <div class="flex flex-row items-center m-3 font-semibold text-xl">
                     <div id="museum">(전시명)</div>
-                    <div>  이야기 나누기</div>
+                    <div>&nbsp;이야기 나누기</div>
                 </div>
                 <div class="flex justify-end items-center m-2 font-semibold">
                     <div id="date-container"></div>
@@ -134,7 +134,7 @@
                 else {
                     // const messageContentContainer = document.createElement("div");
                     // messageContentContainer.classList.add("flex", "flex-row");
-                    messageElement.classList.add("flex flex-row justify-end items-end m-2")
+                    messageElement.classList.add("flex", "flex-row", "justify-end", "items-end", "m-2")
 
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
