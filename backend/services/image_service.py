@@ -20,10 +20,10 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data.json'
+    data_path = '../data/data.json'
     json_data = load_data(data_path)
 
-    for item in json_data.get("meta", []):  # 'meta' 리스트 탐색
-        if item.get("title") == title:
-            return json_data.get("eng_id")  # 해당 제목의 eng_id 반환
+    for item in json_data:
+        if item['meta']['title'] == title:
+            return item['eng_id']
     raise ValueError(f"Title '{title}' not found in JSON data.")
