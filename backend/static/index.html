@@ -131,6 +131,7 @@
                     messageElement.classList.add("sysAlertStyle")
                 }
                 else {
+
                     messageElement.classList.add("flex", "flex-row", "justify-end", "items-end", "m-2")
 
                     const timestampElement = document.createElement("div");
@@ -153,18 +154,18 @@
                 document.getElementById("messages").appendChild(messageElement);
 
                 // console.log('message',message.username)
-                // if (userName != "System") {
-                //     artworkId = 0
-                // }
-                // const artworkImage = document.createElement("img");
-                // artworkImage.style.width = "30px";  // 원하는 크기 설정
-                // artworkImage.style.height = "auto";
-                // artworkImage.classList.add("artwork-image");
-                // artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
-                // getArtwork(artworkidParam, artworkImage)
+                if (userName != "System") {
+                    artworkId = 0
+                }
+                const artworkImage = document.createElement("img");
+                artworkImage.style.width = "30px";  // 원하는 크기 설정
+                artworkImage.style.height = "auto";
+                artworkImage.classList.add("artwork-image");
+                artworkImage.alt = "Artwork will appear here";  // alt 텍스트 추가
+                getArtwork(artworkidParam, artworkImage)
 
-                // messageElement.appendChild(artworkImage);
-                // document.getElementById("messages").appendChild(messageElement);
+                messageElement.appendChild(artworkImage);
+                document.getElementById("messages").appendChild(messageElement);
             };
 
             socket.onclose = function(event) {
