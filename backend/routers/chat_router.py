@@ -234,13 +234,13 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
         await websocket.close(code=1008, reason="Internal server error")
 
 @router.get("/download-profile")
-async def download_profile(s3_key: str):
+async def download_profile(title: str):
     try:
-        if not s3_key:
-            raise HTTPException(status_code=400, detail="s3_key is required")
+        if not title:
+            raise HTTPException(status_code=400, detail="title is required")
 
         # S3에서 이미지 다운로드
-        image = download_image_from_s3(s3_key)
+        image = download_image_from_s3(title)
         # byte로 변환
         image_bytes = image_to_bytes(image)
 
