@@ -2,7 +2,6 @@ import boto3
 from io import BytesIO
 from PIL import Image
 from fastapi import HTTPException
-from image_service import load_id_from_title
 import json
 
 # AWS S3 설정
