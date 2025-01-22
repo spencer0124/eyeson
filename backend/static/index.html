@@ -126,14 +126,12 @@
                     userElement.classList.add("userStyle");
                     userElement.textContent = message.username;
 
-                    if (userName != "System") {
                     const artworkImage = document.createElement("img");
                     artworkImage.style.width = "30px";  // 원하는 크기 설정
                     artworkImage.style.height = "auto";
                     artworkImage.classList.add("artwork-image", "text-xs");
                     artworkImage.alt = "Artwork will appear";  // alt 텍스트 추가
                     getArtwork(parsedTitle, artworkImage)
-                    }
 
                     messageElement.appendChild(timestampElement);
                     messageElement.appendChild(contentElement);
