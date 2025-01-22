@@ -122,6 +122,8 @@
                     contentElement.classList.add("contentStyle");
                     contentElement.textContent = message.content;
 
+                    const userContainerElement = document.createElement("div");
+
                     const userElement = document.createElement("div");
                     userElement.classList.add("userStyle");
                     userElement.textContent = message.username;
@@ -133,10 +135,14 @@
                     artworkImage.alt = "Artwork will appear";  // alt 텍스트 추가
                     getArtwork(parsedTitle, artworkImage)
 
+                    userContainerElement.appendChild(artworkImage)
+                    userContainerElement.appendChild(userElement)
+
                     messageElement.appendChild(timestampElement);
                     messageElement.appendChild(contentElement);
-                    messageElement.appendChild(artworkImage);
-                    messageElement.appendChild(userElement);
+                    messageElement.appendChild(userContainerElement);
+                    // messageElement.appendChild(artworkImage);
+                    // messageElement.appendChild(userElement);
                 }
 
                 document.getElementById("messages").appendChild(messageElement);
