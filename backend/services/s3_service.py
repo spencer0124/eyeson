@@ -19,7 +19,9 @@ def list_images_in_s3():
         raise HTTPException(status_code=500, detail="Failed to list images in S3")
 
 def download_image_from_s3(title):
-    s3_key = load_id_from_title(title)
+    eng_id = load_id_from_title(title)
+    s3_key = 'photo/'+eng_id
+    print('skey', s3_key)
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         img_data = response['Body'].read()
