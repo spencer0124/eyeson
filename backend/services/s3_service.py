@@ -3,6 +3,7 @@ from io import BytesIO
 from PIL import Image
 from fastapi import HTTPException
 from image_service import load_id_from_title
+import json
 
 # AWS S3 설정
 s3_client = boto3.client('s3')
@@ -17,6 +18,19 @@ def list_images_in_s3():
     except Exception as e:
         print(f"Error listing images in S3: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to list images in S3")
+
+def load_data(path):
+    with open(path, "r") as f:
+        return json.load(f)
+
+def load_id_from_title(title: str):
+    data_path = '../data/data.json'
+    json_data = load_data(data_path)
+
+    for item in json_data:
+        if item['meta']['title'] == title:
+            return item['eng_id']
+    raise ValueError(f"Title '{title}' not found in JSON data.")
 
 def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
