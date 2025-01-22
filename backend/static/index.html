@@ -14,8 +14,10 @@
             <!-- title -->
             <div class="flex flex-col justify-between items-center m-2 w-full">
                 <div class="flex flex-row items-center m-3 font-semibold text-xl">
+                    <div>&lt;</div>
                     <div id="museum">(전시명)</div>
                     <div>&nbsp;이야기 나누기</div>
+                    <div>&gt;</div>
                 </div>
                 <div class="flex justify-end items-center m-2 font-semibold">
                     <div id="date-container"></div>
@@ -25,19 +27,17 @@
 
             <!-- chats --> 
             <div class="flex flex-col w-full">
-                <!-- 작품 정보 받아서 이미지 넣어야 함 -->
-                
-                <ul>
+                <!-- <ul>
                     <li class="flex flex-row justify-end items-end m-2">
                         <div class="timestampStyle">time</div>
                         <div class="contentStyle">chat</div>
                         <div>
                             <div class="userStyle">user name</div>
-                            <!-- <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 30px; height: auto;" /> -->
+                            <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 30px; height: auto;" />
                         </div>
 
                     </li>
-                </ul>
+                </ul> -->
                 <ul id="messages"></ul>
             </div>
             
@@ -104,7 +104,8 @@
             socket.onmessage = function(event) {
                 const message = JSON.parse(event.data);
                 const userName = message.username
-                const parsedTitle = extractUsernameFromName(userName);
+                const parsedTitle = extractTitleFromName(userName);
+                const parsedName = extractUserNameFromName(userName);
                 const messageElement = document.createElement("li");
 
                 if (message.username == "System") {
@@ -120,7 +121,20 @@
 
                     const contentElement = document.createElement("div");
                     contentElement.classList.add("contentStyle");
-                    contentElement.textContent = message.content;
+                    
+                    // 줄 바꿈을 위한 별도의 <br> 요소 생성
+                    const nameElement = document.createElement("span");
+                    nameElement.textContent = parsedName;
+
+                    const breakElement = document.createElement("br");
+
+                    const titleElement = document.createElement("span");
+                    titleElement.textContent = parsedTitle;
+
+                    // 내용 추가
+                    contentElement.appendChild(nameElement);
+                    contentElement.appendChild(breakElement);
+                    contentElement.appendChild(titleElement);
 
                     const userContainerElement = document.createElement("div");
 

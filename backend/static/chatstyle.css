@@ -100,6 +100,10 @@ ul {
     color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.text-lime-900 {
+    color: rgb(54 83 20 / var(--tw-text-opacity, 1));
+}
+
 .bg-zinc-100 {
     background-color: rgb(244 244 245 / var(--tw-bg-opacity, 1));
 }
@@ -148,7 +152,7 @@ ul {
 }
 
 .userStyle {
-    color: red;
+    color: rgb(54 83 20 / var(--tw-text-opacity, 1));
     font-size: 0.5rem; /* 12px */
     line-height: 0.75rem; /* 16px */
     align-items: flex-end;
