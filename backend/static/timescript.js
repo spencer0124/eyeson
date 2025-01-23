@@ -26,7 +26,7 @@ function scheduleDateUpdate() {
     const timeUntilMidnight = nextMidnight - now;
 
     // 자정에 맞춰 업데이트 함수 호출 (다음 날 00:00:00)
-    setTimeout(function() {
+    setTimeout(() => {
         updateDate();
         // 이후 매일 자정마다 날짜를 업데이트하도록 설정
         setInterval(updateDate, 86400000); // 24시간마다 날짜 업데이트

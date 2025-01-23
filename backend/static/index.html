@@ -49,17 +49,14 @@
         </div>
     </div>
     
-    <script src="nameParser.js"></script>
-    <script src="artwork.js"></script>
     <script src="timescript.js"></script>
-
     <script>
         let socket;
         let museumName;
         let artworkid;
 
         // Function to parse query parameters
-        function getQueryParams() {
+        const getQueryParams = () => {
             const params = {};
             const queryString = window.location.search.substring(1);
             const pairs = queryString.split("&");
@@ -73,7 +70,7 @@
         }
 
         // Auto-connect if query parameters are present
-        window.onload = function() {
+        window.onload = () => {
             const params = getQueryParams();
             if (params["museum"]) {
                 museumName = params["museum"];
@@ -90,18 +87,18 @@
             }
         }
 
-        function connectWebSocket(museum, artworkidParam) {
+        const connectWebSocket = (museum, artworkidParam) => {
             if (socket) {
                 socket.close();
             }
 
             socket = new WebSocket(`ws://43.201.93.53:8000/chat/ws/${museum}?artworkid=${encodeURIComponent(artworkidParam)}`);
 
-            socket.onopen = function(event) {
+            socket.onopen = (event) => {
                 console.log('WebSocket is connected!');
             };
             
-            socket.onmessage = function(event) {
+            socket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
                 const userName = message.username
                 const parsedTitle = extractTitleFromName(userName);
@@ -174,13 +171,54 @@
                 // }
             };
 
-            socket.onclose = function(event) {
+            socket.onclose = (event) => {
                 console.log(event);
                 console.log('WebSocket is closed!');
             };
         }
 
-        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+        const extractTitleFromName = (userName) => {
+            const regex = /\((.*?)\)/;  // 괄호 안의 내용을 추출하는 정규식
+            const match = userName.match(regex);
+
+            if (match && match[1]) {
+                return match[1];  // 괄호 안의 내용만 반환
+            } else {
+                return null;  // 괄호 안에 내용이 없으면 null 반환
+            }
+        }
+
+        const extractUserNameFromName = (userName) => {
+            const regex = /^(.*?)(?=\s?\()/;  // 괄호 전에 있는 부분만 추출
+            const match = userName.match(regex);
+
+            if (match && match[1]) {
+                return match[1];  // 괄호 앞의 내용만 반환
+            } else {
+                return null;  // 괄호가 없으면 null 반환
+            }
+        }
+
+        const getArtwork = (title, artworkImg) => {
+            const url = `http://43.201.93.53:8000/chat/download-profile?title=${encodeURIComponent(title)}`;
+            
+            fetch(url)
+                .then(response => response.blob())  // 이미지 데이터를 blob 형태로 받기
+                .then(blob => {
+                    // Blob을 Object URL로 변환
+                    const imageUrl = URL.createObjectURL(blob);
+
+                    // 미리 준비한 <img> 태그의 src 속성에 이미지 URL을 설정
+                    // const imgElement = document.getElementById("artwork-image");
+                    // imgElement.src = imageUrl;  // 이미지 표시
+                    artworkImg.src = imageUrl;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        }
+
+        document.getElementById('sendMessageBtn').addEventListener('click', () => {
             const message = document.getElementById('messageInput').value;
             if (socket && message) {
                 socket.send(message); // 서버로 메시지 전송
