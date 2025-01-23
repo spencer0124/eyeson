@@ -163,7 +163,7 @@ class ConnectionManager:
             messages = self.redis_client.lrange(redis_key, 0, -1)
 
             # 로그 파일에 저장 후 redis에서 삭제
-            log_filename = f"logs/museum{museum}_{yesterday}.log"
+            log_filename = f"logs/{museum}_{yesterday}.log"
             with open(log_filename, "a", encoding="utf-8") as f:
                 for message in messages:
                     f.write(message + "\n")
