@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import json
 import base64
 from typing import Dict, Any, List
-from services.s3_service import download_image_from_s3
+from services.s3_service import download_image_from_s3_gpt
 from services.image_service import image_to_bytes, dtype_is
 from services.openai_service import generate_image_description
 
@@ -42,7 +42,7 @@ async def get_description(data: EngId):
 @router.post("/gpt-artwork/")
 async def describe_image_with_artwork(request: Request, original_image: str = Form(...), crop_image: UploadFile = File(...)):
     try:        
-        original_image_data = download_image_from_s3(original_image)
+        original_image_data = download_image_from_s3_gpt(original_image)
         crop_image_data = await crop_image.read()
 
         byte_original_image = image_to_bytes(original_image_data)
