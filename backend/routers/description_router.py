@@ -40,7 +40,7 @@ async def get_description(data: EngId):
     }
 
 @router.post("/gpt-artwork/")
-async def describe_image_with_artwork(modereq: Request, request: str = Form(...), crop_image: UploadFile = File(...)):
+async def describe_image_with_artwork(promptmode: Request, request: str = Form(...), crop_image: UploadFile = File(...)):
     try:        
         original_image_data = download_image_from_s3_gpt(request)
         crop_image_data = await crop_image.read()
@@ -52,7 +52,7 @@ async def describe_image_with_artwork(modereq: Request, request: str = Form(...)
         original_dtype = dtype_is(request)
         crop_dtype = dtype_is(crop_image.filename)
 
-        prompt_mode = modereq.query_params.get("promptmode", "promptmode1")
+        prompt_mode = promptmode.query_params.get("promptmode", "promptmode1")
         description = generate_image_description(prompt_mode, original_dtype, base64_image, crop_dtype, crop_base64_image)
         return {"description": description}
     
