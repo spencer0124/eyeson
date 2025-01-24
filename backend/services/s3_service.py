@@ -32,14 +32,19 @@ def load_id_from_title(title: str):
     raise ValueError(f"Title '{title}' not found in JSON data.")
 
 def download_image_from_s3_gpt(s3_key):
+    print('s3', s3_key)
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
+        print('resp', response)
         img_data = response['Body'].read()
         image = Image.open(BytesIO(img_data))
         return image
     except Exception as e:
         print(f"Error downloading image from S3: {str(e)}")
         raise HTTPException(status_code=404, detail="Image not found in S3")
+    
+img = download_image_from_s3_gpt("photo/GeoyeonPyo_LoveYou.jpg")
+print('img', img)
     
 def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
