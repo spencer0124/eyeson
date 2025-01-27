@@ -9,7 +9,7 @@
 <body>
     <!-- container -->
     <div class="flex flex-col items-center w-full">
-        <div class="flex flex-col justify-center items-center bg-zinc-200 max-w-screen-md rounded">
+        <div class="flex flex-col items-center bg-zinc-200 max-w-screen-md  h-screen rounded">
             
             <!-- title -->
             <div class="flex flex-col justify-between items-center m-2 w-full">
@@ -40,12 +40,12 @@
                 </ul> -->
                 <ul id="messages"></ul>
             </div>
-            <div class="flex justify-start w-90 m-2">
+            <div class="flex justify-start w-90 mt-auto except-mt-2">
                 <div id="randomQ" class="randomQStyle"></div>
             </div>
             
             <!-- send chat -->
-            <div class="flex w-full">
+            <div class="flex w-full m-2">
                 <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" onkeypress="msgSend(event)"/>
                 <button id="sendMessageBtn" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
             </div>
