@@ -41,7 +41,7 @@
                 <ul id="messages"></ul>
             </div>
             <div class="flex justify-start w-90 m-2">
-                <div id="randomQ" class="randomQStyle">예시텍스트: 작품에서 가장 마음에 들었던 부분은 무엇이었나요?</div>
+                <div id="randomQ" class="randomQStyle"></div>
             </div>
             
             <!-- send chat -->
@@ -152,6 +152,7 @@
 
         // Auto-connect if query parameters are present
         window.onload = () => {
+            displayRandomQuestion();
             const params = getQueryParams();
             if (params["museum"]) {
                 museumName = params["museum"];
