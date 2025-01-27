@@ -68,12 +68,8 @@ class ConnectionManager:
         self.active_connections[museum].append(websocket)
 
         artworkid = websocket.query_params.get('artworkid', 'unknown')
-        print('py id',artworkid)
         unique_key = self.generate_unique_key(websocket, museum)
         username = self.generate_username(museum, unique_key, artworkid)
-
-        # 마지막 접속 시간 갱신 (Redis에 저장)
-        await self.update_last_seen(unique_key)
 
         # 유저 정보 저장
         self.user_info[websocket] = (museum, username, artworkid)
@@ -154,10 +150,11 @@ class ConnectionManager:
         return [json.loads(message) for message in messages]
 
     async def archive_and_clear_old_messages(self):
-        """하루가 지나면 Redis 데이터를 로그 파일로 저장하고 삭제"""
+        """하루가 지나면 Redis 데이터를 로그 파일로 저장하고, 유저 리스트 초기화"""
         yesterday = (datetime.now(KST).date() - timedelta(days=1)).isoformat()
         redis_keys = self.redis_client.keys(f"chat:*:{yesterday}")
 
+        # 메시지 파일 저장
         for redis_key in redis_keys:
             museum = redis_key.split(":")[1]
             messages = self.redis_client.lrange(redis_key, 0, -1)
@@ -169,34 +166,12 @@ class ConnectionManager:
                     f.write(message + "\n")
             self.redis_client.delete(redis_key)
 
-    async def update_last_seen(self, unique_key: str):
-        """Redis에 유저의 마지막 접속 시간 업데이트"""
-        now = datetime.now(KST).isoformat()
-        # now = datetime.now(KST).strftime("%I:%M %p")
-        redis_key = f"user:last_seen:{unique_key}"
-        
-        # Redis에 유저의 마지막 접속 시간 저장 및 TTL 설정 (24시간)
-        self.redis_client.set(redis_key, now, ex=24 * 60 * 60)
-        print(f"Updated last_seen for {unique_key} at {now}")
-
-    async def cleanup_old_users(self):
-        """오래된 유저 정보를 Redis에서 정리"""
-        # Redis에 저장된 모든 last_seen 키 가져오기
-        keys = self.redis_client.keys("user:last_seen:*")
-        now = datetime.now(KST)
-
-        cleaned_count = 0
-        for key in keys:
-            # Redis에서 마지막 접속 시간 불러오기
-            last_seen = self.redis_client.get(key)
-            if last_seen:
-                last_seen_time = datetime.fromisoformat(last_seen)
-                if now - last_seen_time > timedelta(hours=24):
-                    # 24시간 이상 지난 유저를 Redis에서 제거
-                    self.redis_client.delete(key)
-                    cleaned_count += 1
-
-        print(f"Cleaned up {cleaned_count} old users.")
+        # 유저 리스트 초기화
+        self.active_connections.clear()
+        self.user_info.clear()
+        self.username_counters.clear()
+        self.user_id_map.clear()
+        print("User list has been reset.")
 
     async def shutdown(self):
         """ConnectionManager 종료 시 호출되어야 하는 함수"""
