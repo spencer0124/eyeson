@@ -238,9 +238,10 @@ ul {
 }
 
 .randomQStyle {
-    background-color: rgb(20 83 45 / var(--tw-bg-opacity, 1));
+    background-color: rgb(82 82 91 / var(--tw-bg-opacity, 1));
     border-radius: 0.5rem; /* 8px */
     color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    /* color: black; */
     padding: 0.5rem;
     min-width: 5rem;
     position: relative;
@@ -258,7 +259,7 @@ ul {
 	width: 0;
 	height: 0;
 	border: 11px solid transparent;
-	border-right-color: rgb(20 83 45 / var(--tw-bg-opacity, 1));
+	border-right-color: rgb(82 82 91 / var(--tw-bg-opacity, 1));
 	border-left: 0;
 	border-bottom: 0;
 	margin-top: -5.5px;

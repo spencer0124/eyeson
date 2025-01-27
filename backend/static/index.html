@@ -121,6 +121,35 @@
             return params;
         }
 
+        // random question list
+        const randomQuestions = [
+            "이 작품을 보고 가장 먼저 떠오른 생각이나 감정은 무엇인가요?",
+            "작품 속에서 가장 눈길을 끌었던 요소는 무엇인가요? (색감, 소재, 구도 등)",
+            "이 작품이 전달하는 메시지나 이야기가 무엇이라고 느꼈나요?",
+            "작품을 본 후, 작가가 의도한 것이 무엇인지 궁금해진 점이 있었나요?",
+            "이 작품이 당신에게 개인적으로 어떤 의미를 주었나요?",
+            "이 작품이 당신의 일상이나 기억과 연결되는 부분이 있었나요?",
+            "만약 이 작품을 한 단어로 표현한다면 어떤 단어가 떠오르나요?",
+            "이 작품을 보고 떠오른 음악, 영화, 혹은 다른 예술작품이 있나요?",
+            "이 작품을 친구에게 설명한다면 어떤 점을 강조하고 싶나요?",
+            "이 작품이 당신의 공간에 있다면, 어떤 느낌일 것 같나요?",
+            "작품을 다른 시각에서 봐야 한다면, 어떤 방향이나 위치에서 보고 싶으신가요?",
+            "이 작품을 다른 사람과 함께 본다면, 어떤 이야기를 나누고 싶나요?",
+            "이 작품이 살아 움직인다면 어떤 이야기를 할 것 같나요?",
+            "작품 속으로 들어가서 한 부분을 바꿀 수 있다면, 어떤 것을 바꾸고 싶나요?",
+            "이 작품에 제목을 새로 붙인다면 어떤 제목이 어울릴까요?",
+            "작품이 영화나 소설로 만들어진다면, 어떤 장르가 어울릴까요?",
+            "이 작품이 시간여행을 했다면, 어느 시대에서 더 잘 어울렸을까요?"
+        ]
+
+        // 랜덤으로 질문을 뽑아서 div에 추가하는 함수
+        function displayRandomQuestion() {
+        const randomIndex = Math.floor(Math.random() * questions.length); // 랜덤 인덱스 생성
+        const randomQuestion = questions[randomIndex]; // 랜덤 질문 가져오기
+        const randomQDiv = document.getElementById("randomQ"); // div 요소 가져오기
+        randomQDiv.textContent = randomQuestion; // 질문을 div에 추가
+        }
+
         // Auto-connect if query parameters are present
         window.onload = () => {
             const params = getQueryParams();
