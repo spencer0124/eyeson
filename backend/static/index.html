@@ -144,8 +144,8 @@
 
         // 랜덤으로 질문을 뽑아서 div에 추가하는 함수
         function displayRandomQuestion() {
-        const randomIndex = Math.floor(Math.random() * questions.length); // 랜덤 인덱스 생성
-        const randomQuestion = questions[randomIndex]; // 랜덤 질문 가져오기
+        const randomIndex = Math.floor(Math.random() * randomQuestions.length); // 랜덤 인덱스 생성
+        const randomQuestion = randomQuestions[randomIndex]; // 랜덤 질문 가져오기
         const randomQDiv = document.getElementById("randomQ"); // div 요소 가져오기
         randomQDiv.textContent = randomQuestion; // 질문을 div에 추가
         }
