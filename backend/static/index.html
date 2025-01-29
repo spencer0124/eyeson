@@ -15,11 +15,12 @@
             <div class="flex flex-col justify-between items-center m-2 w-full">
                 <div class="flex flex-row items-center m-3 font-semibold text-xl" 
                     aria-labelledby="museum museum-text">
-                    <div>&lt;</div>
+                    <div aria-hidden="true">&lt;</div>
                     <div id="museum" aria-live="polite">전시명</div>
-                    <div>&gt;</div>
+                    <div aria-hidden="true">&gt;</div>
                     <div id="museum-text">&nbsp;이야기 나누기</div>
                 </div>
+
 
                 <div class="flex justify-end items-center m-2 font-semibold">
                     <div id="date-container"></div>
@@ -48,8 +49,8 @@
             
             <!-- send chat -->
             <div class="flex w-full m-2">
-                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 관람평을 입력하세요" onkeypress="msgSend(event)"/>
-                <button id="sendMessageBtn" aria-label="메시지 전송 버튼" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
+                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="여기서 관람평을 나누어 보세요" onkeypress="msgSend(event)"/>
+                <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
             </div>
         </div>
     </div>
@@ -67,6 +68,35 @@
                 socket.send(message);  // 서버로 메시지 전송
                 document.getElementById("messageInput").value = '';  // 입력칸 비우기
             }
+        };
+
+        const formatDateKorean = () => {
+            const dateContainer = document.getElementById("date-container");
+            const today = new Date();
+            
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1; // 0부터 시작하므로 +1 필요
+            const day = today.getDate();
+
+            const formattedDate = `${year}년 ${month}월 ${day}일`;
+            
+            dateContainer.textContent = formattedDate; // UI 표시
+            dateContainer.setAttribute("aria-label", formattedDate); // VoiceOver용 설정
+        };
+
+        const formatTimeKorean = (timeString) => {
+            const [hour, minute, period] = timeString.match(/(\d+):(\d+) (AM|PM)/).slice(1);
+            let formattedHour = parseInt(hour, 10);
+            let formattedPeriod = period === "AM" ? "오전" : "오후";
+
+            // 12시간제를 한국어로 변환
+            if (formattedHour === 12) {
+                formattedHour = period === "AM" ? 0 : 12;
+            } else if (formattedHour === 0) {
+                formattedHour = 12;
+            }
+
+            return `${formattedPeriod} ${formattedHour}시 ${minute}분`;
         };
 
         const extractTitleFromName = (userName) => {
@@ -93,7 +123,6 @@
 
         const getArtwork = (title, artworkImg) => {
             const url = `http://43.201.93.53:8000/chat/download-profile?title=${encodeURIComponent(title)}`;
-            
             fetch(url)
                 .then(response => response.blob())  // 이미지 데이터를 blob 형태로 받기
                 .then(blob => {
@@ -145,15 +174,16 @@
         ]
 
         // 랜덤으로 질문을 뽑아서 div에 추가하는 함수
-        function displayRandomQuestion() {
-        const randomIndex = Math.floor(Math.random() * randomQuestions.length); // 랜덤 인덱스 생성
-        const randomQuestion = randomQuestions[randomIndex]; // 랜덤 질문 가져오기
-        const randomQDiv = document.getElementById("randomQ"); // div 요소 가져오기
-        randomQDiv.textContent = randomQuestion; // 질문을 div에 추가
+        const displayRandomQuestion = () => {
+            const randomIndex = Math.floor(Math.random() * randomQuestions.length); // 랜덤 인덱스 생성
+            const randomQuestion = randomQuestions[randomIndex]; // 랜덤 질문 가져오기
+            const randomQDiv = document.getElementById("randomQ"); // div 요소 가져오기
+            randomQDiv.textContent = randomQuestion; // 질문을 div에 추가
         }
 
         // Auto-connect if query parameters are present
         window.onload = () => {
+            formatDateKorean();
             displayRandomQuestion();
             const params = getQueryParams();
             if (params["museum"]) {
@@ -184,6 +214,7 @@
             
             socket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
+                let formattedTime = formatTimeKorean(message.timestamp);
                 const userName = message.username
                 const parsedTitle = extractTitleFromName(userName);
                 const parsedName = extractUserNameFromName(userName);
@@ -199,7 +230,7 @@
 
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
-                    timestampElement.textContent = message.timestamp;
+                    timestampElement.textContent = formattedTime;
 
                     const contentElement = document.createElement("div");
                     contentElement.classList.add("contentStyle");
@@ -228,7 +259,7 @@
                     artworkImage.style.width = "30px";  // 원하는 크기 설정
                     artworkImage.style.height = "auto";
                     artworkImage.classList.add("artwork-image", "text-xs");
-                    artworkImage.alt = `${parsedTitle} 작품 이미지`;
+                    artworkImage.alt = `${parsedTitle} 작품`;
                     getArtwork(parsedTitle, artworkImage)
 
                     userContainerElement.appendChild(artworkImage)
