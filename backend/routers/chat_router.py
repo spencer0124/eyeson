@@ -152,7 +152,7 @@ class ConnectionManager:
     async def archive_and_clear_old_messages(self):
         """하루가 지나면 Redis 데이터를 로그 파일로 저장하고, 유저 리스트 초기화"""
         yesterday = (datetime.now(KST).date() - timedelta(days=1)).isoformat()
-        redis_keys = self.redis_client.keys(f"chat:*:{yesterday}")
+        redis_keys = self.redis_client.keys(f"chat:*:{2025-01-29}")
 
         # 메시지 파일 저장
         for redis_key in redis_keys:
