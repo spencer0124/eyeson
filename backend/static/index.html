@@ -9,16 +9,18 @@
 <body>
     <!-- container -->
     <div class="flex flex-col items-center w-full">
-        <div class="flex flex-col items-center bg-zinc-200 max-w-screen-md  h-screen rounded">
+        <div class="flex flex-col items-center bg-zinc-200 max-w-screen-md h-screen rounded">
             
             <!-- title -->
             <div class="flex flex-col justify-between items-center m-2 w-full">
-                <div class="flex flex-row items-center m-3 font-semibold text-xl">
+                <div class="flex flex-row items-center m-3 font-semibold text-xl" 
+                    aria-labelledby="museum museum-text">
                     <div>&lt;</div>
-                    <div id="museum">전시명</div>
+                    <div id="museum" aria-live="polite">전시명</div>
                     <div>&gt;</div>
-                    <div>&nbsp;이야기 나누기</div>
+                    <div id="museum-text">&nbsp;이야기 나누기</div>
                 </div>
+
                 <div class="flex justify-end items-center m-2 font-semibold">
                     <div id="date-container"></div>
                 </div>   
@@ -38,7 +40,7 @@
 
                     </li>
                 </ul> -->
-                <ul id="messages"></ul>
+                <ul id="messages" role="list"></ul>
             </div>
             <div class="flex justify-start w-90 mt-auto except-mt-2">
                 <div id="randomQ" class="randomQStyle"></div>
@@ -46,8 +48,8 @@
             
             <!-- send chat -->
             <div class="flex w-full m-2">
-                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" onkeypress="msgSend(event)"/>
-                <button id="sendMessageBtn" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
+                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 관람평을 입력하세요" onkeypress="msgSend(event)"/>
+                <button id="sendMessageBtn" aria-label="메시지 전송 버튼" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
             </div>
         </div>
     </div>
@@ -186,6 +188,7 @@
                 const parsedTitle = extractTitleFromName(userName);
                 const parsedName = extractUserNameFromName(userName);
                 const messageElement = document.createElement("li");
+                messageElement.setAttribute("role", "listitem");
 
                 if (message.username == "System") {
                     messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
@@ -219,12 +222,13 @@
                     userElement.appendChild(nameElement);
                     userElement.appendChild(breakElement);
                     userElement.appendChild(titleElement);
+                    userElement.setAttribute("aria-label", `${parsedTitle}를 보고 있는 ${parsedName}`);
 
                     const artworkImage = document.createElement("img");
                     artworkImage.style.width = "30px";  // 원하는 크기 설정
                     artworkImage.style.height = "auto";
                     artworkImage.classList.add("artwork-image", "text-xs");
-                    artworkImage.alt = "Artwork will appear";  // alt 텍스트 추가
+                    artworkImage.alt = `${parsedTitle} 작품 이미지`;
                     getArtwork(parsedTitle, artworkImage)
 
                     userContainerElement.appendChild(artworkImage)
