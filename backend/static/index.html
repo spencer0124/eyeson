@@ -48,7 +48,7 @@
             
             <!-- send chat -->
             <div class="flex w-full m-2">
-                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 관람평을 입력하세요" onkeypress="msgSend(event)"/>
+                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
                 <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
             </div>
         </div>
@@ -67,6 +67,19 @@
                 socket.send(message);  // 서버로 메시지 전송
                 document.getElementById("messageInput").value = '';  // 입력칸 비우기
             }
+        };
+
+        const formatTimeKorean = (timeString) => { // 12시간제를 한국어로 변환
+            const [hour, minute, period] = timeString.match(/(\d+):(\d+) (AM|PM)/).slice(1);
+            let formattedHour = parseInt(hour, 10);
+            let formattedPeriod = period === "AM" ? "오전" : "오후";
+
+            if (formattedHour === 12) {
+                formattedHour = period === "AM" ? 0 : 12;
+            } else if (formattedHour === 0) {
+                formattedHour = 12;
+            }
+            return `${formattedPeriod} ${formattedHour}시 ${minute}분`;
         };
 
         const extractTitleFromName = (userName) => {
@@ -183,6 +196,7 @@
             
             socket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
+                let formattedTime = formatTimeKorean(message.timestamp);
                 const userName = message.username
                 const parsedTitle = extractTitleFromName(userName);
                 const parsedName = extractUserNameFromName(userName);
@@ -190,7 +204,7 @@
                 messageElement.setAttribute("role", "listitem");
 
                 if (message.username == "System") {
-                    messageElement.textContent = `[${message.timestamp}] ${message.username}: ${message.content}`;
+                    messageElement.textContent = `[${formattedTime}] ${message.username}: ${message.content}`;
                     messageElement.classList.add("sysAlertStyle")
                 }
                 else {
@@ -198,7 +212,7 @@
 
                     const timestampElement = document.createElement("div");
                     timestampElement.classList.add("timestampStyle");
-                    timestampElement.textContent = message.timestamp;
+                    timestampElement.textContent = formattedTime;
 
                     const contentElement = document.createElement("div");
                     contentElement.classList.add("contentStyle");
