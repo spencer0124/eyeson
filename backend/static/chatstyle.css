@@ -88,8 +88,8 @@ ul {
     min-height: 100vh;
 }
 
-.min-h-cont {
-    min-height: calc(100vh - 150px);
+.h-cont {
+    height: calc(100vh - 150px);
 }
 
 .max-h-screen {
