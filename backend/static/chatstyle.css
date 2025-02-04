@@ -8,6 +8,10 @@ ul {
     left: 0;
 }
 
+.sticky {
+    position: sticky;
+}
+
 .bottom-0 {
     bottom: 0;
 }
@@ -87,6 +91,10 @@ ul {
 .py-px {
     padding-top: 1px;
     padding-bottom: 1px;
+}
+
+.p-bottom {
+    padding-bottom: 150px;
 }
 
 .mt-auto {
