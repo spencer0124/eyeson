@@ -42,12 +42,14 @@
                 </ul> -->
                 <ul id="messages" role="list"></ul>
             </div>
+        </div>
+        <div class="fixed max-w-screen-md bottom-0">
             <div class="flex justify-start w-90 mt-auto except-mt-2">
                 <div id="randomQ" class="randomQStyle"></div>
             </div>
             
             <!-- send chat -->
-            <div class="flex w-full m-2">
+            <div class="flex m-2">
                 <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
                 <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
             </div>
