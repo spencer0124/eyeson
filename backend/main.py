@@ -30,10 +30,3 @@ app.include_router(search_router.router, prefix="/search", tags=["search"])
 app.include_router(description_router.router, prefix="/description", tags=["description"])
 app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"])
 app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
-
-@app.get("/")
-async def read_root(request: Request):
-    query = request.url.query  # 쿼리 파라미터 가져오기
-    redirect_url = f"/static/index.html?{query}" if query else "/static/index.html"
-    # redirect_url = f"/static/temp.html"
-    return RedirectResponse(url=redirect_url)
