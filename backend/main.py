@@ -22,11 +22,8 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
-# Mount static files
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
-
 # Include routers
-app.include_router(search_router.router, prefix="/search", tags=["search"])
-app.include_router(description_router.router, prefix="/description", tags=["description"])
-app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"])
-app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
+app.include_router(search_router.router, prefix="/api/search", tags=["search"])
+app.include_router(description_router.router, prefix="/api/description", tags=["description"])
+app.include_router(metadata_router.router, prefix="/api/metadata", tags=["metadata"])
+app.include_router(chat_router.router, prefix="/api/chat", tags=["chat"])

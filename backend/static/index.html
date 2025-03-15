@@ -107,7 +107,7 @@
         }
 
         const getArtwork = (title, artworkImg) => {
-            const url = `http://43.201.93.53:8000/chat/download-profile?title=${encodeURIComponent(title)}`;
+            const url = `https://eyeson.click/api/chat/download-profile?title=${encodeURIComponent(title)}`;
             fetch(url)
                 .then(response => response.blob())  // 이미지 데이터를 blob 형태로 받기
                 .then(blob => {
@@ -190,7 +190,7 @@
                 socket.close();
             }
 
-            socket = new WebSocket(`ws://43.201.93.53:8000/chat/ws/${museum}?artworkid=${encodeURIComponent(artworkidParam)}`);
+            socket = new WebSocket(`wss://eyeson.click/api/chat/ws/${museum}?artworkid=${encodeURIComponent(artworkidParam)}`);
 
             socket.onopen = (event) => {
                 console.log('WebSocket is connected!');
