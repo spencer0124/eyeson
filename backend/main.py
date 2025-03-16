@@ -1,7 +1,5 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 from routers import search_router, description_router, metadata_router, chat_router
 from routers.chat_router import manager
