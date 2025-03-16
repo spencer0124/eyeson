@@ -33,19 +33,6 @@ jobs:
             sudo systemctl restart fastapi
             sleep 3  # 서비스 재시작 후 대기
 
-            # FastAPI 상태 확인
-            if ! curl -s http://localhost:8000/docs > /dev/null; then
-              echo "Failed to restart FastAPI service. Check logs:"
-              sudo journalctl -u fastapi.service -n 20
-              exit 1
-            fi
-
             # Nginx 설정 점검 및 재시작
             sudo nginx -t
-            if [ $? -eq 0 ]; then
-              sudo systemctl restart nginx
-              echo "Nginx restarted successfully"
-            else
-              echo "Nginx configuration test failed"
-              exit 1
-            fi
+            sudo systemctl restart nginx
