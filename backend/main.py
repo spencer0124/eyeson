@@ -20,6 +20,8 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
+print("0709 testing")
+
 # Include routers
 app.include_router(search_router.router, prefix="/search", tags=["search"])
 app.include_router(description_router.router, prefix="/description", tags=["description"])
