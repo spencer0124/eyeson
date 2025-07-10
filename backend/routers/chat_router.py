@@ -60,11 +60,13 @@ class ConnectionManager:
         allowed_origins = ["https://eyeson.click"]
         
         # if "*" not in allowed_origins and origin not in allowed_origins:
+        print('origin', origin)
         if origin is not None and origin not in allowed_origins:
             raise ValueError("CORS policy violation")
             await websocket.close(code=1008, reason="CORS policy violation")
             return
         # await websocket.accept()
+        print('pass')
 
         if museum not in self.active_connections:
             self.active_connections[museum] = []
