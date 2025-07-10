@@ -189,6 +189,7 @@ manager = ConnectionManager()
 @router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
     try:
+        await websocket.accept()
         await manager.connect(websocket, museum)
         while True:
             data = await websocket.receive_text()
@@ -206,7 +207,8 @@ async def websocket_endpoint(websocket: WebSocket, museum: str):
         await manager.disconnect(websocket)
     except Exception as e:
         print(f"Unexpected error: {e}")
-        await websocket.close(code=1008, reason="Internal server error")
+        if websocket.application_state == "CONNECTED":
+            await websocket.close(code=1008, reason="Internal server error")
 
 @router.get("/download-profile")
 async def download_profile(title: str):
