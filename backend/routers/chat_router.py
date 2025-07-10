@@ -188,6 +188,7 @@ manager = ConnectionManager()
 
 @router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
+    print('websocket_endpoint 호출됨')
     await websocket.accept()
     print(f"WebSocket connection accepted for museum: {museum}")
 
