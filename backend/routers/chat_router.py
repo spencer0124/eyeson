@@ -59,6 +59,7 @@ class ConnectionManager:
         origin = websocket.headers.get('origin')
         allowed_origins = ["https://eyeson.click"]
         if "*" not in allowed_origins and origin not in allowed_origins:
+            raise ValueError("CORS policy violation")
             await websocket.close(code=1008, reason="CORS policy violation")
             return
         # await websocket.accept()
