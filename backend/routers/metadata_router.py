@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 import os
 import json
 from services.s3_service import list_images_in_s3
@@ -16,7 +16,7 @@ def get_filename_from_path(s3_key: str) -> str:
     return os.path.basename(s3_key)
 
 @router.get("/with-images/")
-async def get_images_with_metadata():
+async def get_images_with_metadata(uniqueid: str = Query(...)):
     try:
         # load_data 인수로 data_path 받게 수정정
         data = load_data(data_path)
