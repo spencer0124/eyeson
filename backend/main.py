@@ -43,7 +43,8 @@ import os
 from routers import search_router, description_router, metadata_router, chat_router
 from routers.chat_router import manager
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+print('base dir', BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 @asynccontextmanager
