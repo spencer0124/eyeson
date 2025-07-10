@@ -61,7 +61,7 @@ class ConnectionManager:
         if "*" not in allowed_origins and origin not in allowed_origins:
             await websocket.close(code=1008, reason="CORS policy violation")
             return
-        await websocket.accept()
+        # await websocket.accept()
 
         if museum not in self.active_connections:
             self.active_connections[museum] = []
@@ -188,8 +188,8 @@ manager = ConnectionManager()
 
 @router.websocket("/ws/{museum}")
 async def websocket_endpoint(websocket: WebSocket, museum: str):
+    await websocket.accept()
     try:
-        await websocket.accept()
         await manager.connect(websocket, museum)
         while True:
             data = await websocket.receive_text()
