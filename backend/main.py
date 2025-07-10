@@ -21,6 +21,7 @@ app.add_middleware(
 )
 
 print("0709 testing")
+print("search router",search_router.router)
 
 # Include routers
 app.include_router(search_router.router, prefix="/search", tags=["search"])
