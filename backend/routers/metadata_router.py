@@ -4,8 +4,8 @@ import json
 from services.s3_service import list_images_in_s3
 
 router = APIRouter()
-data_path = './data/data.json'
-exhibit_path = './data/exhibit.json'
+data_path = './data/data_david.json'
+exhibit_path = './data/exhibit_david.json'
 
 # parameter로 path 받아 data_path와 exhibit_path 모두 다루도록 수정정
 def load_data(path):
