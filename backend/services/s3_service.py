@@ -46,6 +46,7 @@ def download_image_from_s3_gpt(s3_key):
         raise HTTPException(status_code=404, detail="Image not found in S3")
     
 def download_image_from_s3(title):
+    print('title',title)
     eng_id = load_id_from_title(title)
     s3_key = 'photo/'+eng_id
     try:
