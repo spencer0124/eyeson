@@ -25,11 +25,13 @@ def load_data(path):
 def load_id_from_title(title: str):
     data_path = './data/data_david.json'
     json_data = load_data(data_path)
+    tmp_title = title[6:]
+    print('tmp',tmp_title)
 
     for item in json_data:
-        if item['eng_id'] == title:
+        if item['eng_id'] == tmp_title:
             return item['eng_id']
-    raise ValueError(f"Title '{title}' not found in JSON data.")
+    raise ValueError(f"EngId '{tmp_title}' not found in JSON data.")
 
 def download_image_from_s3_gpt(s3_key):
     print('s3', s3_key)
