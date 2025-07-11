@@ -58,3 +58,5 @@ def download_image_from_s3(title):
         except Exception as e:
             print(f"Error downloading image from S3: {str(e)}")
             raise HTTPException(status_code=404, detail="Image not found in S3")
+    else:
+        pass
