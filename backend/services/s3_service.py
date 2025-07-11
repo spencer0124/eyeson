@@ -27,7 +27,7 @@ def load_id_from_title(title: str):
     json_data = load_data(data_path)
 
     for item in json_data:
-        if item['meta']['eng_id'] == title:
+        if item['eng_id'] == title:
             return item['eng_id']
     raise ValueError(f"Title '{title}' not found in JSON data.")
 
