@@ -8,7 +8,7 @@ from services.image_service import image_to_bytes, dtype_is
 from services.openai_service import generate_image_description
 
 router = APIRouter()
-data_path = './data/data.json'
+data_path = './data/data_david.json'
 
 class EngId(BaseModel):
     file: str
