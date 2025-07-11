@@ -47,13 +47,14 @@ def download_image_from_s3_gpt(s3_key):
     
 def download_image_from_s3(title):
     print('title',title)
-    eng_id = load_id_from_title(title)
-    s3_key = 'photo/'+eng_id
-    try:
-        response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
-        img_data = response['Body'].read()
-        image = Image.open(BytesIO(img_data))
-        return image
-    except Exception as e:
-        print(f"Error downloading image from S3: {str(e)}")
-        raise HTTPException(status_code=404, detail="Image not found in S3")
+    if title[6:10] != "temp":
+        eng_id = load_id_from_title(title)
+        s3_key = 'photo/'+eng_id
+        try:
+            response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
+            img_data = response['Body'].read()
+            image = Image.open(BytesIO(img_data))
+            return image
+        except Exception as e:
+            print(f"Error downloading image from S3: {str(e)}")
+            raise HTTPException(status_code=404, detail="Image not found in S3")
