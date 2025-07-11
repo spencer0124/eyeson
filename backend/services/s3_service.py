@@ -23,7 +23,7 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data.json'
+    data_path = './data/data_david.json'
     json_data = load_data(data_path)
 
     for item in json_data:
