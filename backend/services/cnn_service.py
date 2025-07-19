@@ -55,6 +55,7 @@ def preprocess_image(image):
 
 def create_fv(s3_file_list, download_image_func, pkl_path):
     preprocessed_images = [preprocess_image(download_image_func(s3_key)) for s3_key in s3_file_list if s3_key[6:10] != "temp"]
+    print('processed', preprocessed_images)
 
     with torch.no_grad():
         feature_vectors = [feature_extractor(img_tensor) for img_tensor in preprocessed_images]
@@ -69,6 +70,7 @@ def create_fv(s3_file_list, download_image_func, pkl_path):
 
 def preprocess_query(image_path):
     query = preprocess_image(image_path)
+    print('query img', type(query), query)
     with torch.no_grad():
         query_fv = feature_extractor(query)
     return query_fv
