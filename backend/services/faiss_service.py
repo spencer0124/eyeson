@@ -3,6 +3,7 @@ import os
 import pickle
 
 def make_faiss_idx(fv, idx_path):
+    print('fv',fv.shape[1])
     index = faiss.IndexFlatL2(fv.shape[1])
     index.add(fv)
     faiss.write_index(index, idx_path)
