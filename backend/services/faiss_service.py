@@ -20,5 +20,6 @@ def load_or_create_faiss_index(idx_path, fv):
     return idx
 
 def search_faiss(top_k, idx, query_fv):
+    print('query', query_fv.numpy().shape)
     D, I = idx.search(query_fv.numpy(), top_k)
     return D, I
