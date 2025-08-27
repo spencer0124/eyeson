@@ -21,9 +21,9 @@ def load_or_create_faiss_index(idx_path, fv):
     return idx
 
 def search_faiss(top_k, idx, query_fv):
-    print('query', query_fv.numpy().shape)
+    print('query', query_fv.shape)
     print("Index dimension:", idx.d)
     print("Query dimension:", query_fv.shape[1])
 
-    D, I = idx.search(query_fv.numpy(), top_k)
+    D, I = idx.search(query_fv, top_k)
     return D, I
