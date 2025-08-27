@@ -30,6 +30,8 @@ def load_id_from_title(title: str):
 
     if tmp_title == "ChoiGyungEun_Keyring2.jpg":
         tmp_title = "ChoiGyungEun_Keyring.jpg"
+    if tmp_title == "PyoGeoYeon_Chicken.jpg.jpg":
+        tmp_title = "PyoGeoYeon_Chicken.jpg"
 
     for item in json_data:
         if item['eng_id'] == tmp_title:
