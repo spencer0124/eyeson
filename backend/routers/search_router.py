@@ -9,8 +9,8 @@ from services.faiss_service import load_or_create_faiss_index, search_faiss
 router = APIRouter()
 
 # Global variables for feature vectors and index
-fv_pkl_path = './features/vgg16_features.pkl'
-idx_path = './features/faiss_idx.index'
+fv_pkl_path = './features/clip_vgg16_features.pkl'
+idx_path = './features/clip_faiss_idx.index'
 
 # Initialize feature vectors and index
 file_list = list_images_in_s3()
