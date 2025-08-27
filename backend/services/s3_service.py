@@ -28,6 +28,9 @@ def load_id_from_title(title: str):
     tmp_title = title[6:]
     print('tmp',tmp_title)
 
+    if tmp_title == "ChoiGyungEun_Keyring2.jpg":
+        tmp_title = "ChoiGyungEun_Keyring.jpg"
+
     for item in json_data:
         if item['eng_id'] == tmp_title:
             return item['eng_id']
