@@ -89,23 +89,19 @@
 #     return fv
 
 import torch
+import clip
 from PIL import Image
 import cv2
 import numpy as np
 import pickle
 import os
-from transformers import AutoImageProcessor, AutoModel
 
-# 모델 불러오기 (DINOv2로 수정)
-pretrained_model_name = "facebook/dinov2-vitg14-pretrain"
-processor = AutoImageProcessor.from_pretrained(pretrained_model_name)
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-model = AutoModel.from_pretrained(
-    pretrained_model_name,
-    device_map="auto",
-)
+# CLIP 모델 불러오기
+clip_model, clip_preprocess = clip.load("ViT-B/32", device=device)
 
-# 이미지 전처리 함수 (기존 코드와 동일)
+# 이미지 전처리 함수
 def preprocess_image(image):
     if isinstance(image, str):
         image = Image.open(image).convert("RGB")
@@ -114,64 +110,36 @@ def preprocess_image(image):
     elif not isinstance(image, Image.Image):
         raise ValueError(f"Unsupported image type: {type(image)}")
     
-    return image
+    return clip_preprocess(image).unsqueeze(0).to(device)
 
-# --- 수정된 create_fv 함수 ---
+# feature vector 생성 함수
 def create_fv(s3_file_list, download_image_func, pkl_path):
     preprocessed_images = [
         preprocess_image(download_image_func(s3_key))
         for s3_key in s3_file_list if s3_key[6:10] != "temp"
     ]
-    
-    # 1. 모든 이미지를 한 번에 전처리
-    # Hugging Face processor는 이미지 리스트를 받아 한 번에 처리하는 데 최적화되어 있습니다.
-    inputs = processor(images=preprocessed_images, return_tensors="pt")
-    
-    # 2. 전처리된 데이터를 GPU로 이동
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-    
-    with torch.no_grad():
-        # 3. 모델에 전처리된 데이터 전달
-        # model(**inputs)는 딕셔너리 형태로 출력을 반환합니다.
-        outputs = model(**inputs)
 
-    # 4. 출력에서 CLS 토큰(첫 번째 토큰)의 feature vector를 추출
-    # outputs.last_hidden_state의 shape는 (배치 크기, 토큰 수, 차원) 입니다.
-    # 첫 번째 토큰([:, 0, :])이 CLS 토큰입니다.
-    feature_vectors = outputs.last_hidden_state[:, 0, :]
-    
-    # 5. 정규화 및 numpy 변환 (기존 코드와 동일)
-    fv_tensor = feature_vectors / feature_vectors.norm(dim=1, keepdim=True)
+    with torch.no_grad():
+        feature_vectors = [clip_model.encode_image(img_tensor) for img_tensor in preprocessed_images]
+
+    fv_tensor = torch.vstack(feature_vectors)
+    fv_tensor = fv_tensor / fv_tensor.norm(dim=1, keepdim=True)  # 정규화 (cosine similarity용)
     fv_np = fv_tensor.cpu().numpy()
-    print('fv_np shape', fv_np.shape)
 
     with open(pkl_path, 'wb') as f:
         pickle.dump(fv_np, f)
     
     return fv_np
 
-# --- 수정된 preprocess_query 함수 ---
+# 쿼리 이미지 처리
 def preprocess_query(image_path):
     query = preprocess_image(image_path)
-    
-    # 1. 단일 이미지를 전처리
-    inputs = processor(images=query, return_tensors="pt")
-
-    # 2. 전처리된 데이터를 GPU로 이동
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
-
     with torch.no_grad():
-        # 3. 모델에 전처리된 데이터 전달
-        outputs = model(**inputs)
-
-    # 4. CLS 토큰 추출
-    query_fv = outputs.last_hidden_state[:, 0, :]
-
-    # 5. 정규화 및 numpy 변환 (기존 코드와 동일)
-    query_fv = query_fv / query_fv.norm()
+        query_fv = clip_model.encode_image(query)
+        query_fv = query_fv / query_fv.norm()  # 정규화
     return query_fv.cpu().numpy()
 
-# load_or_create_feature_vectors 함수는 수정할 필요 없음
+# 피처 벡터 불러오거나 생성
 def load_or_create_feature_vectors(fv_pkl_path, s3_file_list, download_image_func):
     if os.path.isfile(fv_pkl_path):
         with open(fv_pkl_path, 'rb') as file:
