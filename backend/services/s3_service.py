@@ -27,7 +27,7 @@ def load_id_from_title(title: str):
     json_data = load_data(data_path)
     
     if data_path == './data/data_david.json':
-        tmp_title = title[11:]
+        tmp_title = title[12:]
     else:
         tmp_title = title[6:]
     print('tmp',tmp_title)
