@@ -23,6 +23,8 @@ async def get_description(data: EngId):
     first_file = data.file
     if first_file[-4].isdigit():
         first_file = first_file[:-5] + '1' + first_file[-4:]
+    
+    print('first file', first_file)
     s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
     try:
