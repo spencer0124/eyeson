@@ -25,6 +25,11 @@ async def get_description(data: EngId):
         first_file = first_file[:-5] + '1' + first_file[-4:]
     
     print('first file', first_file)
+    if first_file[:6] == "david/":
+        first_file = first_file
+    else:
+        first_file = "david/"+first_file
+
     s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
     if first_file[:6] == "david/":
