@@ -9,6 +9,8 @@ s3_client = boto3.client('s3')
 bucket_name = 'seeterature'
 prefix = 'photo/'
 
+data_path = './data/data_david.json' # Edit: 250826 for ablind 2025
+
 def list_images_in_s3():
     try:
         response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
@@ -23,7 +25,7 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data_david.json' # Edit: 250826 for ablind 2025
+    global data_path
     json_data = load_data(data_path)
     
     if data_path == './data/data_david.json':
@@ -55,10 +57,17 @@ def download_image_from_s3_gpt(s3_key):
         raise HTTPException(status_code=404, detail="Image not found in S3")
     
 def download_image_from_s3(title):
+    global data_path
+
     eng_id = load_id_from_title(title)
     if eng_id == "PyoGeoYeon_Chicken.jpg":
         eng_id = "PyoGeoYeon_Chicken.jpg.jpg"
-    s3_key = 'photo/'+eng_id
+    
+    if data_path == './data/data_david.json':
+        s3_key = 'photo/david/'+eng_id
+    else:
+        s3_key = 'photo/'+eng_id
+
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         img_data = response['Body'].read()
