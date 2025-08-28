@@ -27,10 +27,15 @@ async def get_description(data: EngId):
     print('first file', first_file)
     s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
 
+    if first_file[:6] == "david/":
+        first_file_id = first_file[6:]
+    else:
+        first_file_id = first_file
+
     try:
-        matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
+        matched = next(entry for entry in json_data if entry['eng_id'] == first_file_id)
     except StopIteration:
-        raise HTTPException(status_code=404, detail=f"No matching entry found for eng_id: {first_file}")
+        raise HTTPException(status_code=404, detail=f"No matching entry found for eng_id: {first_file_id}")
 
     return {
         'eng_id': matched.get('eng_id', 'N/A'),
