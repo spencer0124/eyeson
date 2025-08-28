@@ -23,7 +23,7 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data_day.json' # Edit: 250826 for ablind 2025
+    data_path = './data/data_david.json' # Edit: 250826 for ablind 2025
     json_data = load_data(data_path)
     tmp_title = title[6:]
     print('tmp',tmp_title)

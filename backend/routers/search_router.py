@@ -9,12 +9,15 @@ from services.faiss_service import load_or_create_faiss_index, search_faiss
 router = APIRouter()
 
 # Global variables for feature vectors and index
-fv_pkl_path = './features/clip_vgg16_features.pkl'
-idx_path = './features/clip_faiss_idx.index'
+fv_pkl_path = './features/david_vgg16_features.pkl'
+idx_path = './features/david_faiss_idx.index'
 
 # Initialize feature vectors and index
 file_list = list_images_in_s3()
-# print('files', file_list)
+
+file_list = [file for file in file_list if file[6:11]=="david"]
+print('files', file_list)
+
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
 
