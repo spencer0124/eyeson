@@ -25,7 +25,11 @@ def load_data(path):
 def load_id_from_title(title: str):
     data_path = './data/data_david.json' # Edit: 250826 for ablind 2025
     json_data = load_data(data_path)
-    tmp_title = title[6:]
+    
+    if data_path == './data/data_david.json':
+        tmp_title = title[11:]
+    else:
+        tmp_title = title[6:]
     print('tmp',tmp_title)
 
     if tmp_title == "ChoiGyungEun_Keyring2.jpg":
