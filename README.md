@@ -1,4 +1,4 @@
-# 시각장애인 전시 감상 보조 앱 눈와:
+# 시각장애인 전시 감상 보조 앱 XXXX
 
 ![Image](https://github.com/user-attachments/assets/8bde2485-f418-4d53-95ed-6ba8c4e60cca)
 
