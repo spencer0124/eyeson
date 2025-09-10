@@ -23,15 +23,9 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data_day.json' # Edit: 250826 for ablind 2025
+    data_path = './data/data_david.json'
     json_data = load_data(data_path)
     tmp_title = title[6:]
-    print('tmp',tmp_title)
-
-    if tmp_title == "ChoiGyungEun_Keyring2.jpg":
-        tmp_title = "ChoiGyungEun_Keyring.jpg"
-    if tmp_title == "PyoGeoYeon_Chicken.jpg.jpg":
-        tmp_title = "PyoGeoYeon_Chicken.jpg"
 
     for item in json_data:
         if item['eng_id'] == tmp_title:
@@ -39,7 +33,6 @@ def load_id_from_title(title: str):
     raise ValueError(f"EngId '{tmp_title}' not found in JSON data.")
 
 def download_image_from_s3_gpt(s3_key):
-    print('s3', s3_key)
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         print('resp', response)
@@ -52,8 +45,6 @@ def download_image_from_s3_gpt(s3_key):
     
 def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
-    if eng_id == "PyoGeoYeon_Chicken.jpg":
-        eng_id = "PyoGeoYeon_Chicken.jpg.jpg"
     s3_key = 'photo/'+eng_id
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)

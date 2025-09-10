@@ -349,17 +349,6 @@
 
             <!-- chats --> 
             <div class="flex flex-col w-full h-full flex-grow overflow-y-auto">
-                <!-- <ul>
-                    <li class="flex flex-row justify-end items-end m-2">
-                        <div class="timestampStyle">time</div>
-                        <div class="contentStyle">chat</div>
-                        <div>
-                            <div class="userStyle">user name</div>
-                            <img id="artwork-image" src="" alt="Artwork will appear here" style="width: 30px; height: auto;" />
-                        </div>
-
-                    </li>
-                </ul> -->
                 <ul id="messages" role="list"></ul>
             </div>
         </div>
@@ -469,10 +458,6 @@
                 .then(blob => {
                     // Blob을 Object URL로 변환
                     const imageUrl = URL.createObjectURL(blob);
-
-                    // 미리 준비한 <img> 태그의 src 속성에 이미지 URL을 설정
-                    // const imgElement = document.getElementById("artwork-image");
-                    // imgElement.src = imageUrl;  // 이미지 표시
                     artworkImg.src = imageUrl;
                 })
                 .catch(error => {
@@ -532,7 +517,7 @@
                 console.log('artworkid', artworkid)
 
                 const museumMapping = {
-                    "240904_everymoment": "나의 모든 순간",
+                    "xxxx": "xxxx",
                 };
                 const displayName = museumMapping[museumName] || museumName;
                 document.getElementById('museum').textContent = displayName;
@@ -613,19 +598,6 @@
                 }
 
                 document.getElementById("messages").appendChild(messageElement);
-
-                // console.log('param', parsedTitle)
-                // if (userName != "System") {
-                //     const artworkImage = document.createElement("img");
-                //     artworkImage.style.width = "30px";  // 원하는 크기 설정
-                //     artworkImage.style.height = "auto";
-                //     artworkImage.classList.add("artwork-image", "text-xs");
-                //     artworkImage.alt = "Artwork will appear";  // alt 텍스트 추가
-                //     getArtwork(parsedTitle, artworkImage)
-
-                //     messageElement.appendChild(artworkImage);
-                //     document.getElementById("messages").appendChild(messageElement);
-                // }
             };
 
             socket.onclose = (event) => {

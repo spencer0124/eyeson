@@ -2,3 +2,7 @@
 __pycache__/
 temp/
 .DS_Store
+data/data_day.json
+data/data.json
+data/exhibit_day.json
+data/exhibit.json

@@ -57,7 +57,7 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket, museum: str):
         """유저 연결 처리"""
         origin = websocket.headers.get('origin')
-        allowed_origins = ["https://eyeson.click", "http://43.201.93.53:8000"]
+        allowed_origins = ["https://eyeson.click"]
         
         # if "*" not in allowed_origins and origin not in allowed_origins:
         print('origin', origin)
