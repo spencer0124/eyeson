@@ -1,9 +1,3 @@
-//
-//  FreeCameraModeVM.swift
-//  eyeson
-//
-//  Created by SeungYong on 1/14/25.
-//
 
 import Foundation
 import SwiftUI
@@ -27,7 +21,7 @@ class FreeCameraModeViewModel: ObservableObject {
         isLoadingRequestDescription = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/description/gpt-nonartwork/?promptmode=\(promptmode)"
+        let url = "http://XXXX:8000/description/gpt-nonartwork/?promptmode=\(promptmode)"
         let headers: HTTPHeaders = [
             "Content-Type": "multipart/form-data"
         ]

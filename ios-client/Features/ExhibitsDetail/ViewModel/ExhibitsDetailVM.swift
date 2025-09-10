@@ -1,9 +1,3 @@
-//
-//  ExhibitsDetailVM.swift
-//  eyeson
-//
-//  Created by 조승용 on 9/3/24.
-//
 
 
 import Foundation
@@ -18,7 +12,7 @@ class ExhibitsDetailViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let url = "http://43.201.93.53:8000/metadata/with-images/?uniqueid=\(uniqueId)"
+        let url = "http://XXXX/metadata/with-images/?uniqueid=\(uniqueId)"
         
         AF.request(url).responseJSON { response in
             self.isLoading = false

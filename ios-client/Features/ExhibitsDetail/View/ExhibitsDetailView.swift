@@ -1,9 +1,4 @@
-//
-//  ExhibitsDetailView.swift
-//  eyeson
-//
-//  Created by 조승용 on 8/5/24.
-//
+
 
 import SwiftUI
 import Kingfisher

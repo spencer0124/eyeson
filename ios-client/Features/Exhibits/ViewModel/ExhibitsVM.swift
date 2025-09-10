@@ -1,9 +1,3 @@
-//
-//  ExhibitsVM.swift
-//  eyeson
-//
-//  Created by SeungYong on 1/16/25.
-//
 
 import Foundation
 import Alamofire

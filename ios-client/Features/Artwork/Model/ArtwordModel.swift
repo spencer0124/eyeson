@@ -1,9 +1,4 @@
-//
-//  ArtwordModel.swift
-//  eyeson
-//
-//  Created by 조승용 on 9/2/24.
-//
+
 
 import Foundation
 

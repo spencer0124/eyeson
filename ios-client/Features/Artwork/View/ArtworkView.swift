@@ -1,9 +1,3 @@
-//
-//  ArtworkView.swift
-//  eyeson
-//
-//  Created by 조승용 on 8/7/24.
-//
 
 import SwiftUI
 import UIKit
@@ -426,12 +420,4 @@ struct ArtworkView: View {
                     .replacingOccurrences(of: "cm", with: "센치미터")
     }
 
-}
-
-
-
-#Preview {
-    ArtworkView(eng_id: "JeongyeonMoon_Golden.jpg"
-                , paramUniqueId: "240904_everymoment"
-    )
 }

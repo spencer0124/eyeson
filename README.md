@@ -1,4 +1,4 @@
-A Museum Accessibility Application for Blind and Low-Vision Visitors
+# A Museum Accessibility Application for Blind and Low-Vision Visitors
 
 ![Image](https://github.com/user-attachments/assets/8bde2485-f418-4d53-95ed-6ba8c4e60cca)
 

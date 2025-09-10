@@ -1,9 +1,4 @@
-////
-////  FullScreenImageView.swift
-////  eyeson
-////
-////  Created by 조승용 on 9/3/24.
-////
+
 //
 //import SwiftUI
 //import UIKit

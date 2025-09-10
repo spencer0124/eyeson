@@ -1,9 +1,3 @@
-//
-//  eyesonUITests.swift
-//  eyesonUITests
-//
-//  Created by 조승용 on 7/20/24.
-//
 
 import XCTest
 

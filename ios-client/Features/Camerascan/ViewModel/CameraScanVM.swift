@@ -1,9 +1,4 @@
-//
-//  CameraScanVM.swift
-//  eyeson
-//
-//  Created by 조승용 on 9/1/24.
-//
+
 import Foundation
 import Alamofire
 
