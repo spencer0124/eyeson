@@ -72,9 +72,9 @@ async def serve_index():
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
 # /artChat 경로 추가
-@app.get("/art_chat", include_in_schema=False)
+@app.get("/artChat", include_in_schema=False)
 async def serve_art_chat():
-    return FileResponse(os.path.join(STATIC_DIR, "art_chat.html"))
+    return FileResponse(os.path.join(STATIC_DIR, "artChat.html"))
 
 # 라우터 포함
 app.include_router(search_router.router, prefix="/search", tags=["search"])
