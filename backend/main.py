@@ -71,6 +71,11 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 async def serve_index():
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
+# /artChat 경로 추가
+@app.get("/art_chat", include_in_schema=False)
+async def serve_art_chat():
+    return FileResponse(os.path.join(STATIC_DIR, "art_chat.html"))
+
 # 라우터 포함
 app.include_router(search_router.router, prefix="/search", tags=["search"])
 app.include_router(description_router.router, prefix="/description", tags=["description"])
