@@ -76,7 +76,7 @@ async def serve_index():
 async def serve_art_chat():
     return FileResponse(os.path.join(STATIC_DIR, "artChat.html"))
 
-app.mount("../modules", StaticFiles(directory="node_modules"), name="modules")
+app.mount("/modules", StaticFiles(directory="../node_modules"), name="modules")
 
 # 라우터 포함
 app.include_router(search_router.router, prefix="/search", tags=["search"])
