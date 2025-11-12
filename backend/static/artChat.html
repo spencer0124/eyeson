@@ -5,11 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Artwork Chat</title>
 
-        <link rel="stylesheet" href="css/artChat_style.css">
+        <link rel="stylesheet" href="artChat_css/artChat_style.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        
 
         <!-- Load for zoomable image -->
         <!-- source : https://www.jqueryscript.net/zoom/Simple-jQuery-Image-Zoom-With-Mouse-Wheel-or-Touch-Scroll.html -->
-        <link rel="stylesheet" href="css/ap-image-zoom.css">
+        <link rel="stylesheet" href="artChat_css/ap-image-zoom.css">
         
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -18,7 +21,7 @@
         <!-- mousewheel plugin -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.11/jquery.mousewheel.min.js"></script>
         <!-- ap image zoom JS -->
-        <script src="js/ap-image-zoom.js"></script>
+        <script src="artChat_js/ap-image-zoom.js"></script>
 
         <style>
             .demo-wrapper {
@@ -39,8 +42,15 @@
             </div>
             
             <!-- image zoom -->
-            <div class="demo-wrapper flex m-2">
-                <img src="temp.jpeg" alt="dirndl" id="image">
+            <div class="relative demo-wrapper flex items-center m-2">
+                <img src="artChat_demo/wanderer-above-the-sea-of-fog.jpg" alt="dirndl" id="image">
+            
+                <!-- description button -->
+                <div class="absolute zoom-btn-container">
+                    <button id="ask_AI_btn" class="zoom-btn rounded-lg font-normal text-lg bg-indigo-700 text-neutral-100 border-solid border-3 border-yellow-300">
+                        Ask Description
+                    </button>
+                </div>
             </div>
 
             <!-- 하단 바 -->
@@ -68,19 +78,169 @@
                 </div>
                 
             </div>
+
+            <!-- prompt mode -->
+            <div class="flex flex-row">
+                <div class="m-2">
+                    <select id="promptModeSelect">
+                        <option value="promptmode">1</option>
+                        <option value="promptmode1">2</option>
+                    </select>
+                </div >
+                <div id="resultOutput" class="m-2">hi</div>
+            </div>
+            <div id="tmp"></div>
+            
         </div>
 
         <script>
             function initImage() {
-            $('#image').apImageZoom({
-                cssWrapperClass: 'custom-wrapper-class',
-                autoCenter: false,
-                loadingAnimation: 'throbber',
-                minZoom: 'contain',
-                maxZoom: 3.0
-            });
-            }
+                $('#image').apImageZoom({
+                    cssWrapperClass: 'custom-wrapper-class',
+                    autoCenter: false,
+                    loadingAnimation: 'throbber',
+                    minZoom: 'contain',
+                    maxZoom: 3.0
+                });
+                }
             initImage();
+        </script>
+        <script>
+            // Data URI를 File 객체로 변환하는 헬퍼 함수
+            function dataURItoFile(dataurl, filename) {
+                if (!dataurl || dataurl.length < 20 || dataurl.indexOf(',') === -1) {
+                    // Data URL이 아니거나 너무 짧으면 fetch를 시도합니다 (일반 URL일 경우).
+                    return fetch(dataurl)
+                        .then(res => res.blob())
+                        .then(blob => new File([blob], filename, { type: blob.type }))
+                        .catch(e => {
+                            console.error("Failed to convert data URI or fetch URL:", e);
+                            // 유효한 File 객체를 생성하지 못했음을 알리기 위해 null 반환
+                            return null; 
+                        });
+                }
+                
+                // Base64 Data URI 처리 로직
+                var arr = dataurl.split(',');
+                
+                // 🚨 방어 코드 추가: arr[0].match(...)이 null을 반환하는 경우를 대비
+                var mimeMatch = arr[0].match(/:(.*?);/);
+                
+                if (!mimeMatch || arr.length < 2) {
+                    console.error("Data URI structure error. Could not extract MIME type or data.");
+                    return null;
+                }
+
+                var mime = mimeMatch[1];
+                var bstr = atob(arr[1]);
+                var n = bstr.length;
+                var u8arr = new Uint8Array(n);
+
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+
+                // Blob 대신 File 객체 생성
+                return new File([u8arr], filename, { type: mime });
+            }
+
+            // ----------------------------------------------------------------------
+
+            /**
+             * 주어진 wrapper 요소를 캡처하고, 캡처된 이미지 File 객체를 Promise로 반환합니다.
+             *
+             * @param {string} wrapperId - 캡처할 wrapper 요소의 ID.
+             * @returns {Promise<File>} - 캡처된 이미지 File 객체.
+             */
+            function captureWrapper(wrapperId) {
+                const wrapperElement = document.getElementById(wrapperId);
+
+                if (!wrapperElement) {
+                    console.error(`ID '${wrapperId}'를 가진 요소를 찾을 수 없습니다.`);
+                    // 요소를 찾지 못하면 Promise를 거부합니다.
+                    return Promise.reject(new Error(`ID '${wrapperId}'를 가진 요소를 찾을 수 없습니다.`));
+                }
+
+                console.log('Capture starting...');
+                
+                // html2canvas의 Promise를 반환하고, 결과를 File 객체로 변환하여 resolve합니다.
+                return html2canvas(wrapperElement, {
+                    useCORS: true,
+                    scale: 2,
+                }).then(canvas => {
+                    // 캔버스를 Data URL (base64 인코딩)로 변환
+                    const imageURL = canvas.toDataURL('image/png');
+                    
+                    // **수정: imageURL을 사용하여 File 객체를 생성합니다.**
+                    const cropFile = dataURItoFile(imageURL, 'cropped_zoom_image.png');
+                    
+                    return cropFile; // 캡처된 File 객체를 반환합니다.
+                });
+            }
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // NOTE: originalFile, promptMode, outputDiv, objectURL이 외부 스코프에 정의되어 있어야 합니다.
+                // (이 코드가 동작하려면 이 변수들이 어디선가 정의되어 있어야 합니다.)
+                
+                document.getElementById('ask_AI_btn').addEventListener('click', async () => {
+                    const originalURL = document.getElementById('image').src;
+                    const promptMode = document.getElementById('promptModeSelect');
+                    const outputDiv = document.getElementById('resultOutput');
+                    
+                    // 1. 캡처 대상 ID 설정 (HTML에 따라 정확히 지정해야 합니다)
+                    const wrapperId = 'targetWrapper'; // 예시 ID
+
+                    const originalFile = await dataURItoFile(originalURL, 'original_image.jpg');
+                    
+                    let cropFile;
+                    try {
+                        // 2. 비동기 캡처 함수를 호출하고 완료될 때까지 기다립니다.
+                        cropFile = await captureWrapper(wrapperId);
+                        console.log('Capture successful, File created:', cropFile);
+                        
+                    } catch (error) {
+                        outputDiv.innerHTML = `<p style="color: red;">이미지 캡처 실패: ${error.message}</p>`;
+                        console.error("Capture Error:", error);
+                        return; // 캡처 실패 시 이후 로직 실행 중단
+                    }
+
+                    // 3. FormData 객체 생성 및 FastAPI 전송
+                    const formData = new FormData();
+                    // NOTE: originalFile 변수가 정의되어 있어야 합니다.
+                    formData.append('original_image', originalFile); 
+                    formData.append('crop_image', cropFile); // 캡처된 File
+
+                    const apiUrl = `/gpt-nonartwork/?promptmode=${promptMode}`;
+                    outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
+
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(`HTTP 오류: ${response.status} - ${errorData.detail || response.statusText}`);
+                        }
+
+                        const data = await response.json();
+                        outputDiv.innerHTML = `
+                            <h3>AI 설명 결과:</h3>
+                            <p>${data.description}</p>
+                        `;
+                        // NOTE: objectURL 변수가 정의되어 있어야 합니다.
+                        // URL.revokeObjectURL(objectURL); 
+
+                    } catch (error) {
+                        outputDiv.innerHTML = `<p style="color: red;">요청 실패: ${error.message}</p>`;
+                        console.error("Fetch Error:", error);
+                        // NOTE: objectURL 변수가 정의되어 있어야 합니다.
+                        // URL.revokeObjectURL(objectURL);
+                    }
+                });
+            });
         </script>
     </body>
 </html>

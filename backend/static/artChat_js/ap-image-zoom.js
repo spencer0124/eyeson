@@ -155,7 +155,8 @@
 							self._showError('Error loading image!');
 							self.disable();
 						})
-						.attr('src', this.imageUrl);
+						.attr('src', this.imageUrl)
+						.attr('id', 'targetImage')
 				}
 			}
 		},
@@ -168,7 +169,8 @@
 			this.$wrapper = $('<div></div>')
 								.addClass(cssPrefix + 'wrapper')
 								.addClass(cssPrefix + 'mode-' + this.mode)
-								.addClass(cssPrefix + 'loading');
+								.addClass(cssPrefix + 'loading')
+								.attr('id','targetWrapper');
 			this.$overlay = $('<div></div>')
 								.addClass(cssPrefix + 'overlay')
 								.appendTo(this.$wrapper);
