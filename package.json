@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "mouse-wheel-zoom": "^1.1.5"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.17"
   }
 }

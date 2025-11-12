@@ -1,257 +1,50 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Artwork Chat</title>
+
+        <link rel="stylesheet" href="css/artChat_style.css">
+
+        <!-- Load for zoomable image -->
+        <!-- source : https://www.jqueryscript.net/zoom/Simple-jQuery-Image-Zoom-With-Mouse-Wheel-or-Touch-Scroll.html -->
+        <link rel="stylesheet" href="css/ap-image-zoom.css">
+        
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- hammer.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+        <!-- mousewheel plugin -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.11/jquery.mousewheel.min.js"></script>
+        <!-- ap image zoom JS -->
+        <script src="js/ap-image-zoom.js"></script>
+
         <style>
-            .fixed {
-                position: fixed;
-                left: 0;
-            }
-
-            .sticky {
-                position: sticky;
-            }
-
-            .bottom-0 {
-                bottom: 0;
-            }
-
-            .bottom-50 {
-                bottom: 50px;
-            }
-
-            .flex {
-                display: flex;
-            }
-
-            .flex-row {
-                flex-direction: row;
-            }
-
-            .flex-col {
-                flex-direction: column;
-            }
-
-            .justify-center {
-                justify-content: center;
-            }
-
-            .justify-between {
-                justify-content: space-between;
-            }
-
-            .justify-start {
-                justify-content: flex-start;
-            }
-
-            .justify-end {
-                justify-content: flex-end;
-            }
-
-            .justify-evenly {
-                justify-content: space-evenly;
-            }
-
-            .items-center {
-                align-items: center;
-            }
-
-            .items-end {
-                align-items: flex-end;
-            }
-
-            .items-start {
-                align-items: flex-start;
-            }
-
-            .min-w-20 {
-                min-width: 5rem;
-            }
-
-            .min-w-3xl {
-                min-width: 48rem;
-            }
-
-            .max-w-screen-md {
-                max-width: 768px;
-            }
-
-            .max-w-3xl {
-                max-width: 48rem;
-            }
-
-            .w-full {
-                width: 100%;
-            }
-
-            .w-90 {
-                width: 90%;
-            }
-
-            .w-2rem {
-                width: 2rem;
-            }
-
-            .h-screen {
-                height: 90vh;
-            }
-
-            .min-h-screen {
-                min-height: 100vh;
-            }
-
-            .h-cont {
-                height: calc(100vh - 130px);
-            }
-
-            .max-h-screen {
-                max-height: 100vh;
-            }
-
-            .p-2 {
-                padding: 0.5rem;
-            }
-
-            .py-px {
-                padding-top: 1px;
-                padding-bottom: 1px;
-            }
-
-            .p-bottom {
-                padding-bottom: 150px;
-            }
-
-            .mt-auto {
-                margin-top: auto;
-            }
-
-            .except-mt-2 {
-                margin-left: 0.5rem;
-                margin-right: 0.5rem;
-                margin-bottom: 0.5rem;
-            }
-
-            .m-2 {
-                margin: 0.5rem;
-            }
-
-            .m-3 {
-                margin: 0.75rem;
-            }
-
-            .mx-2 {
-                margin-left: 0.5rem;
-                margin-right: 0.5rem;
-            }
-
-            .text-xs {
-                font-size: 0.75rem; /* 12px */
-                line-height: 1rem; /* 16px */
-            }
-
-            .text-xl {
-                font-size: 1.25rem; /* 20px */
-                line-height: 1.75rem; /* 28px */
-            }
-
-            .text-2xl {
-                font-size: 1.5rem; /* 24px */
-                line-height: 2rem; /* 32px */
-            }
-
-            .text-3xl {
-                font-size: 1.875rem;
-                line-height: 2.25rem;
-            }
-
-            .text-blue-500 {
-                color: oklch(62.3% 0.214 259.815);
-            }
-
-            .icon-gray {
-                color: oklch(70.7% 0.022 261.325);
-            }
-
-            .font-normal {
-                font-weight: 400;
-            }
-
-            .font-medium {
-                font-weight: 500;
-            }
-
-            .font-semibold {
-                font-weight: 600;
-            }
-
-            .rounded {
-                border-radius: 0.25rem; /* 4px */
-            }
-
-            .rounded-lg {
-                border-radius: 0.5rem; /* 8px */
-            }
-
-            .grow {
-                flex-grow: 1;
-            }
-
-            .overflow-y-auto {
-                overflow-y: auto;
-            }
-
-            .border-0 {
-                border-width: 0px;
-            }
-
-            .border-t {
-                border-top-width: 1px;
-            }
-
-            .border-solid {
-                border-style: solid;
-            }
-
-            .border-slate-400 {
-                border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
-            }
-
-            .border-zinc-400 {
-                border-color: rgb(161 161 170 / var(--tw-border-opacity, 1));
-            }
-
-            .border-red {
-                border-color: red;
-            }
-
-            .shadow-sm {
-                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            }
-
-            .gap-2 {
-                gap: 0.5rem; /* 8px */
+            .demo-wrapper {
+            width: 90%;
+            height: 100%;
+            border: 1px solid #ccc;
             }
         </style>
+
     </head>
     <body>
         <div class="flex flex-col items-center w-full h-screen">
+            <!-- go back -->
             <div class="flex justify-start w-full m-2">
-                go back
                 <div class="text-blue-500 font-medium">
                     &lt; &nbsp; artwork scanning
                 </div>
             </div>
             
-            <div class="flex justify-center w-full flex-grow">
-                <div class="image-wrapper" style="width: 90%; max-height: 70vh; overflow: hidden; display: flex; justify-content: center; align-items: center;">
-                    <img class="image" data-wheel-zoom src="temp.jpeg" style="max-width: 100%; max-height: 100%;">
-                </div>
+            <!-- image zoom -->
+            <div class="demo-wrapper flex m-2">
+                <img src="temp.jpeg" alt="dirndl" id="image">
             </div>
 
-            <div class="flex flex-row justify-evenly w-full">
-                하단 바
+            <!-- 하단 바 -->
+            <div class="flex flex-row justify-evenly w-full">   
                 <div class="flex flex-col items-center icon-gray w-2rem mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                         <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clipRule="evenodd" />
@@ -277,44 +70,17 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/mouse-wheel-zoom@latest/dist/mouse-wheel-zoom.min.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // 전역 함수 mouseWheelZoom을 직접 사용합니다.
-                const wz = mouseWheelZoom({
-                    element: document.querySelector('[data-wheel-zoom]'),
-                    zoomStep: .25  
-                });
-
-                // reset zoom
-                // wz.reset(); // 초기화 직후 리셋할 필요는 없으므로 주석 처리
+            function initImage() {
+            $('#image').apImageZoom({
+                cssWrapperClass: 'custom-wrapper-class',
+                autoCenter: false,
+                loadingAnimation: 'throbber',
+                minZoom: 'contain',
+                maxZoom: 3.0
             });
+            }
+            initImage();
         </script>
     </body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Zoom Test</title>
-</head>
-<body>
-    <div class="flex flex-col items-center w-full h-screen">
-        <img class="image" data-wheel-zoom src="temp.jpeg">
-    </div>
-
-    <script src="/modules/mouse-wheel-zoom/src/index.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 전역 함수 mouseWheelZoom을 사용합니다.
-            const wz = mouseWheelZoom({
-                element: document.querySelector('[data-wheel-zoom]'),
-                zoomStep: .25  
-            });
-            // wz.reset();
-        });
-    </script>
-</body>
 </html>
