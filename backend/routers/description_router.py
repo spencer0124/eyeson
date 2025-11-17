@@ -70,6 +70,8 @@ async def describe_image_without_artwork(request: Request, original_image: Uploa
 
         original_dtype = dtype_is(original_image.filename)
         crop_dtype = dtype_is(crop_image.filename)
+
+        print('original',original_dtype,'crop',crop_dtype)
         
         prompt_mode = request.query_params.get("promptmode", "promptmode1")
         description = generate_image_description(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image)
