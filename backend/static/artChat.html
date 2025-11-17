@@ -46,10 +46,23 @@
                 <img src="artChat_demo/wanderer-above-the-sea-of-fog.jpg" alt="dirndl" id="image">
             
                 <!-- description button -->
-                <div class="absolute zoom-btn-container">
-                    <button id="ask_AI_btn" class="zoom-btn rounded-lg font-normal text-lg bg-indigo-700 text-neutral-100 border-solid border-3 border-yellow-300">
+                <div class="absolute flex-row zoom-btn-container">
+                    <!-- <button id="ask_AI_btn" class="zoom-btn rounded-lg font-normal text-lg bg-indigo-700 text-neutral-100 border-solid border-3 border-yellow-300">
                         Ask Description
-                    </button>
+                    </button> -->
+
+                    <div>
+                        <textarea 
+                            id="userPrompt" 
+                            placeholder="Ask additional explanation to AI (ex. What is the color of the sky?)." 
+                            class="w-90 m-3 p-2 text-base border rounded-md" 
+                            rows="3"
+                        ></textarea>
+                        <button id="aiPromptBtn" class="m-3 p-2 prompt-btn">
+                            Ask a Question
+                        </button>
+                    </div>
+                    
                 </div>
 
                 <!-- ai description -->
@@ -58,15 +71,7 @@
                         hi
                     </div>
 
-                    <textarea 
-                        id="userPrompt" 
-                        placeholder="Ask additional explanation to AI (ex. What is the color of the sky?)." 
-                        class="w-90 m-3 p-2 text-base border rounded-md" 
-                        rows="3"
-                    ></textarea>
-                    <button id="aiPromptBtn" class="m-3 p-2 prompt-btn">
-                        Ask a Question
-                    </button>
+                    
 
                     <hr class="w-full bg-zinc-200 border-0" style="height: 1px;">
                     <button id="closeButton" class="m-3 p-2 close-btn">
