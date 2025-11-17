@@ -83,6 +83,7 @@ async def describe_image_without_artwork(request: Request, original_image: Uploa
 @router.post("/gpt-nonartwork-prompt/")
 async def describe_image_with_user_prompt(request: Request, original_image: UploadFile = File(...), crop_image: UploadFile = File(...), user_prompt: str = Form(...)):
     try:
+        print('user prompt on post', user_prompt)
         original_image_data = await original_image.read()
         crop_image_data = await crop_image.read()
 
