@@ -212,7 +212,21 @@
                     formData.append('original_image', originalFile); 
                     formData.append('crop_image', cropFile); // 캡처된 File
 
-                    console.log('form',formData)
+                    // FormData 객체의 내용을 출력하는 코드
+                    console.log('--- FormData Contents ---');
+                    for (const [key, value] of formData.entries()) {
+                        // key는 필드 이름 (예: 'original_image', 'crop_image')
+                        // value는 필드 값 (File 객체 또는 문자열)
+                        
+                        if (value instanceof File) {
+                            // value가 파일 객체인 경우
+                            console.log(`Key: ${key}, Value: [File Object: ${value.name}, Size: ${value.size} bytes]`);
+                        } else {
+                            // value가 일반 문자열인 경우
+                            console.log(`Key: ${key}, Value: ${value}`);
+                        }
+                    }
+                    console.log('-------------------------');
 
                     const apiUrl = `/gpt-nonartwork/?promptmode=${promptMode}`;
                     outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
