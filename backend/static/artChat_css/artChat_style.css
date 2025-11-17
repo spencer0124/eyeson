@@ -78,6 +78,10 @@
     width: 2rem;
 }
 
+.h-70 {
+    height: 70%;
+}
+
 .h-80 {
     height: 80%;
 }
@@ -342,6 +346,27 @@
 
 .close-btn:active {
     background-color: oklch(50.848% 0.19825 260.024);
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.prompt-btn {
+    width: 90%;
+    background-color: oklch(69.92% 0.18594 46.973);
+    border: 0;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: calc(1.75 / 1.125);
+    color: oklch(98.5% 0 0);
+    border-radius: 0.5rem;
+}
+
+.prompt-btn:hover {
+    background-color: oklch(64.241% 0.1774 45.708);
+}
+
+.prompt-btn:active {
+    background-color: oklch(52.012% 0.14646 45.311);
     transform: translateY(1px);
     box-shadow: none;
 }
