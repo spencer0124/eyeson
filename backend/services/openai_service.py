@@ -47,7 +47,7 @@ def generate_image_description(prompt_mode, original_dtype, base64_image, crop_d
     
 def answer_user_prompt(original_dtype, base64_image, crop_dtype, crop_base64_image, user_prompt):
     rule = '''### user query
-    {user_prompt}
+    {user_query}
 
     ### task
     확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
@@ -71,7 +71,7 @@ def answer_user_prompt(original_dtype, base64_image, crop_dtype, crop_base64_ima
                     {"type":"image_url", "image_url": {"url":f"data:image/{original_dtype};base64,{base64_image}"}},
                     {"type": "text", "text" : "다음은 확대된 예술 작품의 일부이다."},
                     {"type":"image_url", "image_url": {"url":f"data:image/{crop_dtype};base64,{crop_base64_image}"}},
-                    {"type": "text", "text" : rule.format(user_prompt)}
+                    {"type": "text", "text" : rule.format(user_query=user_prompt)}
                 ]}
             ]
         )
