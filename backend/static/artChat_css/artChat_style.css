@@ -78,6 +78,10 @@
     width: 2rem;
 }
 
+.h-80 {
+    height: 80%;
+}
+
 .h-screen {
     height: 90vh;
 }
@@ -197,6 +201,11 @@
     border-radius: 0.5rem; /* 8px */
 }
 
+.rounded-t-xl {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
 .grow {
     flex-grow: 1;
 }
@@ -219,6 +228,10 @@
 
 .border-solid {
     border-style: solid;
+}
+
+.border-slate-200 {
+    border-color: oklch(92.9% 0.013 255.508);
 }
 
 .border-slate-400 {
@@ -249,6 +262,18 @@
     background-color: oklch(43.534% 0.22482 295.715)
 }
 
+.bg-slate-200 {
+    background-color: oklch(92.9% 0.013 255.508);
+}
+
+.bg-zinc-200 {
+    background-color: oklch(92% 0.004 286.32);
+}
+
+.bg-blue-500 {
+    background-color: oklch(62.3% 0.214 259.815);
+}
+
 .gap-2 {
     gap: 0.5rem; /* 8px */
 }
@@ -273,10 +298,54 @@
     bottom: 15%;
     left: 50%;
     translate: -50% var(--tw-translate-y, 0);
-    z-index: 1000;
+    z-index: 10;
 }
 
 .zoom-btn {
     width: 10rem;
     height: 3rem;
+}
+
+.zoom-btn:hover {
+    background-color: oklch(40.177% 0.1833 273.728);
+}
+
+.zoom-btn:active {
+    background-color: oklch(32.276% 0.1663 271.429);
+    transform: translateY(1px);
+}
+
+.explanation-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background-color: rgba(256, 256, 256);
+    z-index: 100; /* 이미지 위에 오도록 설정 */
+}
+
+.close-btn {
+    width: 90%;
+    background-color: oklch(62.3% 0.214 259.815);
+    border: 0;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: calc(1.75 / 1.125);
+    color: oklch(98.5% 0 0);
+    border-radius: 0.5rem;
+}
+
+.close-btn:hover {
+    background-color: oklch(57.374% 0.20815 259.535);
+}
+
+.close-btn:active {
+    background-color: oklch(50.848% 0.19825 260.024);
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.hidden {
+    display: none;
 }

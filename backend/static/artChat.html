@@ -35,8 +35,8 @@
     <body>
         <div class="flex flex-col items-center w-full h-screen">
             <!-- go back -->
-            <div class="flex justify-start w-full m-2">
-                <div class="text-blue-500 font-medium">
+            <div class="flex justify-start w-90 m-2">
+                <div class="text-blue-500 font-medium text-lg">
                     &lt; &nbsp; artwork scanning
                 </div>
             </div>
@@ -49,6 +49,19 @@
                 <div class="absolute zoom-btn-container">
                     <button id="ask_AI_btn" class="zoom-btn rounded-lg font-normal text-lg bg-indigo-700 text-neutral-100 border-solid border-3 border-yellow-300">
                         Ask Description
+                    </button>
+                </div>
+
+                <!-- ai description -->
+                <div id="explanationOverlay" class="flex flex-col explanation-overlay hidden justify-center items-center rounded-t-xl">
+                    <div id="resultOutput" class="h-80 m-3 text-lg">
+                        hi
+                    </div>
+
+                    <hr class="w-full bg-zinc-200 border-0" style="height: 1px;">
+                    
+                    <button id="closeButton" class="m-3 p-2 close-btn">
+                        Close
                     </button>
                 </div>
             </div>
@@ -80,14 +93,14 @@
             </div>
 
             <!-- prompt mode -->
-            <div class="flex flex-row">
+            <div class="flex flex-row w-90 m-3">
                 <div class="m-2">
-                    <select id="promptModeSelect">
-                        <option value="promptmode">1</option>
-                        <option value="promptmode1">2</option>
+                    <select id="promptModeSelect" class="text-lg">
+                        <option value="promptmode1">Objective (T mode)</option>
+                        <option value="promptmode">Emotional (F mode)</option>
                     </select>
                 </div >
-                <div id="resultOutput" class="m-2">hi</div>
+                <!-- <div id="resultOutput" class="m-2">hi</div> -->
             </div>
             <div id="tmp"></div>
             
@@ -104,6 +117,21 @@
                 });
                 }
             initImage();
+        </script>
+        <script>
+            const requestButton = document.getElementById('ask_AI_btn');
+            const closeButton = document.getElementById('closeButton');
+            const overlay = document.getElementById('explanationOverlay');
+            const explanationText = document.getElementById('resultOutput');
+
+            requestButton.addEventListener('click', () => {
+                overlay.classList.remove('hidden'); 
+            });
+
+            // 2. '닫기' 버튼 클릭 이벤트 리스너
+            closeButton.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+            });
         </script>
         <script>
             // Data URI를 File 객체로 변환하는 헬퍼 함수
