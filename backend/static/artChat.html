@@ -212,6 +212,8 @@
                     formData.append('original_image', originalFile); 
                     formData.append('crop_image', cropFile); // 캡처된 File
 
+                    console.log('form',formData)
+
                     const apiUrl = `/gpt-nonartwork/?promptmode=${promptMode}`;
                     outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
 
