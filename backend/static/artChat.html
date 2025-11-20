@@ -53,13 +53,11 @@
                 </div>
 
                 <form id="userPromptForm" 
-                        class="flex flex-col w-90 items-center mt-3 mb-3 border-solid border-1 border-gray-200 rounded-lg shadow-md">
+                        class="flex flex-row w-90 items-center mt-3 mb-3 border-solid border-1 border-gray-200 rounded-lg shadow-md">
                     <input name="userPrompt" 
-                            class="w-90 m-3 p-2 text-base border-0 rounded-lg"
-                            placeholder="Ask additional explanation to AI &#10;(ex. What is the color of the sky?).">
-                    <div class="flex flex-row justify-between mb-3 mr-3 ml-3 w-90">
-                        <input type="submit" id="promptBtn" name="Ask" value="Ask" class="p-2 prompt-btn">
-                    </div>
+                            class="w-full p-2 text-base border-0 rounded-lg"
+                            placeholder="Ask anything to AI (ex. What color is the sky?)">
+                    <input type="submit" id="promptBtn" name="Ask" value="Ask" class="m-3 p-2 prompt-btn">
                 </form>
                     <!-- <textarea 
                         id="userPrompt" 
