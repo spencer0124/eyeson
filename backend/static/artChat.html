@@ -281,7 +281,7 @@
                     // console.log('-------------------------');
 
                     const apiUrl = `/description/gpt-nonartwork/?promptmode=${promptMode}`;
-                    outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
+                    outputDiv.innerHTML = "Requesting AI Description...";
 
                     try {
                         const response = await fetch(apiUrl, {
@@ -377,7 +377,7 @@
                         formData.append('user_prompt', userPromptValue);
 
                         const apiUrl = `/description/gpt-nonartwork-prompt/?promptmode=${promptMode}`;
-                        outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
+                        outputDiv.innerHTML = "Requesting AI Description... (응답 대기)";
 
                         try {
                             const response = await fetch(apiUrl, {
