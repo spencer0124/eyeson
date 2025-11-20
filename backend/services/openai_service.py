@@ -51,7 +51,7 @@ def answer_user_prompt(original_dtype, base64_image, crop_dtype, crop_base64_ima
 
     ### task
     확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
-    가능한 한 간결하게 사용자 질문에 응답하라. 필요 시 아래의 원칙을 사용해 응답하라.
+    가능한 한 간결하게 사용자 질문에 응답하라. 필요 시에만 아래의 원칙을 사용해 응답하라.
     배경 지식이나 주관적인 해석을 최대한 배제하고, 작품의 소재와 형태를 위주로 묘사하라.
 
     ### description rules
