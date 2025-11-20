@@ -53,19 +53,16 @@
                 </div> -->
 
                 <form id="userPromptForm" 
-                        class="flex flex-col w-90 items-center mt-3 mb-3 border-solid border-gray-200 rounded-lg">
+                        class="flex flex-col w-90 items-center mt-3 mb-3 border-solid border-1 border-gray-200 rounded-lg shadow-md">
                     <input name="userPrompt" 
                             class="w-95 m-3 p-2 text-lg border-0 rounded-lg"
                             placeholder="Ask additional explanation to AI (ex. What is the color of the sky?).">
                     <div class="flex flex-row justify-between mb-3 mr-3 ml-3 w-95">
                         <button id="ask_AI_btn" class="zoom-btn p-2 rounded-lg font-normal text-lg bg-indigo-700 text-neutral-100 border-solid border-3 border-yellow-300">
-                            Direct Description
+                            Get Direct Description
                         </button>
-                        <input type="submit" name="Ask" value="Ask" class="p-2 prompt-btn">
+                        <input type="submit" id="promptBtn" name="Ask" value="Ask" class="p-2 prompt-btn">
                     </div>
-                    <!-- <button id="aiPromptBtn" class="m-3 p-2 prompt-btn">
-                        Ask
-                    </button> -->
                 </form>
                     <!-- <textarea 
                         id="userPrompt" 
@@ -76,8 +73,8 @@
 
 
                 <!-- ai description -->
-                <div id="explanationOverlay" class="flex flex-col explanation-overlay hidden justify-center items-center rounded-t-xl">
-                    <div id="resultOutput" class="w-90 h-70 m-3 p-2 text-lg">
+                <div id="explanationOverlay" class="flex flex-col explanationOverlay justify-center items-center rounded-t-2xl">
+                    <div id="resultOutput" class="w-90 h-70 m-3 p-2 text-lg overflow-y-auto">
                         hi
                     </div>
 
@@ -142,18 +139,25 @@
             initImage();
         </script>
         <script>
-            const requestButton = document.getElementById('aiPromptBtn');
+            const askAIButton = document.getElementById('ask_AI_btn');
+            const promptButton = document.getElementById('promptBtn')
             const closeButton = document.getElementById('closeButton');
             const overlay = document.getElementById('explanationOverlay');
             const explanationText = document.getElementById('resultOutput');
 
-            requestButton.addEventListener('click', () => {
-                overlay.classList.remove('hidden'); 
+            askAIButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                overlay.classList.add('visible'); 
+            });
+
+            promptButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                overlay.classList.add('visible'); 
             });
 
             // 2. '닫기' 버튼 클릭 이벤트 리스너
             closeButton.addEventListener('click', () => {
-                overlay.classList.add('hidden');
+                overlay.classList.remove('visible');
             });
         </script>
         <script>
@@ -264,20 +268,20 @@
                     formData.append('crop_image', cropFile); // 캡처된 File
 
                     // FormData 객체의 내용을 출력하는 코드
-                    console.log('--- FormData Contents ---');
-                    for (const [key, value] of formData.entries()) {
-                        // key는 필드 이름 (예: 'original_image', 'crop_image')
-                        // value는 필드 값 (File 객체 또는 문자열)
+                    // console.log('--- FormData Contents ---');
+                    // for (const [key, value] of formData.entries()) {
+                    //     // key는 필드 이름 (예: 'original_image', 'crop_image')
+                    //     // value는 필드 값 (File 객체 또는 문자열)
                         
-                        if (value instanceof File) {
-                            // value가 파일 객체인 경우
-                            console.log(`Key: ${key}, Value: [File Object: ${value.name}, Size: ${value.size} bytes]`);
-                        } else {
-                            // value가 일반 문자열인 경우
-                            console.log(`Key: ${key}, Value: ${value}`);
-                        }
-                    }
-                    console.log('-------------------------');
+                    //     if (value instanceof File) {
+                    //         // value가 파일 객체인 경우
+                    //         console.log(`Key: ${key}, Value: [File Object: ${value.name}, Size: ${value.size} bytes]`);
+                    //     } else {
+                    //         // value가 일반 문자열인 경우
+                    //         console.log(`Key: ${key}, Value: ${value}`);
+                    //     }
+                    // }
+                    // console.log('-------------------------');
 
                     const apiUrl = `/description/gpt-nonartwork/?promptmode=${promptMode}`;
                     outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
