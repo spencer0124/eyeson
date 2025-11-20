@@ -341,7 +341,6 @@
                 if (promptButton) {
                     promptButton.addEventListener('click', async (event) => {
                         event.preventDefault();
-                        console.log('form',form)
 
                         const userPromptElement = event.target.elements.userPrompt;
                         const userPromptValue = userPromptElement ? userPromptElement.value : '';
