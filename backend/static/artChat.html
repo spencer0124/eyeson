@@ -117,7 +117,7 @@
                 <div class="m-2">
                     <select id="promptModeSelect" class="text-lg">
                         <option value="promptmode1">Objective (T mode)</option>
-                        <option value="promptmode">Emotional (F mode)</option>
+                        <option value="promptmode2">Emotional (F mode)</option>
                     </select>
                 </div >
                 <!-- <div id="resultOutput" class="m-2">hi</div> -->
@@ -349,6 +349,8 @@
                         console.log('User Prompt (from input):', userPromptValue);
 
                         const originalURL = document.getElementById('image').src;
+                        const promptModeElement = document.getElementById('promptModeSelect');
+                        const promptMode = promptModeElement ? promptModeElement.value : 'promptmode';
                         const outputDiv = document.getElementById('resultOutput');
 
                         // 1. 캡처 대상 ID 설정 (HTML에 따라 정확히 지정해야 합니다)
@@ -375,7 +377,7 @@
                         formData.append('crop_image', cropFile); // 캡처된 File
                         formData.append('user_prompt', userPromptValue);
 
-                        const apiUrl = `/description/gpt-nonartwork-prompt/`;
+                        const apiUrl = `/description/gpt-nonartwork-prompt/?promptmode=${promptMode}`;
                         outputDiv.innerHTML = "AI 분석 요청 중... (응답 대기)";
 
                         try {
