@@ -145,7 +145,8 @@
             const overlay = document.getElementById('explanationOverlay');
             const explanationText = document.getElementById('resultOutput');
 
-            askAIButton.addEventListener('click', () => {
+            askAIButton.addEventListener('click', (event) => {
+                event.preventDefault();
                 overlay.classList.add('visible'); 
             });
 
