@@ -423,7 +423,7 @@
 }
 
 .prompt-btn {
-    width: 10%;
+    width: 5rem;
     background-color: oklch(69.92% 0.18594 46.973);
     border: 0;
     font-weight: 400;
