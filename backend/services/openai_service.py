@@ -31,11 +31,11 @@ def generate_image_description(prompt_mode, original_dtype, base64_image, crop_d
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "당신은 미술품을 간결하게 묘사해주는 미술관 큐레이터입니다."},
+                {"role": "system", "content": "You are a museum curator who provides concise descriptions of artworks."},
                 {"role": "user", "content": [
-                    {"type": "text", "text" : "다음 작품은 확대되기 전 예술 작품의 이미지이다."},
+                    {"type": "text", "text" : "Here is the original image of the artwork."},
                     {"type":"image_url", "image_url": {"url":f"data:image/{original_dtype};base64,{base64_image}"}},
-                    {"type": "text", "text" : "다음은 확대된 예술 작품의 일부이다."},
+                    {"type": "text", "text" : "The following is a magnified portion of the artwork."},
                     {"type":"image_url", "image_url": {"url":f"data:image/{crop_dtype};base64,{crop_base64_image}"}},
                     {"type": "text", "text" : rule}
                 ]}
@@ -45,31 +45,42 @@ def generate_image_description(prompt_mode, original_dtype, base64_image, crop_d
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-def answer_user_prompt(original_dtype, base64_image, crop_dtype, crop_base64_image, user_prompt):
-    rule = '''### user query
-    {user_query}
-
-    ### task
-    확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
-    가능한 한 간결하게 사용자 질문에 응답하라. 필요 시에만 아래의 원칙을 사용해 응답하라.
-    배경 지식이나 주관적인 해석을 최대한 배제하고, 작품의 소재와 형태를 위주로 묘사하라.
-
-    ### description rules
-    1. 설명의 순서 및 위치를 밝힌다. (예 : 작품의 좌상단에서부터 묘사하겠습니다.)
-    2. 주요 소재를 묘사한다 (예: 6시 방향에 있는 흰색 천 같은 대상은 녹아내린 시계입니다.)
-    3. 주요 소재의 형태를 자세히 묘사한다. (예 : 작품 6시 방향 내 시계의 형태)
-    4. 작품의 색감을 자세히 묘사한다. (예: 작품의 전반적인 색감, 작품에서 두드러지는 색감 등)
-    확대된 이미지만을 묘사하라. 간결성을 위해 모든 원칙을 사용하지 않을 수 있다. 개조식이 아닌, 미술관의 큐레이터가 설명하듯 묘사하라.'''
-
+def answer_user_prompt(prompt_mode, original_dtype, base64_image, crop_dtype, crop_base64_image, user_prompt):
+    if prompt_mode == "promptmode1":
+        rule = '''### USER QUESTION 
+        {user_query}
+        
+        ### TASK
+        Answer the given question as brief as possible.
+        Consider that the user might be blind or low-vision.
+        Exclude background knowledge and subjective interpretations as much as possible, 
+        and you may respond that you cannot answer if the information is not objective.
+        Describe only the magnified image.
+        Use narrative prose, as if you were a museum curator explaining the piece, 
+        rather than an outline or fragmented style.
+        '''
+    else:
+        rule = '''### USER QUESTION 
+        {user_query}
+        
+        ### TASK
+        Answer the given question as brief as possible.
+        Provide a description that allows individuals who are blind or have low vision to experience the mood of the artwork.
+        Exclude background knowledge and subjective interpretations as much as possible.
+        Describe only the magnified image.
+        Use poetic and narrative prose, as if you were a museum curator explaining the piece, 
+        rather than an outline or fragmented style.
+        '''
+    
     try:
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "당신은 미술품을 간결하게 묘사해주는 미술관 큐레이터입니다."},
+                {"role": "system", "content": "You are a museum curator who provides concise descriptions of artworks."},
                 {"role": "user", "content": [
-                    {"type": "text", "text" : "다음 작품은 확대되기 전 예술 작품의 이미지이다."},
+                    {"type": "text", "text" : "Here is the original image of the artwork."},
                     {"type":"image_url", "image_url": {"url":f"data:image/{original_dtype};base64,{base64_image}"}},
-                    {"type": "text", "text" : "다음은 확대된 예술 작품의 일부이다."},
+                    {"type": "text", "text" : "The following is a magnified portion of the artwork."},
                     {"type":"image_url", "image_url": {"url":f"data:image/{crop_dtype};base64,{crop_base64_image}"}},
                     {"type": "text", "text" : rule.format(user_query=user_prompt)}
                 ]}
@@ -78,3 +89,18 @@ def answer_user_prompt(original_dtype, base64_image, crop_dtype, crop_base64_ima
         return response.choices[0].message.content
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    # rule = '''### user query
+    # {user_query}
+
+    # ### task
+    # 확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
+    # 가능한 한 간결하게 사용자 질문에 응답하라. 필요 시에만 아래의 원칙을 사용해 응답하라.
+    # 배경 지식이나 주관적인 해석을 최대한 배제하고, 작품의 소재와 형태를 위주로 묘사하라.
+
+    # ### description rules
+    # 1. 설명의 순서 및 위치를 밝힌다. (예 : 작품의 좌상단에서부터 묘사하겠습니다.)
+    # 2. 주요 소재를 묘사한다 (예: 6시 방향에 있는 흰색 천 같은 대상은 녹아내린 시계입니다.)
+    # 3. 주요 소재의 형태를 자세히 묘사한다. (예 : 작품 6시 방향 내 시계의 형태)
+    # 4. 작품의 색감을 자세히 묘사한다. (예: 작품의 전반적인 색감, 작품에서 두드러지는 색감 등)
+    # 확대된 이미지만을 묘사하라. 간결성을 위해 모든 원칙을 사용하지 않을 수 있다. 개조식이 아닌, 미술관의 큐레이터가 설명하듯 묘사하라.'''
