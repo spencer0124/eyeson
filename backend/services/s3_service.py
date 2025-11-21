@@ -7,7 +7,7 @@ import json
 # AWS S3 설정
 s3_client = boto3.client('s3')
 bucket_name = 'seeterature'
-prefix = 'photo/'
+prefix = 'photo/david/'
 
 def list_images_in_s3():
     try:

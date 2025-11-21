@@ -9,17 +9,18 @@ from services.faiss_service import load_or_create_faiss_index, search_faiss
 router = APIRouter()
 
 # Global variables for feature vectors and index
-fv_pkl_path = './features/david_vgg16_features.pkl'
-idx_path = './features/david_faiss_idx.index'
+fv_pkl_path = './features/david_vgg16_features.pkl' # Edit: 251121 for CHI 2026
+idx_path = './features/david_faiss_idx.index' # Edit: 251121 for CHI 2026
 
 # Initialize feature vectors and index
 file_list = list_images_in_s3()
+print('files', file_list)
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
 
 @router.post("/")
 async def search_image(file: UploadFile = File(...)):
-    query_dir = 'david/'
+    query_dir = 'temp/'
     query_path = os.path.join(query_dir, file.filename)
 
     try:
