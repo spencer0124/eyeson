@@ -24,7 +24,7 @@ async def get_description(data: EngId):
     first_file = data.file
     if first_file[-4].isdigit():
         first_file = first_file[:-5] + '1' + first_file[-4:]
-    s3_url = f"https://seeterature.s3.amazonaws.com/photo/{first_file}"
+    s3_url = f"https://seeterature.s3.amazonaws.com/photo/david/{first_file}" # Edit: 251121 for CHI 2026
 
     try:
         matched = next(entry for entry in json_data if entry['eng_id'] == first_file)
