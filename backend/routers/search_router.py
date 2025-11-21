@@ -19,7 +19,7 @@ idx = load_or_create_faiss_index(idx_path, fv)
 
 @router.post("/")
 async def search_image(file: UploadFile = File(...)):
-    query_dir = 'temp/david/'
+    query_dir = 'david/'
     query_path = os.path.join(query_dir, file.filename)
 
     try:
