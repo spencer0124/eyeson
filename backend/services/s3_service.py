@@ -52,9 +52,11 @@ def download_image_from_s3_gpt(s3_key):
     
 def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
+    print("download img from s3 eng_id", eng_id)
     if eng_id == "PyoGeoYeon_Chicken.jpg":
         eng_id = "PyoGeoYeon_Chicken.jpg.jpg"
     s3_key = 'photo/david/'+eng_id
+    print('s3 key', s3_key)
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         img_data = response['Body'].read()
