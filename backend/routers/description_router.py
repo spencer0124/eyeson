@@ -86,18 +86,18 @@ async def describe_image_with_user_prompt(request: Request, original_image: Uplo
     try:
         start = time.time()
         print('user prompt on post', user_prompt)
-        original_image_data = await original_image.read()
+        # original_image_data = await original_image.read()
         crop_image_data = await crop_image.read()
 
-        original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
+        # original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
         crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
-        original_dtype = dtype_is(original_image.filename)
+        # original_dtype = dtype_is(original_image.filename)
         crop_dtype = dtype_is(crop_image.filename)
         
         prompt_mode = request.query_params.get("promptmode", "promptmode1")
-        description = answer_user_prompt(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image, user_prompt)
-        # description = answer_user_prompt_no_original(prompt_mode, crop_dtype, crop_base64_image, user_prompt)
+        # description = answer_user_prompt(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image, user_prompt)
+        description = answer_user_prompt_no_original(prompt_mode, crop_dtype, crop_base64_image, user_prompt)
         end = time.time()
         print('elapsed time:',end - start)
         return {"description": description}
