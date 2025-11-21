@@ -14,7 +14,6 @@ idx_path = './features/clip_faiss_idx.index'
 
 # Initialize feature vectors and index
 file_list = list_images_in_s3()
-# print('files', file_list)
 fv = load_or_create_feature_vectors(fv_pkl_path, file_list, download_image_from_s3)
 idx = load_or_create_faiss_index(idx_path, fv)
 

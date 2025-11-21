@@ -7,7 +7,7 @@ import json
 # AWS S3 설정
 s3_client = boto3.client('s3')
 bucket_name = 'seeterature'
-prefix = 'photo/'
+prefix = 'photo/david/'
 
 def list_images_in_s3():
     try:
@@ -23,7 +23,7 @@ def load_data(path):
         return json.load(f)
 
 def load_id_from_title(title: str):
-    data_path = './data/data_day.json' # Edit: 250826 for ablind 2025
+    data_path = './data/data_david.json' # Edit: 2501121 for CHI 2026
     json_data = load_data(data_path)
     tmp_title = title[6:]
     print('tmp',tmp_title)
@@ -54,7 +54,7 @@ def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
     if eng_id == "PyoGeoYeon_Chicken.jpg":
         eng_id = "PyoGeoYeon_Chicken.jpg.jpg"
-    s3_key = 'photo/'+eng_id
+    s3_key = 'photo/david/'+eng_id
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         img_data = response['Body'].read()

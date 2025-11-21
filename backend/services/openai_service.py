@@ -8,13 +8,18 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_image_description(prompt_mode, original_dtype, base64_image, crop_dtype, crop_base64_image):
     if prompt_mode == "promptmode1":
-        rule = '''확대된 예술 작품의 일부분을 저시력자(low-vision)인 시각장애인에게 설명해주려 한다.
-        배경 지식이나 주관적인 해석을 최대한 배제하고, 작품의 소재와 형태를 위주로 묘사하라.
-        1. 설명의 순서 및 위치를 밝힌다. (예 : 작품의 좌상단에서부터 묘사하겠습니다.)
-        2. 주요 소재를 묘사한다 (예: 6시 방향에 있는 흰색 천 같은 대상은 녹아내린 시계입니다.)
-        3. 주요 소재의 형태를 자세히 묘사한다. (예 : 작품 6시 방향 내 시계의 형태)
-        4. 작품의 색감을 자세히 묘사한다. (예: 작품의 전반적인 색감, 작품에서 두드러지는 색감 등)
-        확대된 이미지만을 묘사하라. 간결성을 위해 모든 원칙을 사용하지 않을 수 있다. 개조식이 아닌, 미술관의 큐레이터가 설명하듯 묘사하라.'''
+        rule = '''You are to describe an enlarged section of an artwork to a low-vision individual who is visually impaired.
+        Your description must primarily focus on the subject matter and form of the artwork, strictly excluding background knowledge or subjective interpretation.
+
+        The description should follow these guidelines:
+
+        1. State the sequence and location of the description. (e.g., I will begin the description from the upper-left corner of the artwork.)
+        2. Describe the main subjects (e.g., The white, cloth-like object at the six o'clock position is a melting clock.)
+        3. Describe the form of the main subjects in detail. (e.g., The form of the clock within the six o'clock position of the work.)
+        4. Describe the colors of the work in detail. (e.g., The overall color palette of the work, and the most prominent colors.)
+
+        Only describe the enlarged image. All principles may not be used for brevity. 
+        The description should not be presented in bullet points, but rather delivered in a narrative style, as a museum curator would explain it.'''
     else: 
         rule = '''저시력자(low-vision)인 시각장애인이 작품의 분위기를 알 수 있도록, 확대된 예술 작품의 일부를 시로 표현해주려고 한다.
         배경 지식이나 주관적인 해석을 최대한 배제하고, 확대된 이미지만을 묘사하라. 
