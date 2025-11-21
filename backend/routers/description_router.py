@@ -5,7 +5,7 @@ import base64
 from typing import Dict, Any, List
 from services.s3_service import download_image_from_s3_gpt
 from services.image_service import image_to_bytes, dtype_is
-from services.openai_service import generate_image_description, answer_user_prompt
+from services.openai_service import *
 
 router = APIRouter()
 data_path = './data/data_day.json' # Edit: 250826 for ablind 2025
@@ -84,17 +84,18 @@ async def describe_image_without_artwork(request: Request, original_image: Uploa
 async def describe_image_with_user_prompt(request: Request, original_image: UploadFile = File(...), crop_image: UploadFile = File(...), user_prompt: str = Form(...)):
     try:
         print('user prompt on post', user_prompt)
-        original_image_data = await original_image.read()
+        # original_image_data = await original_image.read()
         crop_image_data = await crop_image.read()
 
-        original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
+        # original_base64_image = base64.b64encode(original_image_data).decode('utf-8')
         crop_base64_image = base64.b64encode(crop_image_data).decode('utf-8')
 
-        original_dtype = dtype_is(original_image.filename)
+        # original_dtype = dtype_is(original_image.filename)
         crop_dtype = dtype_is(crop_image.filename)
         
         prompt_mode = request.query_params.get("promptmode", "promptmode1")
-        description = answer_user_prompt(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image, user_prompt)
+        # description = answer_user_prompt(prompt_mode, original_dtype, original_base64_image, crop_dtype, crop_base64_image, user_prompt)
+        description = answer_user_prompt_no_original(prompt_mode, crop_dtype, crop_base64_image, user_prompt)
         return {"description": description}
     
     except Exception as e:

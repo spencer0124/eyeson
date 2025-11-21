@@ -90,6 +90,49 @@ def answer_user_prompt(prompt_mode, original_dtype, base64_image, crop_dtype, cr
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
+def answer_user_prompt_no_original(prompt_mode, crop_dtype, crop_base64_image, user_prompt):
+    if prompt_mode == "promptmode1":
+        rule = '''### USER QUESTION 
+        {user_query}
+        
+        ### TASK
+        Answer the given question as brief as possible.
+        Consider that the user might be blind or low-vision.
+        Exclude background knowledge and subjective interpretations as much as possible, 
+        and you may respond that you cannot answer if the information is not objective.
+        Describe only the magnified image.
+        Use narrative prose, as if you were a museum curator explaining the piece, 
+        rather than an outline or fragmented style.
+        '''
+    else:
+        rule = '''### USER QUESTION 
+        {user_query}
+        
+        ### TASK
+        Answer the given question as brief as possible.
+        Provide a description that allows individuals who are blind or have low vision to experience the mood of the artwork.
+        Exclude background knowledge and subjective interpretations as much as possible.
+        Describe only the magnified image.
+        Use poetic and narrative prose, as if you were a museum curator explaining the piece, 
+        rather than an outline or fragmented style.
+        '''
+    
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are a museum curator who provides concise descriptions of artworks."},
+                {"role": "user", "content": [
+                    {"type": "text", "text" : "The following is a magnified portion of the artwork."},
+                    {"type":"image_url", "image_url": {"url":f"data:image/{crop_dtype};base64,{crop_base64_image}"}},
+                    {"type": "text", "text" : rule.format(user_query=user_prompt)}
+                ]}
+            ]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
     # rule = '''### user query
     # {user_query}
 
