@@ -25,7 +25,7 @@ def load_data(path):
 def load_id_from_title(title: str):
     data_path = './data/data_david.json' # Edit: 2501121 for CHI 2026
     json_data = load_data(data_path)
-    tmp_title = title[6:]
+    tmp_title = title[12:]
     print('tmp',tmp_title)
 
     if tmp_title == "ChoiGyungEun_Keyring2.jpg":
