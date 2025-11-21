@@ -54,7 +54,7 @@ def download_image_from_s3(title):
     eng_id = load_id_from_title(title)
     if eng_id == "PyoGeoYeon_Chicken.jpg":
         eng_id = "PyoGeoYeon_Chicken.jpg.jpg"
-    s3_key = 'photo/david/'+eng_id
+    s3_key = 'photo/'+eng_id
     try:
         response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
         img_data = response['Body'].read()
