@@ -39,7 +39,7 @@ async def search_image(file: UploadFile = File(...)):
             top_n_id = file_list[i]
             results.append({
                 'rank': n+1,
-                'file': top_n_id,
+                'file': top_n_id[12:],
             })
         print('search result', results)
         return {"results": results}
