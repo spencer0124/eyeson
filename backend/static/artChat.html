@@ -318,7 +318,7 @@
                         const data = JSON.parse(responseText); 
                         
                         outputDiv.innerHTML = `
-                            <h3>AI 설명 결과:</h3>
+                            <h3>AI description about zoomed-in section:</h3>
                             <p>${data.description}</p>
                         `;
                         // ... (objectURL 해제 로직)
@@ -378,7 +378,7 @@
                         formData.append('user_prompt', userPromptValue);
 
                         const apiUrl = `/description/gpt-nonartwork-prompt/?promptmode=${promptMode}`;
-                        outputDiv.innerHTML = "Requesting AI Description... (응답 대기)";
+                        outputDiv.innerHTML = "Requesting AI Description...";
 
                         try {
                             const response = await fetch(apiUrl, {
@@ -414,7 +414,7 @@
                             const data = JSON.parse(responseText); 
                             
                             outputDiv.innerHTML = `
-                                <h3>AI 설명 결과:</h3>
+                                <h3>AI description about user question:</h3>
                                 <p>${data.description}</p>
                             `;
                             // ... (objectURL 해제 로직)
