@@ -353,14 +353,14 @@
 
 .zoom-btn-container {
     bottom: 30%;
-    left: 30%;
+    left: 50%;
     translate: -50% var(--tw-translate-y, 0);
     z-index: 10;
 }
 
 .zoom-btn {
-    width: 5rem;
-    height: 3rem;
+    width: 5.5rem;
+    height: 4.5rem;
 }
 
 .zoom-btn:hover {
