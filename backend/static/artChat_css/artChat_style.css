@@ -353,7 +353,7 @@
 
 .zoom-btn-container {
     bottom: 30%;
-    left: 50%;
+    left: 30%;
     translate: -50% var(--tw-translate-y, 0);
     z-index: 10;
 }
