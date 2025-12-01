@@ -338,7 +338,8 @@
                     <div aria-hidden="true">&lt;</div>
                     <div id="museum" aria-live="polite">전시명</div>
                     <div aria-hidden="true">&gt;</div>
-                    <div id="museum-text">&nbsp;이야기 나누기</div>
+                    <!-- <div id="museum-text">&nbsp;이야기 나누기</div> -->
+                     <div id="museum-text">&nbsp;Chat</div>
                 </div>
 
                 <div class="flex justify-end items-center m-2 font-semibold">
@@ -370,8 +371,10 @@
             
             <!-- send chat -->
             <div class="flex m-2">
-                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
-                <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button>
+                <!-- <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
+                <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button> -->
+                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="Share your opinion" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
+                <button id="sendMessageBtn" aria-label="Send a message" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">Send</button>
             </div>
         </div>
     </div>
@@ -494,24 +497,44 @@
         }
 
         // random question list
+        // const randomQuestions = [
+        //     "이 작품을 보고 가장 먼저 떠오른 생각이나 감정은 무엇인가요?",
+        //     "작품 속에서 가장 눈길을 끌었던 요소는 무엇인가요? (색감, 소재, 구도 등)",
+        //     "이 작품이 전달하는 메시지나 이야기가 무엇이라고 느꼈나요?",
+        //     "작품을 본 후, 작가가 의도한 것이 무엇인지 궁금해진 점이 있었나요?",
+        //     "이 작품이 당신에게 개인적으로 어떤 의미를 주었나요?",
+        //     "이 작품이 당신의 일상이나 기억과 연결되는 부분이 있었나요?",
+        //     "만약 이 작품을 한 단어로 표현한다면 어떤 단어가 떠오르나요?",
+        //     "이 작품을 보고 떠오른 음악, 영화, 혹은 다른 예술작품이 있나요?",
+        //     "이 작품을 친구에게 설명한다면 어떤 점을 강조하고 싶나요?",
+        //     "이 작품이 당신의 공간에 있다면, 어떤 느낌일 것 같나요?",
+        //     "작품을 다른 시각에서 봐야 한다면, 어떤 방향이나 위치에서 보고 싶으신가요?",
+        //     "이 작품을 다른 사람과 함께 본다면, 어떤 이야기를 나누고 싶나요?",
+        //     "이 작품이 살아 움직인다면 어떤 이야기를 할 것 같나요?",
+        //     "작품 속으로 들어가서 한 부분을 바꿀 수 있다면, 어떤 것을 바꾸고 싶나요?",
+        //     "이 작품에 제목을 새로 붙인다면 어떤 제목이 어울릴까요?",
+        //     "작품이 영화나 소설로 만들어진다면, 어떤 장르가 어울릴까요?",
+        //     "이 작품이 시간여행을 했다면, 어느 시대에서 더 잘 어울렸을까요?"
+        // ]
+
         const randomQuestions = [
-            "이 작품을 보고 가장 먼저 떠오른 생각이나 감정은 무엇인가요?",
-            "작품 속에서 가장 눈길을 끌었던 요소는 무엇인가요? (색감, 소재, 구도 등)",
-            "이 작품이 전달하는 메시지나 이야기가 무엇이라고 느꼈나요?",
-            "작품을 본 후, 작가가 의도한 것이 무엇인지 궁금해진 점이 있었나요?",
-            "이 작품이 당신에게 개인적으로 어떤 의미를 주었나요?",
-            "이 작품이 당신의 일상이나 기억과 연결되는 부분이 있었나요?",
-            "만약 이 작품을 한 단어로 표현한다면 어떤 단어가 떠오르나요?",
-            "이 작품을 보고 떠오른 음악, 영화, 혹은 다른 예술작품이 있나요?",
-            "이 작품을 친구에게 설명한다면 어떤 점을 강조하고 싶나요?",
-            "이 작품이 당신의 공간에 있다면, 어떤 느낌일 것 같나요?",
-            "작품을 다른 시각에서 봐야 한다면, 어떤 방향이나 위치에서 보고 싶으신가요?",
-            "이 작품을 다른 사람과 함께 본다면, 어떤 이야기를 나누고 싶나요?",
-            "이 작품이 살아 움직인다면 어떤 이야기를 할 것 같나요?",
-            "작품 속으로 들어가서 한 부분을 바꿀 수 있다면, 어떤 것을 바꾸고 싶나요?",
-            "이 작품에 제목을 새로 붙인다면 어떤 제목이 어울릴까요?",
-            "작품이 영화나 소설로 만들어진다면, 어떤 장르가 어울릴까요?",
-            "이 작품이 시간여행을 했다면, 어느 시대에서 더 잘 어울렸을까요?"
+            "What was the very first thought or emotion that came to mind when you saw this artwork?",
+            "What element in the artwork captured your attention the most? (e.g., color, material, composition, etc.)",
+            "What message or story do you feel this artwork is trying to convey?",
+            "After viewing the piece, was there anything that made you wonder about the artist's original intention?",
+            "What personal meaning did this artwork bring to you??",
+            "Was there any part of this artwork that connected with your daily life or memories?",
+            "If you had to describe this artwork with just one word, what word comes to mind?",
+            "Does this artwork remind you of any music, film, or other piece of art?",
+            "If you were explaining this artwork to a friend, what aspects would you emphasize?",
+            "If this artwork were in your personal space, what kind of feeling would it create?",
+            "If you could view the artwork from a different perspective, what angle or position would you choose?",
+            "If you were viewing this artwork with someone else, what kind of conversation would you want to have?",
+            "If this artwork could come alive, what story do you think it would tell?",
+            "If you could step inside the artwork and change one element, what would it be?",
+            "If you were to give this artwork a new title, what would it be?",
+            "If this artwork were to be adapted into a film or novel, what genre would best suit it?",
+            "If this artwork traveled through time, which era do you think it would fit into best?"
         ]
 
         // 랜덤으로 질문을 뽑아서 div에 추가하는 함수
