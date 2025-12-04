@@ -20,6 +20,14 @@
             position: sticky;
         }
 
+        .absolute {
+            position: absolute;
+        }
+
+        .relative {
+            position: relative;
+        }
+
         .bottom-0 {
             bottom: 0;
         }
@@ -363,18 +371,18 @@
                 </ul> -->
                 <ul id="messages" role="list"></ul>
             </div>
-        </div>
-        <div class="sticky max-w-screen-md">
-            <div class="flex justify-start w-90 mt-auto except-mt-2">
-                <div id="randomQ" class="randomQStyle"></div>
-            </div>
-            
-            <!-- send chat -->
-            <div class="flex m-2">
-                <!-- <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
-                <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button> -->
-                <input id="messageInput" class="grow m-2 rounded border-0" placeholder="Share your opinion" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
-                <button id="sendMessageBtn" aria-label="Send a message" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">Send</button>
+            <div class="absolute max-w-screen-md w-90 flex flex-col" style="bottom: 10%;">
+                <div class="flex justify-start w-full mt-auto except-mt-2">
+                    <div id="randomQ" class="randomQStyle"></div>
+                </div>
+                
+                <!-- send chat -->
+                <div class="flex m-2">
+                    <!-- <input id="messageInput" class="grow m-2 rounded border-0" placeholder="관람평을 나누어 보세요" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
+                    <button id="sendMessageBtn" aria-label="메시지 전송" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">전송하기</button> -->
+                    <input id="messageInput" class="grow m-2 rounded border-0" placeholder="Share your opinion" aria-label="여기에 텍스트를 입력해서" onkeypress="msgSend(event)"/>
+                    <button id="sendMessageBtn" aria-label="Send a message" class="bg-green-900 rounded text-white m-2 p-2 border-0 shadow-sm">Send</button>
+                </div>
             </div>
         </div>
     </div>
