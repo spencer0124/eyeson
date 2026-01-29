@@ -1,5 +1,6 @@
 [
     {
+        "no" : 1,
         "id" : "self-portrait.jpg",
         "eng_id" : "self-portrait.jpg",
         "explanation" : "",
@@ -13,6 +14,7 @@
         }
     },
     {
+        "no" : 2,
         "id" : "cross-in-the-mountains.jpg",
         "eng_id" : "cross-in-the-mountains.jpg",
         "explanation" : "",
@@ -26,6 +28,7 @@
         }
     },
     {
+        "no" : 3,
         "id" : "monk-by-the-sea.jpg",
         "eng_id" : "monk-by-the-sea.jpg",
         "explanation" : "",
@@ -39,6 +42,7 @@
         }
     },
     {
+        "no" : 4,
         "id" : "two-men-contemplating-the-moon.jpg",
         "eng_id" : "two-men-contemplating-the-moon.jpg",
         "explanation" : "이 두 인물은 등을 보인 채 묘사되어, 관람자가 그들의 자연과의 교감에 함께 참여할 수 있도록 구성되어 있습니다. 이들 중 한 명은 종종 프리드리히 본인으로, 다른 한 명은 그의 제자인 아우구스트 하인리히(1794–1822)로 여겨집니다. 독일 낭만주의자들 사이에서 달은 신성한 관조의 대상으로 여겨졌을 만큼 큰 관심을 받는 소재였습니다. 이 작품은 프리드리히의 가장 유명한 구성 중 하나의 세 번째 버전으로, 첫 번째는 하인리히가 생존해 있던 1819년에 그려졌으며(드레스덴 알베르티눔 소장), 두 번째는 그의 사망 직후인 1824년경에 제작되었습니다(베를린 국립미술관 소장).",
@@ -52,6 +56,7 @@
         }
     },
     {
+        "no" : 5,
         "id" : "moonrise-over-the-sea.jpg",
         "eng_id" : "moonrise-over-the-sea.jpg",
         "explanation" : "",
@@ -65,6 +70,7 @@
         }
     },
     {
+        "no" : 6,
         "id" : "castle-ruins-at-teplitz.jpg",
         "eng_id" : "castle-ruins-at-teplitz.jpg",
         "explanation" : "",
@@ -78,6 +84,7 @@
         }
     },
     {
+        "no" : 7,
         "id" : "spruce-thicket-in-the-snow.jpg",
         "eng_id" : "spruce-thicket-in-the-snow.jpg",
         "explanation" : "",
@@ -91,6 +98,7 @@
         }
     },
     {
+        "no" : 8,
         "id" : "bushes-in-the-snow.jpg",
         "eng_id" : "bushes-in-the-snow.jpg",
         "explanation" : "",
@@ -104,6 +112,7 @@
         }
     },
     {
+        "no" : 9,
         "id" : "the-watzmann.jpg",
         "eng_id" : "the-watzmann.jpg",
         "explanation" : "",
@@ -117,6 +126,7 @@
         }
     },
     {
+        "no" : 10,
         "id" : "wanderer-above-the-sea-of-fog.jpg",
         "eng_id" : "wanderer-above-the-sea-of-fog.jpg",
         "explanation" : "",
@@ -130,6 +140,7 @@
         }
     },
     {
+        "no" : 11,
         "id" : "the-stage-of-life.jpg",
         "eng_id" : "the-stage-of-life.jpg",
         "explanation" : "",

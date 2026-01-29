@@ -32,6 +32,7 @@ async def get_description(data: EngId):
         raise HTTPException(status_code=404, detail=f"No matching entry found for eng_id: {first_file}")
 
     return {
+        'no': matched.get('no', 'N/A'),
         'eng_id': matched.get('eng_id', 'N/A'),
         'description': matched.get('description', 'N/A'),
         'explanation': matched.get('explanation', 'N/A'),
