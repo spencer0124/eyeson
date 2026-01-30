@@ -40,6 +40,7 @@ async def get_description(data: EngId):
         'meta': matched.get('meta', 'N/A'),
         'image_url': s3_url
     }
+# check deploy
 
 @router.post("/gpt-artwork/")
 async def describe_image_with_artwork(promptmode: Request, request: str = Form(...), crop_image: UploadFile = File(...)):
