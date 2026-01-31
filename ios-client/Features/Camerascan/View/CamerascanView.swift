@@ -24,6 +24,7 @@ struct CamerascanView: View {
     
     // 두 번째 Picker (전시관 선택)
     @State private var selectedExhibitId: String = "" // 선택된 전시관의 인덱스 (viewModel.exhibitInfo 배열에서)
+    // 히히 vscode랑 xcode 둘다 ㅇ잘된당 !!
 
 
     var body: some View {

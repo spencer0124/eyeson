@@ -27,13 +27,22 @@ class ExhibitsDetailViewModel: ObservableObject {
             case .success(let data):
                 if let json = data as? [String: Any], let images = json["images"] as? [[String: Any]] {
                     self.exhibits = images.compactMap { dict in
+                        let artworknum: Int
+                        if let num = dict["no"] as? Int {
+                            artworknum = num
+                        } else if let numString = dict["no"] as? String, let num = Int(numString) {
+                            artworknum = num
+                        } else {
+                            return nil // 'no' is required
+                        }
+
                         guard let file = dict["file"] as? String,
                               let title = dict["title"] as? String,
                               let artist = dict["artist"] as? String,
                               let imageUrl = dict["image_url"] as? String else {
                             return nil
                         }
-                        return ExhibitDetail(id: file, title: title, artist: artist, imageUrl: imageUrl)
+                        return ExhibitDetail(id: file, title: title, artist: artist, imageUrl: imageUrl, artworknum: artworknum)
                     }
                 } else {
                     self.errorMessage = "Invalid response format."
@@ -50,4 +59,5 @@ struct ExhibitDetail: Identifiable {
     let title: String
     let artist: String
     let imageUrl: String
+    let artworknum: Int
 }

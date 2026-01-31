@@ -14,21 +14,21 @@ struct ExhibitsDetailView: View {
     @State private var isNavigatingToExhibitInfo = false
     @State private var searchText = ""
     @State private var hasLoadedData = false
-    @State private var sortOrder: SortOrder = .title
+    @State private var sortOrder: SortOrder = .artworknum
     
     @State var showSafari: Bool = false
     
     var exhibit: ExhibitList
     
     enum SortOrder {
-           case title, artist
+           case title, artworknum
        }
 
     var body: some View {
         VStack {
             Picker("정렬 기준", selection: $sortOrder) {
-                            Text("작품제목 순서").tag(SortOrder.title)
-                            Text("작가명 순서").tag(SortOrder.artist)
+                            Text("관람 순서").tag(SortOrder.artworknum)
+                            Text("작품 제목 순서").tag(SortOrder.title)
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .padding(.horizontal)
@@ -106,8 +106,8 @@ struct ExhibitsDetailView: View {
                         switch sortOrder {
                         case .title:
                             return $0.title < $1.title
-                        case .artist:
-                            return $0.artist < $1.artist
+                        case .artworknum:
+                            return $0.artworknum < $1.artworknum
                         }
                     }
                     ) { exhibit in
