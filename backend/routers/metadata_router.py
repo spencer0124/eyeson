@@ -30,6 +30,7 @@ async def get_images_with_metadata(uniqueid: str = Query(...)):
             if matched_data:
                 s3_url = f"https://seeterature.s3.amazonaws.com/{s3_key}"
                 images_with_metadata.append({
+                    'no': matched_data.get('no', 'N/A'),
                     'file': filename,
                     'title': matched_data['meta'].get('title', 'N/A'),
                     'artist': matched_data['meta'].get('artist', 'N/A'),
