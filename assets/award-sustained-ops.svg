@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="140" viewBox="0 0 480 140">
+  <defs>
+    <linearGradient id="silver-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="silver-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8e9bae"/>
+      <stop offset="50%" style="stop-color:#c8d6e5"/>
+      <stop offset="100%" style="stop-color:#8e9bae"/>
+    </linearGradient>
+    <linearGradient id="silver-text" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8d6e5"/>
+      <stop offset="100%" style="stop-color:#8e9bae"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="140" rx="12" ry="12" fill="url(#silver-bg)"/>
+
+  <!-- Silver border -->
+  <rect x="1" y="1" width="478" height="138" rx="11" ry="11" fill="none" stroke="url(#silver-accent)" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Inner subtle border -->
+  <rect x="8" y="8" width="464" height="124" rx="8" ry="8" fill="none" stroke="url(#silver-accent)" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Medal icon area -->
+  <circle cx="60" cy="62" r="30" fill="none" stroke="url(#silver-accent)" stroke-width="1" opacity="0.3"/>
+
+  <!-- Medal/Star SVG -->
+  <g transform="translate(42, 46)" fill="url(#silver-text)">
+    <path d="M12 0L14.7 8.2H23.4L16.4 13.3L19 21.5L12 16.4L5 21.5L7.6 13.3L0.6 8.2H9.3L12 0Z" transform="scale(1.5)" />
+  </g>
+
+  <!-- Award title -->
+  <text x="100" y="38" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="13" font-weight="500" fill="url(#silver-accent)" letter-spacing="3">EXCELLENCE AWARD</text>
+
+  <!-- Award name in Korean -->
+  <text x="100" y="62" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">&#xC6B0;&#xC218;&#xC9C0;&#xC18D;&#xC6B4;&#xC601;&#xD300;&#xC0C1;</text>
+
+  <!-- Decorative line -->
+  <line x1="100" y1="70" x2="440" y2="70" stroke="url(#silver-accent)" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Subtitle line 1 -->
+  <text x="100" y="90" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="12" fill="#8892a4">1&#xB144;&#xAC04; &#xC9C0;&#xC18D; &#xC6B4;&#xC601; &#xD3C9;&#xAC00;</text>
+
+  <!-- Subtitle line 2 -->
+  <text x="100" y="108" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="12" fill="#8892a4">&#xD604;&#xB300;&#xC624;&#xD1A0;&#xC5D0;&#xBC84; &#xBC30;&#xB9AC;&#xC5B4;&#xD504;&#xB9AC; &#xC571; &#xAC1C;&#xBC1C; &#xCF58;&#xD14C;&#xC2A4;&#xD2B8; 2026</text>
+</svg>
