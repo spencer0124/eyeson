@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="76" viewBox="0 0 480 76">
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="76" viewBox="0 0 400 76">
   <defs>
     <linearGradient id="silver-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#1a1a2e"/>
@@ -15,14 +15,14 @@
     </linearGradient>
   </defs>
 
-  <rect width="480" height="76" rx="10" ry="10" fill="url(#silver-bg)"/>
-  <rect x="1" y="1" width="478" height="74" rx="9" ry="9" fill="none" stroke="url(#silver-accent)" stroke-width="1.2" opacity="0.5"/>
+  <rect width="400" height="76" rx="10" ry="10" fill="url(#silver-bg)"/>
+  <rect x="1" y="1" width="398" height="74" rx="9" ry="9" fill="none" stroke="url(#silver-accent)" stroke-width="1.2" opacity="0.5"/>
 
-  <circle cx="110" cy="38" r="20" fill="none" stroke="url(#silver-accent)" stroke-width="1" opacity="0.3"/>
-  <g transform="translate(98, 26)" fill="url(#silver-text)">
+  <circle cx="70" cy="38" r="20" fill="none" stroke="url(#silver-accent)" stroke-width="1" opacity="0.3"/>
+  <g transform="translate(58, 26)" fill="url(#silver-text)">
     <path d="M12 0L14.7 8.2H23.4L16.4 13.3L19 21.5L12 16.4L5 21.5L7.6 13.3L0.6 8.2H9.3L12 0Z" transform="scale(1.1)"/>
   </g>
 
-  <text x="145" y="33" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">&#xC6B0;&#xC218;&#xC9C0;&#xC18D;&#xC6B4;&#xC601;&#xD300;&#xC0C1;</text>
-  <text x="145" y="53" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="11.5" fill="#8892a4">&#xD604;&#xB300;&#xC624;&#xD1A0;&#xC5D0;&#xBC84; &#xBC30;&#xB9AC;&#xC5B4;&#xD504;&#xB9AC; &#xC571; &#xAC1C;&#xBC1C; &#xCF58;&#xD14C;&#xC2A4;&#xD2B8; 2025</text>
+  <text x="105" y="33" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="17" font-weight="700" fill="#ffffff">&#xC6B0;&#xC218;&#xC9C0;&#xC18D;&#xC6B4;&#xC601;&#xD300;&#xC0C1;</text>
+  <text x="105" y="53" font-family="'Segoe UI', 'SF Pro Display', -apple-system, Arial, sans-serif" font-size="11.5" fill="#8892a4">&#xD604;&#xB300;&#xC624;&#xD1A0;&#xC5D0;&#xBC84; &#xBC30;&#xB9AC;&#xC5B4;&#xD504;&#xB9AC; &#xC571; &#xAC1C;&#xBC1C; &#xCF58;&#xD14C;&#xC2A4;&#xD2B8; 2025</text>
 </svg>

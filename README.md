@@ -8,7 +8,7 @@
 [![YouTube](https://img.shields.io/badge/Demo-YouTube-red?logo=youtube)](https://www.youtube.com/watch?v=5qsIBKE3kAk)
 
 <p>
-  <img src="./assets/award-grand-prize.svg" width="430" alt="현대오토에버 대표이사상 — 배리어프리 앱 개발 콘테스트 2025"/>
+  <img src="./assets/award-grand-prize.svg" width="430" alt="현대오토에버 대표이사상 — 배리어프리 앱 개발 콘테스트 2025"/>&nbsp;&nbsp;
   <img src="./assets/award-sustained-ops.svg" width="430" alt="우수지속운영팀상 — 배리어프리 앱 개발 콘테스트 2025"/>
 </p>
 
