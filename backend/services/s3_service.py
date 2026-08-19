@@ -41,9 +41,9 @@ def load_id_from_title(title: str):
 def download_image_from_s3_gpt(s3_key):
     print('s3', s3_key)
     try:
-        response = s3_client.get_object(Bucket=bucket_name, Key=s3_key)
+        new_s3_key = 'photo/david/'+s3_key.split('photo/')[1]
+        response = s3_client.get_object(Bucket=bucket_name, Key=new_s3_key)
         print('resp', response)
-        print('resp to s3', 'photo/david/'+response.split('photo/')[1])
         img_data = response['Body'].read()
         image = Image.open(BytesIO(img_data))
         return image
