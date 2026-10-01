@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eyeson Agent Chat</title>
+        <link rel="stylesheet" href="/static/artChat_css/artChat_style.css">
+        <link rel="stylesheet" href="/artChat_css/ap-image-zoom.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.11/jquery.mousewheel.min.js"></script>
+        <script src="/artChat_js/ap-image-zoom.js"></script>
+        <style>
+            html,
+            body {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            body {
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: #f6f7fb;
+                color: #1f2937;
+            }
+
+            .agent-shell {
+                height: 100vh;
+                display: grid;
+                grid-template-rows: auto minmax(0, 1fr);
+                overflow: hidden;
+            }
+
+            .agent-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 14px;
+                background: #ffffff;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .agent-title {
+                font-size: 18px;
+                font-weight: 700;
+            }
+
+            .agent-session {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                min-width: 0;
+            }
+
+            .agent-session input {
+                width: min(38vw, 240px);
+                padding: 8px 10px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+            .agent-main {
+                display: grid;
+                grid-template-columns: minmax(280px, 42%) minmax(0, 1fr);
+                gap: 14px;
+                min-height: 0;
+                height: 100%;
+                overflow: hidden;
+                padding: 14px;
+            }
+
+            .art-panel,
+            .chat-panel {
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                min-height: 0;
+                overflow: hidden;
+            }
+
+            .art-panel {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .art-stage {
+                width: 100%;
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: hidden;
+                background: #111827;
+            }
+
+            .art-stage .apiz-wrapper {
+                width: 100%;
+                height: 100%;
+            }
+
+            .art-panel img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            .art-meta {
+                padding: 12px;
+                border-top: 1px solid #e5e7eb;
+                font-size: 14px;
+                line-height: 1.45;
+            }
+
+            .chat-panel {
+                display: grid;
+                grid-template-rows: auto minmax(0, 1fr) auto;
+                height: 100%;
+            }
+
+            .chat-status {
+                padding: 10px 12px;
+                border-bottom: 1px solid #e5e7eb;
+                color: #4b5563;
+                font-size: 13px;
+            }
+
+            .messages {
+                min-height: 0;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                padding: 14px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .message {
+                max-width: 88%;
+                padding: 10px 12px;
+                border-radius: 8px;
+                line-height: 1.5;
+                white-space: pre-wrap;
+                word-break: keep-all;
+                overflow-wrap: anywhere;
+            }
+
+            .message.assistant {
+                align-self: flex-start;
+                background: #eef2ff;
+                color: #111827;
+            }
+
+            .message.user {
+                align-self: flex-end;
+                background: #1f2937;
+                color: #ffffff;
+            }
+
+            .chat-form {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 10px;
+                padding: 12px;
+                border-top: 1px solid #e5e7eb;
+                background: #ffffff;
+            }
+
+            .chat-form textarea {
+                min-height: 48px;
+                max-height: 120px;
+                resize: vertical;
+                padding: 10px 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 16px;
+                line-height: 1.45;
+            }
+
+            button {
+                border: 0;
+                border-radius: 8px;
+                padding: 9px 13px;
+                background: #4338ca;
+                color: #ffffff;
+                font-weight: 700;
+                cursor: pointer;
+            }
+
+            button.secondary {
+                background: #e5e7eb;
+                color: #111827;
+            }
+
+            button:disabled {
+                opacity: 0.55;
+                cursor: wait;
+            }
+
+            @media (max-width: 820px) {
+                .agent-main {
+                    grid-template-columns: 1fr;
+                    grid-template-rows: auto minmax(420px, 1fr);
+                }
+
+                .art-stage {
+                    flex: 0 0 auto;
+                    height: 42vh;
+                }
+
+                .agent-topbar {
+                    align-items: stretch;
+                    flex-direction: column;
+                }
+
+                .agent-session input {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="agent-shell">
+            <header class="agent-topbar">
+                <div>
+                    <div class="agent-title">Eyeson LangGraph Agent</div>
+                    <div class="text-sm">Checkpointer thread: <span id="threadId">loading</span></div>
+                </div>
+                <div class="agent-session">
+                    <input id="userIdInput" aria-label="user id" placeholder="user id">
+                    <button id="applyUserButton" class="secondary">Apply</button>
+                    <button id="newUserButton" class="secondary">New User</button>
+                </div>
+            </header>
+
+            <main class="agent-main">
+                <section class="art-panel">
+                    <div class="art-stage">
+                        <img id="image" src="/static/artChat_demo/wanderer-above-the-sea-of-fog.jpg" alt="Wanderer above the Sea of Fog">
+                    </div>
+                    <div class="art-meta">
+                        <strong>Artwork</strong><br>
+                        Wanderer above the Sea of Fog<br>
+                        <span>artwork_id: wanderer-above-the-sea-of-fog.jpg</span>
+                    </div>
+                </section>
+
+                <section class="chat-panel">
+                    <div id="status" class="chat-status">Starting agent...</div>
+                    <div id="messages" class="messages" aria-live="polite"></div>
+                    <form id="chatForm" class="chat-form">
+                        <textarea id="messageInput" placeholder="Ask about the artwork. 예: 가운데 사람은 뭘 보고 있어?"></textarea>
+                        <button id="sendButton" type="submit">Send</button>
+                    </form>
+                </section>
+            </main>
+        </div>
+
+        <script>
+            const artworkId = "wanderer-above-the-sea-of-fog.jpg";
+            const storageKey = "eyeson_agent_user_id";
+            const messagesEl = document.getElementById("messages");
+            const statusEl = document.getElementById("status");
+            const threadIdEl = document.getElementById("threadId");
+            const formEl = document.getElementById("chatForm");
+            const inputEl = document.getElementById("messageInput");
+            const sendButton = document.getElementById("sendButton");
+            const userIdInput = document.getElementById("userIdInput");
+            const applyUserButton = document.getElementById("applyUserButton");
+            const newUserButton = document.getElementById("newUserButton");
+
+            function initImageZoom() {
+                if (!window.jQuery || !jQuery.fn.apImageZoom) return;
+                const image = jQuery("#image");
+                if (image.data("__apiz__")) return;
+                image.apImageZoom({
+                    cssWrapperClass: "custom-wrapper-class",
+                    autoCenter: false,
+                    loadingAnimation: "throbber",
+                    minZoom: "contain",
+                    maxZoom: 3.0,
+                });
+            }
+
+            window.addEventListener("load", initImageZoom);
+
+            function defaultUserId() {
+                const existing = localStorage.getItem(storageKey);
+                if (existing) return existing;
+                const generated = `local_${Math.random().toString(36).slice(2, 10)}`;
+                localStorage.setItem(storageKey, generated);
+                return generated;
+            }
+
+            let userId = defaultUserId();
+            userIdInput.value = userId;
+
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            function renderMessages(messages) {
+                messagesEl.innerHTML = "";
+                for (const message of messages) {
+                    const div = document.createElement("div");
+                    div.className = `message ${message.role}`;
+                    div.innerHTML = escapeHtml(message.content);
+                    messagesEl.appendChild(div);
+                }
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            }
+
+            async function postJson(url, body) {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(body),
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.detail || response.statusText);
+                }
+                return data;
+            }
+
+            async function startAgent() {
+                statusEl.textContent = "Starting agent...";
+                sendButton.disabled = true;
+                try {
+                    const data = await postJson("/agent/start", {
+                        user_id: userId,
+                        artwork_id: artworkId,
+                    });
+                    threadIdEl.textContent = data.thread_id;
+                    statusEl.textContent = data.resumed
+                        ? "Previous LangGraph checkpoint loaded."
+                        : "New LangGraph checkpoint created.";
+                    renderMessages(data.messages || []);
+                } catch (error) {
+                    statusEl.textContent = `Start failed: ${error.message}`;
+                } finally {
+                    sendButton.disabled = false;
+                    inputEl.focus();
+                }
+            }
+
+            async function sendMessage(message) {
+                statusEl.textContent = "Agent is thinking...";
+                sendButton.disabled = true;
+                try {
+                    const data = await postJson("/agent/chat", {
+                        user_id: userId,
+                        artwork_id: artworkId,
+                        message,
+                    });
+                    threadIdEl.textContent = data.thread_id;
+                    statusEl.textContent = "Checkpoint updated.";
+                    renderMessages(data.messages || []);
+                } catch (error) {
+                    statusEl.textContent = `Chat failed: ${error.message}`;
+                } finally {
+                    sendButton.disabled = false;
+                    inputEl.focus();
+                }
+            }
+
+            formEl.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const message = inputEl.value.trim();
+                if (!message) return;
+                inputEl.value = "";
+                await sendMessage(message);
+            });
+
+            applyUserButton.addEventListener("click", async () => {
+                const nextUserId = userIdInput.value.trim();
+                if (!nextUserId) return;
+                userId = nextUserId;
+                localStorage.setItem(storageKey, userId);
+                await startAgent();
+            });
+
+            newUserButton.addEventListener("click", async () => {
+                userId = `local_${Math.random().toString(36).slice(2, 10)}`;
+                userIdInput.value = userId;
+                localStorage.setItem(storageKey, userId);
+                await startAgent();
+            });
+
+            startAgent();
+        </script>
+    </body>
+</html>

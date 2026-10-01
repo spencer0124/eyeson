@@ -40,7 +40,7 @@ from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
 import os
 
-from routers import search_router, description_router, metadata_router, chat_router
+from routers import search_router, description_router, metadata_router, chat_router, agent_router
 from routers.chat_router import manager
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -65,6 +65,9 @@ app.add_middleware(
 
 # 정적 파일 마운트
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/artChat_demo", StaticFiles(directory=os.path.join(STATIC_DIR, "artChat_demo")), name="artChat_demo")
+app.mount("/artChat_css", StaticFiles(directory=os.path.join(STATIC_DIR, "artChat_css")), name="artChat_css")
+app.mount("/artChat_js", StaticFiles(directory=os.path.join(STATIC_DIR, "artChat_js")), name="artChat_js")
 
 # index.html 반환
 @app.get("/", include_in_schema=False)
@@ -76,8 +79,14 @@ async def serve_index():
 async def serve_art_chat():
     return FileResponse(os.path.join(STATIC_DIR, "artChat.html"))
 
+# /artChatAgent 경로 추가 - LangGraph agent 로컬 테스트용
+@app.get("/artChatAgent", include_in_schema=False)
+async def serve_art_chat_agent():
+    return FileResponse(os.path.join(STATIC_DIR, "artChat_agent.html"))
+
 # 라우터 포함
 app.include_router(search_router.router, prefix="/search", tags=["search"])
 app.include_router(description_router.router, prefix="/description", tags=["description"])
 app.include_router(metadata_router.router, prefix="/metadata", tags=["metadata"])
 app.include_router(chat_router.router, prefix="/chat", tags=["chat"])
+app.include_router(agent_router.router, prefix="/agent", tags=["agent"])
