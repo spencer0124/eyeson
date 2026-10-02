@@ -1,0 +1,14 @@
+{
+  "user_id": "smoke_test",
+  "preferences": {
+    "color_description": {
+      "value": "세밀하게",
+      "source": "explicit",
+      "reason": "사용자가 색조와 뉘앙스까지 포함해 설명해달라고 요청함",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T11:44:41"
+    }
+  },
+  "created_at": "2026-10-01T11:44:41",
+  "updated_at": "2026-10-01T11:44:41"
+}

@@ -1,0 +1,42 @@
+{
+  "user_id": "persona2_bg",
+  "preferences": {
+    "color_description": {
+      "value": "단순하게 - 기본 색 이름 위주",
+      "source": "explicit",
+      "reason": "comparison test seed",
+      "evidence_count": 1,
+      "updated_at": "2026-09-08T16:29:53"
+    },
+    "priority_focus": {
+      "value": "인물이나 주요 소재 위주",
+      "source": "explicit",
+      "reason": "comparison test seed",
+      "evidence_count": 1,
+      "updated_at": "2026-09-08T16:29:53"
+    },
+    "detail_level": {
+      "value": "간결하게 - 핵심만 짧게",
+      "source": "explicit",
+      "reason": "comparison test seed",
+      "evidence_count": 1,
+      "updated_at": "2026-09-08T16:29:53"
+    },
+    "spatial_reference_style": {
+      "value": "상하좌우",
+      "source": "explicit",
+      "reason": "comparison test seed",
+      "evidence_count": 1,
+      "updated_at": "2026-09-08T16:29:53"
+    },
+    "background_knowledge": {
+      "value": "포함 원함 - 작가의 의도나 작품의 의미, 역사적 배경지식을 함께 설명",
+      "source": "explicit",
+      "reason": "comparison test seed",
+      "evidence_count": 1,
+      "updated_at": "2026-09-08T16:29:53"
+    }
+  },
+  "created_at": "2026-09-08T16:29:53",
+  "updated_at": "2026-09-08T16:29:53"
+}

@@ -1,0 +1,14 @@
+{
+  "user_id": "log_smoke",
+  "preferences": {
+    "color_description": {
+      "value": "세밀하게 - 색조와 뉘앙스까지",
+      "source": "explicit",
+      "reason": "사용자가 색감을 세밀하게 설명하길 원함.",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T12:04:15"
+    }
+  },
+  "created_at": "2026-10-01T12:04:15",
+  "updated_at": "2026-10-01T12:04:15"
+}

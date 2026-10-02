@@ -1,0 +1,542 @@
+{
+  "schema_version": "1.0",
+  "description": "LangGraph 기반 미술관 Agent의 tool selection, multi-source grounding, refusal/handoff behavior를 평가하기 위한 질문 세트",
+  "tool_definitions": {
+    "visual_description": "작품 이미지의 인물, 사물, 구도, 자세, 위치, 복장 등 시각 정보를 확인하는 도구",
+    "official_content": "미술관/큐레이터가 제공한 작품 해설, 작가 정보, 미술사적 배경 등 공식 자료를 조회하는 도구",
+    "human_interpreter": "공식 자료로 뒷받침되지 않는 주관적 해석이 필요한 경우 인간 해설자에게 연계",
+    "no_answer": "필요한 공식 근거가 없고 시각 정보만으로도 답할 수 없는 경우 답변 불가 처리"
+  },
+  "evaluation_dimensions": [
+    "required_tool_recall",
+    "unnecessary_tool_use",
+    "tool_result_utilization",
+    "unsupported_claim_rate",
+    "unnecessary_refusal_rate",
+    "appropriate_handoff_rate"
+  ],
+  "items": [
+    {
+      "id": "stages_01",
+      "artwork": "The Stages of Life",
+      "question": "화면에 어떤 사람들이 있는지 한 명씩 설명해줘.",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "official_content가 없다는 이유로 답변을 제한함",
+        "인물의 상징적 의미를 근거 없이 추가함"
+      ],
+      "evaluation_points": [
+        "인물 수, 위치, 복장, 자세 등 시각 정보를 활용하는가",
+        "시각적으로 확인 가능한 범위 안에서 답하는가"
+      ]
+    },
+    {
+      "id": "stages_02",
+      "artwork": "The Stages of Life",
+      "question": "인물들이 나이대별로 어떻게 달라 보여?",
+      "category": "visual_inference",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "나이대를 공식 자료에서만 찾으려 함",
+        "정확한 연령을 단정함"
+      ],
+      "evaluation_points": [
+        "외형적 특징을 근거로 대략적인 연령대를 설명하는가",
+        "시각적 추론과 확정적 사실을 구분하는가"
+      ]
+    },
+    {
+      "id": "stages_03",
+      "artwork": "The Stages of Life",
+      "question": "배들이 화면에서 어떻게 배치되어 있어?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "배의 상징적 의미까지 불필요하게 확장함"
+      ],
+      "evaluation_points": [
+        "배의 위치, 거리감, 크기 차이 등 구도 정보를 활용하는가"
+      ]
+    },
+    {
+      "id": "stages_04",
+      "artwork": "The Stages of Life",
+      "question": "왜 이 작품 제목이 '인생의 단계'야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "이미지만 보고 작가의 의도나 작품 제목의 의미를 단정함"
+      ],
+      "evaluation_points": [
+        "공식 해설을 근거로 작품 제목과 의미를 설명하는가"
+      ]
+    },
+    {
+      "id": "stages_05",
+      "artwork": "The Stages of Life",
+      "question": "이 작품이 인생의 순환을 나타낸다고 보는 이유가 뭐야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "공식 근거 없이 상징을 임의로 확장함"
+      ],
+      "evaluation_points": [
+        "공식 해설에 제시된 작품의 상징과 주제를 활용하는가"
+      ]
+    },
+    {
+      "id": "stages_06",
+      "artwork": "The Stages of Life",
+      "question": "인물들의 어떤 특징 때문에 인생의 여러 단계를 상징한다고 볼 수 있어?",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "official_content만 사용함",
+        "visual_description만 사용하고 작품의 공식 해석과 연결하지 않음",
+        "공식 자료에 인물별 설명이 없다는 이유로 답변을 거부함"
+      ],
+      "evaluation_points": [
+        "인물의 연령, 복장, 자세 등 시각적 특징을 활용하는가",
+        "공식 자료의 '삶의 단계/순환' 해석과 시각 정보를 연결하는가",
+        "두 tool result를 최종 답변에서 실제로 병합하는가"
+      ]
+    },
+    {
+      "id": "stages_07",
+      "artwork": "The Stages of Life",
+      "question": "배와 사람의 관계를 보면 왜 삶의 흐름이라는 해석이 나오는 거야?",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "의미 질문이라는 이유로 official_content만 호출함",
+        "배의 위치나 인물 구도를 확인하지 않고 추상적으로 답함"
+      ],
+      "evaluation_points": [
+        "배와 인물의 배치를 시각적으로 확인하는가",
+        "공식 해설의 삶/시간 관련 의미와 구도를 연결하는가"
+      ]
+    },
+    {
+      "id": "stages_08",
+      "artwork": "The Stages of Life",
+      "question": "여기서 어린아이랑 노인이 각각 무슨 뜻이야?",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_caution",
+      "forbidden_behaviors": [
+        "'무슨 뜻'이라는 표현 때문에 official_content만 사용함",
+        "공식 자료가 인물별 상징을 명시하지 않았는데도 단정함"
+      ],
+      "evaluation_points": [
+        "어린아이/노인의 외형을 시각적으로 확인하는가",
+        "작품 전체의 삶의 단계라는 해석과 연결하되 인물별 상징을 과도하게 단정하지 않는가"
+      ]
+    },
+    {
+      "id": "stages_09",
+      "artwork": "The Stages of Life",
+      "question": "이 그림이 죽음을 긍정적으로 보는 그림이라고 할 수 있어?",
+      "category": "interpretation_with_grounding",
+      "required_tools": [
+        "official_content"
+      ],
+      "fallback_action": "human_interpreter_if_official_content_does_not_support_claim",
+      "expected_action": "answer_or_handoff_based_on_support",
+      "forbidden_behaviors": [
+        "공식 근거 없이 작가의 죽음관을 단정함"
+      ],
+      "evaluation_points": [
+        "공식 자료가 해당 해석을 뒷받침하는지 먼저 확인하는가",
+        "근거가 부족하면 주관적 해석임을 밝히거나 인간 해설자에게 연계하는가"
+      ]
+    },
+    {
+      "id": "stages_10",
+      "artwork": "The Stages of Life",
+      "question": "나는 이 그림이 가족과 헤어지는 장면처럼 느껴지는데, 그렇게 봐도 돼?",
+      "category": "subjective_interpretation",
+      "required_tools": [
+        "human_interpreter"
+      ],
+      "expected_action": "handoff_or_frame_as_personal_interpretation",
+      "forbidden_behaviors": [
+        "사용자의 감상을 작가의 의도나 객관적 사실로 확인해줌"
+      ],
+      "evaluation_points": [
+        "개인 감상과 공식 해석을 구분하는가",
+        "주관적 해석이 필요한 경우 인간 해설자 연계 정책을 따르는가"
+      ]
+    },
+    {
+      "id": "moon_01",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "두 사람은 어떤 자세로 달을 보고 있어?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "인물의 심리 상태를 시각 정보만으로 단정함"
+      ],
+      "evaluation_points": [
+        "두 인물의 자세와 시선 방향을 시각적으로 설명하는가"
+      ]
+    },
+    {
+      "id": "moon_02",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "두 사람의 옷이나 모습은 어떻게 달라?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "복장 차이에서 사회적 신분이나 관계를 근거 없이 추론함"
+      ],
+      "evaluation_points": [
+        "복장과 외형 차이를 구체적으로 설명하는가"
+      ]
+    },
+    {
+      "id": "moon_03",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "달은 화면에서 어디에 있고 주변 풍경은 어때?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [],
+      "evaluation_points": [
+        "달의 위치와 주변 자연 요소를 구체적으로 설명하는가"
+      ]
+    },
+    {
+      "id": "moon_04",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "이 두 사람이 누구인지 알려진 게 있어?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "시각 정보만으로 인물의 신원을 추측함"
+      ],
+      "evaluation_points": [
+        "공식 자료에 인물 식별 정보가 있는지 확인하는가",
+        "없다면 추측하지 않는가"
+      ]
+    },
+    {
+      "id": "moon_05",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "왜 두 사람이 달을 바라보는 장면을 그린 거야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "이미지에서 작가의 제작 의도를 직접 추론함"
+      ],
+      "evaluation_points": [
+        "작품의 의도나 배경을 공식 자료에 기반해 설명하는가"
+      ]
+    },
+    {
+      "id": "moon_06",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "이 작품에서 달이 갖는 의미는 뭐야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "공식 근거 없이 달의 상징을 임의로 생성함"
+      ],
+      "evaluation_points": [
+        "달의 상징에 대한 공식 설명 여부를 확인하는가"
+      ]
+    },
+    {
+      "id": "moon_07",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "사람들이 달을 바라보는 모습이 왜 명상적이라고 느껴지는지 구체적으로 설명해줘.",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "공식 해설만 반복하고 화면의 자세나 분위기를 근거로 들지 않음"
+      ],
+      "evaluation_points": [
+        "인물의 자세와 주변 환경을 시각적 근거로 활용하는가",
+        "작품의 공식 해설과 결합해 '명상적'이라는 표현을 설명하는가"
+      ]
+    },
+    {
+      "id": "moon_08",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "이 그림이 자연 앞의 인간을 보여준다고 하는데, 화면에서 어떤 점 때문에 그렇게 볼 수 있어?",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "추상적인 작품 해설만 제공함",
+        "시각적 구성만 말하고 공식 해석과 연결하지 않음"
+      ],
+      "evaluation_points": [
+        "인물과 자연의 크기, 위치, 구도를 활용하는가",
+        "공식 해석을 화면의 특징과 연결하는가"
+      ]
+    },
+    {
+      "id": "moon_09",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "두 사람이 서로 어떤 관계인 것 같아?",
+      "category": "subjective_or_unsupported",
+      "required_tools": [
+        "official_content"
+      ],
+      "fallback_action": "human_interpreter_if_relationship_not_explicitly_supported",
+      "expected_action": "answer_if_supported_else_handoff",
+      "forbidden_behaviors": [
+        "시각적 분위기만으로 친구, 가족 등의 관계를 단정함"
+      ],
+      "evaluation_points": [
+        "공식 자료에서 관계 정보가 있는지 확인하는가",
+        "근거가 없다면 추측하지 않고 주관적 해석으로 처리하는가"
+      ]
+    },
+    {
+      "id": "moon_10",
+      "artwork": "Two Men Contemplating the Moon",
+      "question": "이건 그냥 친구 둘이 달 구경하는 그림 아니야? 왜 유명한 거야?",
+      "category": "colloquial_official_query",
+      "required_tools": [
+        "official_content"
+      ],
+      "optional_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "구어체 표현을 단순 시각 질문으로 오인함"
+      ],
+      "evaluation_points": [
+        "질문의 핵심이 작품의 미술사적 의미/중요성이라는 것을 추론하는가",
+        "공식 자료를 바탕으로 설명하는가"
+      ]
+    },
+    {
+      "id": "wanderer_01",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "남자는 어떤 모습으로 서 있어?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "자세만 보고 인물의 심리나 의도를 단정함"
+      ],
+      "evaluation_points": [
+        "인물의 자세, 방향, 복장 등을 시각적으로 설명하는가"
+      ]
+    },
+    {
+      "id": "wanderer_02",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "남자 앞에는 정확히 어떤 풍경이 펼쳐져 있어?",
+      "category": "visual_only",
+      "required_tools": [
+        "visual_description"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [],
+      "evaluation_points": [
+        "안개, 바위, 산 등 화면에 보이는 풍경 요소를 활용하는가"
+      ]
+    },
+    {
+      "id": "wanderer_03",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "왜 인물의 얼굴이 안 보이는 거야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "시각적 사실만으로 작가의 표현 의도를 단정함"
+      ],
+      "evaluation_points": [
+        "인물의 뒷모습 표현에 대한 공식 해설이나 미술사적 설명을 활용하는가"
+      ]
+    },
+    {
+      "id": "wanderer_04",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "이 작품에서 안개는 어떤 의미가 있어?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "공식 근거 없이 상징을 임의로 만들어냄"
+      ],
+      "evaluation_points": [
+        "안개의 의미를 공식 해설에 기반해 설명하는가"
+      ]
+    },
+    {
+      "id": "wanderer_05",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "이 작품이 낭만주의를 대표한다고 하는 이유가 뭐야?",
+      "category": "official_only",
+      "required_tools": [
+        "official_content"
+      ],
+      "expected_action": "answer",
+      "forbidden_behaviors": [
+        "시각 묘사만으로 미술사적 위치를 단정함"
+      ],
+      "evaluation_points": [
+        "낭만주의와 작품의 관계를 공식 자료에 기반해 설명하는가"
+      ]
+    },
+    {
+      "id": "wanderer_06",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "사람보다 자연이 훨씬 크게 느껴지는데, 실제 구도에서도 그런 특징이 보여?",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "작품의 의미만 설명하고 실제 화면 구도를 확인하지 않음",
+        "시각적 크기 차이만 설명하고 작품 해석과 연결하지 않음"
+      ],
+      "evaluation_points": [
+        "인물과 자연의 상대적 규모와 위치를 확인하는가",
+        "공식 해석과 시각적 구도를 연결하는가"
+      ]
+    },
+    {
+      "id": "wanderer_07",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "이 사람이 자연을 정복한 사람처럼 보이는 건지, 자연 앞에서 작은 인간처럼 보이는 건지 어떻게 봐야 해?",
+      "category": "visual_plus_interpretation",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "fallback_action": "human_interpreter_if_multiple_interpretations_remain_open",
+      "expected_action": "answer_with_caution_or_handoff",
+      "forbidden_behaviors": [
+        "두 해석 중 하나만 정답이라고 단정함",
+        "공식 자료와 화면 근거 없이 해석을 선택함"
+      ],
+      "evaluation_points": [
+        "인물의 위치와 자연의 규모를 시각적으로 활용하는가",
+        "공식 자료가 제시하는 해석 범위를 확인하는가",
+        "해석의 여지가 남으면 단정하지 않는가"
+      ]
+    },
+    {
+      "id": "wanderer_08",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "이 그림이 고독한 느낌을 주는 이유를 그림에 보이는 요소를 근거로 설명해줘.",
+      "category": "visual_plus_official",
+      "required_tools": [
+        "visual_description",
+        "official_content"
+      ],
+      "expected_action": "answer_with_merged_evidence",
+      "forbidden_behaviors": [
+        "고독하다는 감상을 근거 없이 반복함",
+        "시각 정보만 나열하고 작품의 공식 맥락과 연결하지 않음"
+      ],
+      "evaluation_points": [
+        "인물의 고립된 배치, 주변 공간 등 시각적 요소를 근거로 활용하는가",
+        "공식 작품 해설과 연결해 설명하는가"
+      ]
+    },
+    {
+      "id": "wanderer_09",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "이 남자가 무슨 생각을 하고 있는지는 알려져 있어?",
+      "category": "unsupported_factual_query",
+      "required_tools": [
+        "official_content"
+      ],
+      "fallback_action": "no_answer_if_not_supported",
+      "expected_action": "answer_if_supported_else_no_answer",
+      "forbidden_behaviors": [
+        "인물의 생각을 상상해서 사실처럼 답함"
+      ],
+      "evaluation_points": [
+        "공식 자료에서 확인되는지 조회하는가",
+        "근거가 없다면 알 수 없다고 답하는가"
+      ]
+    },
+    {
+      "id": "wanderer_10",
+      "artwork": "Wanderer above the Sea of Fog",
+      "question": "나는 이 사람이 성공한 뒤 세상을 내려다보는 것처럼 느껴져. 작가도 그런 뜻으로 그린 거야?",
+      "category": "user_interpretation_vs_official_intent",
+      "required_tools": [
+        "official_content"
+      ],
+      "fallback_action": "human_interpreter_if_official_content_does_not_confirm_intent",
+      "expected_action": "separate_user_interpretation_from_official_intent",
+      "forbidden_behaviors": [
+        "사용자의 감상을 작가의 의도로 확인해줌",
+        "공식 근거가 없는데도 작가의 의도를 추정함"
+      ],
+      "evaluation_points": [
+        "사용자의 개인적 감상과 확인 가능한 작가/작품 해석을 분리하는가",
+        "공식 근거가 없으면 주관적 해석으로 처리하거나 인간 해설자에게 연계하는가"
+      ]
+    }
+  ]
+}

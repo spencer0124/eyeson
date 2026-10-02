@@ -1,0 +1,35 @@
+{
+  "user_id": "eval_split_moon_03_20261001_144447",
+  "preferences": {
+    "color_description": {
+      "value": "세밀하게 - 색조와 뉘앙스까지",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T14:47:12"
+    },
+    "priority_focus": {
+      "value": "인물이나 주요 소재 위주",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T14:47:12"
+    },
+    "detail_level": {
+      "value": "상세하게 - 형태와 질감까지 풍부하게",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T14:47:12"
+    },
+    "spatial_reference_style": {
+      "value": "상하좌우",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T14:47:12"
+    }
+  },
+  "created_at": "2026-10-01T14:47:12",
+  "updated_at": "2026-10-01T14:47:12"
+}

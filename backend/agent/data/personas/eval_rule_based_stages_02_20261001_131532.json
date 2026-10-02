@@ -1,0 +1,35 @@
+{
+  "user_id": "eval_rule_based_stages_02_20261001_131532",
+  "preferences": {
+    "color_description": {
+      "value": "세밀하게 - 색조와 뉘앙스까지",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T13:15:47"
+    },
+    "priority_focus": {
+      "value": "인물이나 주요 소재 위주",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T13:15:47"
+    },
+    "detail_level": {
+      "value": "상세하게 - 형태와 질감까지 풍부하게",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T13:15:47"
+    },
+    "spatial_reference_style": {
+      "value": "상하좌우",
+      "source": "explicit",
+      "reason": "eval default",
+      "evidence_count": 1,
+      "updated_at": "2026-10-01T13:15:47"
+    }
+  },
+  "created_at": "2026-10-01T13:15:47",
+  "updated_at": "2026-10-01T13:15:47"
+}

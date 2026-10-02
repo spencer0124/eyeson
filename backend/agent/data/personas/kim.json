@@ -1,0 +1,35 @@
+{
+  "user_id": "kim",
+  "preferences": {
+    "color_description": {
+      "value": "단순하게 - 기본 색 이름 위주",
+      "source": "explicit",
+      "reason": "사용자가 색감 설명을 단순하게 원한다고 명시적으로 요청함.",
+      "evidence_count": 1,
+      "updated_at": "2026-09-07T17:29:51"
+    },
+    "priority_focus": {
+      "value": "배경/공간 구도 위주",
+      "source": "explicit",
+      "reason": "색감 설명 선호와 함께 사용자의 전체적인 선호를 파악하기 위해 추가 질문 필요.",
+      "evidence_count": 1,
+      "updated_at": "2026-09-07T17:29:51"
+    },
+    "spatial_reference_style": {
+      "value": "상관없음",
+      "source": "explicit",
+      "reason": "사용자가 위치 설명에 대해 특정한 선호가 없다고 명시적으로 말함.",
+      "evidence_count": 1,
+      "updated_at": "2026-09-07T17:30:36"
+    },
+    "detail_level": {
+      "value": "간결하게 - 핵심만 짧게",
+      "source": "explicit",
+      "reason": "사용자의 선호 요청",
+      "evidence_count": 1,
+      "updated_at": "2026-09-07T18:50:59"
+    }
+  },
+  "created_at": "2026-09-07T17:29:51",
+  "updated_at": "2026-09-07T18:50:59"
+}
